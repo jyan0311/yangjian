@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Dummy data for recent notes
+const recentNotes = [
+  {
+    id: 1,
+    title: "Why I Love AI 🤖",
+    excerpt: "Deep learning isn't just math—it's magic disguised as matrices!",
+    date: "2026-01-20",
+    emoji: "🧠",
+    color: "bg-usagi-yellow",
+  },
+  {
+    id: 2,
+    title: "Melbourne Coffee Guide ☕",
+    excerpt: "Ranking every café within 5km of Monash. Spoiler: I have strong opinions.",
+    date: "2026-01-18",
+    emoji: "☕",
+    color: "bg-usagi-pink",
+  },
+  {
+    id: 3,
+    title: "Learning Rust (Again) 🦀",
+    excerpt: "The borrow checker is my frenemy. We're in couple's therapy.",
+    date: "2026-01-15",
+    emoji: "🦀",
+    color: "bg-yellow-200",
+  },
+  {
+    id: 4,
+    title: "Favorite Anime of 2025",
+    excerpt: "Chiikawa continues to heal my soul. Usagi is life.",
+    date: "2026-01-12",
+    emoji: "🐰",
+    color: "bg-usagi-yellow",
+  },
+  {
+    id: 5,
+    title: "Building a RAG System",
+    excerpt: "Vector databases are cool but have you tried just... reading the docs?",
+    date: "2026-01-10",
+    emoji: "📚",
+    color: "bg-purple-200",
+  },
+  {
+    id: 6,
+    title: "My Digital Garden Setup",
+    excerpt: "Obsidian + Astro + GitHub Pages = Chef's kiss 👌",
+    date: "2026-01-08",
+    emoji: "🌱",
+    color: "bg-green-200",
+  },
+];
+---
+
+<Layout title="Usagi's Digital Garden 🐰 | Home">
+  <!-- Hero Section: Chaotic & Cute -->
+  <section class="relative overflow-hidden bg-usagi-cream pt-12 pb-16 md:pt-20 md:pb-24">
+    <div class="max-w-5xl mx-auto px-4 relative z-10">
+      <!-- Floating decorative elements -->
+      <div class="absolute -top-4 -left-4 md:top-10 md:left-10 animate-float">
+        <div class="text-6xl md:text-8xl opacity-80">🐰</div>
+      </div>
+      <div class="absolute -top-2 -right-4 md:top-20 md:right-20 animate-bounce-slow">
+        <div class="text-4xl md:text-6xl opacity-70">✨</div>
+      </div>
+      <div class="absolute bottom-10 right-1/4 animate-wiggle hidden md:block">
+        <div class="text-5xl opacity-60">🌟</div>
+      </div>
+
+      <!-- Main Hero Card -->
+      <div 
+        class="bg-usagi-yellow border-4 border-usagi-black shadow-neo-xl p-8 md:p-12 transform hover:rotate-1 transition-transform duration-300"
+      >
+        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+          <!-- Avatar/Character -->
+          <div class="shrink-0">
+            <div 
+              class="w-32 h-32 md:w-40 md:h-40 bg-usagi-pink border-4 border-usagi-black shadow-neo rounded-full flex items-center justify-center text-6xl md:text-7xl hover-bounce"
+            >
+              🐰
+            </div>
+          </div>
+
+          <!-- Hero Text -->
+          <div class="text-center md:text-left">
+            <h1 class="text-4xl md:text-6xl font-black text-usagi-brown mb-3 leading-tight">
+              Heyaa! I'm Usagi 🌟
+            </h1>
+            <p class="text-xl md:text-2xl font-bold text-usagi-brown mb-4">
+              Monash AI Student · Code Enthusiast · Digital Gardener
+            </p>
+            <p class="text-base md:text-lg text-usagi-brown/80 max-w-2xl">
+              Welcome to my chaotic corner of the internet! I write about AI, build weird projects, 
+              and occasionally share coherent thoughts. Mostly I just vibe. 🎵
+            </p>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
+          <a 
+            href="#notes" 
+            class="bg-usagi-pink border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-brown hover-bounce inline-block"
+          >
+            📝 Read My Notes
+          </a>
+          <a 
+            href="/about" 
+            class="bg-white border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-brown hover-bounce inline-block"
+          >
+            🐰 About Me
+          </a>
+          <a 
+            href="https://github.com/yangjian" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-usagi-brown border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-cream hover-bounce inline-block"
+          >
+            💻 GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Cute Sub-banner -->
+      <div class="mt-8 text-center">
+        <div class="inline-block bg-white border-3 border-usagi-black shadow-neo px-6 py-3 transform -rotate-1">
+          <p class="text-sm md:text-base font-bold text-usagi-brown">
+            ⚡ Last updated: January 2026 · Status: <span class="text-usagi-pink">Vibing</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Notes: Masonry/Grid Layout -->
+  <section id="notes" class="py-16 md:py-24 bg-usagi-cream">
+    <div class="max-w-6xl mx-auto px-4">
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-black text-usagi-brown mb-4 inline-block">
+          Recent Notes 📚
+        </h2>
+        <p class="text-lg md:text-xl text-usagi-brown/70 max-w-2xl mx-auto">
+          A collection of thoughts, tutorials, rants, and random observations from my digital garden.
+        </p>
+      </div>
+
+      <!-- Masonry Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {recentNotes.map((note) => (
+          <article 
+            class={`${note.color} border-3 border-usagi-black shadow-neo hover:shadow-neo-xl transition-all duration-200 hover-bounce p-6 group cursor-pointer`}
+          >
+            <!-- Emoji Icon -->
+            <div class="text-5xl mb-4 group-hover:animate-bounce">
+              {note.emoji}
+            </div>
+
+            <!-- Title -->
+            <h3 class="text-xl md:text-2xl font-bold text-usagi-brown mb-2 leading-tight">
+              {note.title}
+            </h3>
+
+            <!-- Excerpt -->
+            <p class="text-sm md:text-base text-usagi-brown/80 mb-4 leading-relaxed">
+              {note.excerpt}
+            </p>
+
+            <!-- Date -->
+            <div class="flex items-center justify-between">
+              <time class="text-xs md:text-sm font-medium text-usagi-brown/60" datetime={note.date}>
+                {new Date(note.date).toLocaleDateString('en-US', { 
+                  month: 'short', 
+                  day: 'numeric', 
+                  year: 'numeric' 
+                })}
+              </time>
+              <span class="text-usagi-brown font-bold text-sm group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- View All Link -->
+      <div class="text-center mt-12">
+        <a 
+          href="/notes" 
+          class="inline-block bg-usagi-yellow border-3 border-usagi-black shadow-neo hover:shadow-neo-xl px-8 py-4 font-black text-lg text-usagi-brown hover-bounce"
+        >
+          View All Notes →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fun Stats Section (Optional Eye Candy) -->
+  <section class="py-12 md:py-16 bg-gradient-to-b from-usagi-cream to-usagi-yellow/20">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
+          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">42</div>
+          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Notes Written</div>
+        </div>
+        <div class="bg-usagi-pink border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
+          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">∞</div>
+          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Coffee Consumed</div>
+        </div>
+        <div class="bg-usagi-yellow border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
+          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">127</div>
+          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Hours Coding</div>
+        </div>
+        <div class="bg-purple-200 border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
+          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">3</div>
+          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Usagi Plushies</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,96 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Usagi's Digital Garden 🐰",
+  description = "A chaotic and cute space for thoughts, notes, and AI adventures by a Monash AI Student"
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Google Fonts: M PLUS Rounded 1c (Multiple weights for flexibility) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Global Styles -->
+    <style is:global>
+      /* Ensure body takes full height for sticky footer */
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        background-color: #FFFDF5;
+        color: #2D2305;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+
+      footer {
+        flex-shrink: 0;
+      }
+
+      /* Custom animations for bouncy interactions */
+      .hover-bounce {
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .hover-bounce:hover {
+        transform: scale(1.05) rotate(-2deg);
+      }
+
+      .hover-bounce:active {
+        transform: scale(0.95);
+      }
+
+      /* Thick border everywhere for that hand-drawn look */
+      .neo-border {
+        border: 3px solid #000000;
+      }
+
+      /* Text selection styling */
+      ::selection {
+        background-color: #FFE153;
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body class="font-rounded antialiased">
+    <!-- Main Content Area -->
+    <main class="min-h-screen">
+      <slot />
+    </main>
+
+    <!-- Sticky Footer -->
+    <footer class="bg-usagi-yellow border-t-4 border-usagi-black py-6 mt-12">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <p class="text-usagi-brown font-bold text-sm md:text-base">
+          Made with 🐰 and ✨ by a Monash AI Student
+        </p>
+        <p class="text-usagi-brown text-xs mt-2 opacity-80">
+          Powered by Astro · Styled with Usagi Energy · © {new Date().getFullYear()}
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
