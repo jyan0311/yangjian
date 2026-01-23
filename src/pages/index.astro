@@ -2,23 +2,24 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
+// Base URL for proper routing (ensure trailing slash)
+const base = import.meta.env.BASE_URL;
+const baseUrl = base.endsWith('/') ? base : base + '/';
+
 // --- 配置数据 ---
 const tags = [
-  { name: "AI Grief", slug: "ai-grief", color: "bg-accent-coral", rotate: "-rotate-2" },
-  { name: "Monash Life", slug: "monash-life", color: "bg-usagi", rotate: "rotate-1" },
+  { name: "INTJ", slug: "intj", color: "bg-accent-coral", rotate: "-rotate-2" },
+  { name: "Thinking", slug: "thinking", color: "bg-usagi", rotate: "rotate-1" },
   { name: "Coding", slug: "coding", color: "bg-accent-mint", rotate: "-rotate-3" },
   { name: "Research", slug: "research", color: "bg-accent-ochre", rotate: "rotate-2" },
-  { name: "合集", slug: "合集", color: "bg-accent-blue", rotate: "rotate-1" },
-  { name: "Python", slug: "python", color: "bg-accent-mint", rotate: "-rotate-1" },
+  { name: "LLM", slug: "llm", color: "bg-accent-blue", rotate: "rotate-1" },
+  { name: "Trading", slug: "trading", color: "bg-accent-mint", rotate: "-rotate-1" },
 ];
 
 // 获取所有文章
 const allPosts = await getCollection('posts');
 // 按日期排序（最新的在前面）
 const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-
-// 获取所有标签
-const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
 
 // 颜色映射
 const getTagColor = (tag: string) => {
@@ -32,11 +33,11 @@ const getTagColor = (tag: string) => {
   <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 pointer-events-none">
     <div class="max-w-7xl mx-auto flex justify-between items-start">
       <div class="pointer-events-auto bg-white border-3 border-black px-4 py-2 shadow-hard rotate-[-2deg] hover:rotate-0 transition-transform cursor-default">
-        <span class="font-display text-xl">🐰 USAGI.LOG</span>
+        <span class="font-display text-xl"> USAGI</span>
       </div>
       
       <div class="pointer-events-auto flex gap-3">
-        <a href="/collections" class="bg-accent-blue text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
+        <a href={`${baseUrl}collections`} class="bg-accent-blue text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
           📚 合集
         </a>
         <a href="https://github.com/pangxianyuy" target="_blank" class="bg-black text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
@@ -58,13 +59,13 @@ const getTagColor = (tag: string) => {
       
       <div class="md:col-span-7 text-center md:text-left">
         <div class="inline-block bg-accent-mint border-2 border-black px-3 py-1 font-mono text-xs font-bold mb-4 shadow-hard-sm">
-          STATUS: VIBING
+          STATUS: CODING
         </div>
         <h1 class="font-display text-6xl md:text-8xl leading-[0.9] text-text-ink mb-6 drop-shadow-[4px_4px_0px_#FFF]">
-          CHAOS <br/> <span class="text-accent-coral">GARDEN</span>
+          杨 <br/> <span class="text-accent-coral">几安</span>
         </h1>
         <p class="font-sans text-xl bg-white/60 backdrop-blur-sm border-3 border-black p-6 rounded-2xl shadow-hard max-w-lg transform -rotate-1 hover:rotate-0 transition-transform">
-          <b>Hi, I'm Usagi!</b> A Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
+          <b>Hi, I'm jianyang!</b> A Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
         </p>
         
         <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
@@ -88,14 +89,14 @@ const getTagColor = (tag: string) => {
         
         <div class="bg-white p-4 pb-12 border-2 border-gray-200 shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 w-72 md:w-80 group cursor-pointer">
           <div class="border-3 border-black aspect-square overflow-hidden bg-gray-100 relative">
-             <img src="/images/usagi-face.png" alt="Usagi Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+             <img src={`${baseUrl}images/usagi-face.png`} alt="Usagi Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
              
              <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
                 <span class="text-4xl animate-bounce">🐰</span>
              </div>
           </div>
           <div class="mt-4 font-handwriting text-center text-gray-500 font-bold text-xl group-hover:text-accent-coral transition-colors">
-            Monash, 2026
+            I like Usagi!!!
           </div>
         </div>
 
@@ -113,7 +114,7 @@ const getTagColor = (tag: string) => {
         </div>
         {tags.map((tag) => (
           <a 
-            href={`/tags/${tag.slug}`} 
+            href={`${baseUrl}tags/${tag.slug}`} 
             class={`${tag.color} ${tag.rotate} border-3 border-black px-6 py-2 font-bold text-black shadow-hard hover:scale-110 hover:shadow-hard-lg hover:z-10 transition-all cursor-pointer block active:scale-95`}
           >
             {tag.name}
@@ -133,7 +134,7 @@ const getTagColor = (tag: string) => {
                 
                 <div class="flex flex-wrap gap-2 mb-4">
                   {post.data.tags.map((tag) => (
-                    <a href={`/tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110 transform hover:-rotate-1 transition-all`}>
+                    <a href={`${baseUrl}tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110 transform hover:-rotate-1 transition-all`}>
                       {tag}
                     </a>
                   ))}
@@ -141,7 +142,7 @@ const getTagColor = (tag: string) => {
                 </div>
 
                 <h3 class="font-display text-2xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
-                  <a href={`/posts/${post.slug}`} class="block">{post.data.title}</a>
+                  <a href={`${baseUrl}posts/${post.slug}`} class="block">{post.data.title}</a>
                 </h3>
 
                 <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed">
@@ -150,7 +151,7 @@ const getTagColor = (tag: string) => {
 
                 <div class="pt-4 border-t-2 border-dashed border-gray-200 flex justify-between items-center">
                   <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">⭐ FEATURED</span>
-                  <a href={`/posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors">➜</a>
+                  <a href={`${baseUrl}posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors">➜</a>
                 </div>
               </div>
             </article>
@@ -170,7 +171,7 @@ const getTagColor = (tag: string) => {
                 
                 <div class="flex flex-wrap gap-2 mb-4">
                   {post.data.tags.slice(0, 2).map((tag) => (
-                    <a href={`/tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110`}>
+                    <a href={`${baseUrl}tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110`}>
                       {tag}
                     </a>
                   ))}
@@ -181,7 +182,7 @@ const getTagColor = (tag: string) => {
                 </div>
 
                 <h3 class="font-display text-xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
-                  <a href={`/posts/${post.slug}`} class="block">{post.data.title}</a>
+                  <a href={`${baseUrl}posts/${post.slug}`} class="block">{post.data.title}</a>
                 </h3>
 
                 <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
@@ -192,7 +193,7 @@ const getTagColor = (tag: string) => {
                   {post.data.featured && (
                     <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">✨</span>
                   )}
-                  <a href={`/posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors ml-auto">➜</a>
+                  <a href={`${baseUrl}posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors ml-auto">➜</a>
                 </div>
               </div>
             </article>

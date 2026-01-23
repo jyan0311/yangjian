@@ -4,58 +4,49 @@ export default {
   theme: {
     extend: {
       colors: {
-        // --- 核心底色 ---
-        cream: '#FDFBF7',           // 米色/奶油色纸张底色 (Paper Texture)
-        
-        // --- 乌萨奇专属色 (修正版) ---
-        'usagi': '#FFE153',         // 高能量亮黄 (还原角色原本毛色)
-        'usagi-dark': '#F4D03F',    // 稍深一点的黄色 (用于阴影或层次)
-
-        // --- 复古强调色 (完全对应你的美术指导) ---
-        'accent-coral': '#E76F51',  // 珊瑚红 (Coral Red)
-        'accent-mint': '#2A9D8F',   // 薄荷绿 (Mint Green)
-        'accent-ochre': '#D68C45',  // 赭石色/焦橙 (Burnt Orange) - 之前缺失的
-        'accent-blue': '#264653',   // 岩石蓝 (Rock Blue) - 之前缺失的，用于重色对比
-
-        // --- 轮廓线 ---
-        'text-ink': '#1A1A1A',      // 柔和的纯黑 (用于描边和文字)
+        cream: '#FDFBF7',
+        'usagi': '#FFE153',
+        'usagi-dark': '#F4D03F',
+        'accent-coral': '#E76F51',
+        'accent-mint': '#2A9D8F',
+        'accent-ochre': '#D68C45',
+        'accent-blue': '#264653',
+        'text-ink': '#1A1A1A',
       },
       fontFamily: {
-        // 主标题：复古衬线体 (体现权威与优雅)
-        display: ['"Dela Gothic One"', 'serif'],
-        // 正文/副标题：几何感无衬线体 (清晰易读)
-        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        // 修复核心：英文用圆体，中文用思源黑体，后备系统字体
+        display: ['"M PLUS Rounded 1c"', '"Noto Sans SC"', '"Microsoft YaHei"', 'sans-serif'],
+        sans: ['"M PLUS Rounded 1c"', '"Noto Sans SC"', '"Microsoft YaHei"', 'sans-serif'],
       },
       boxShadow: {
-        // 漫画硬阴影 (Hard Shadows)
         'hard': '4px 4px 0px 0px #1A1A1A',
         'hard-sm': '2px 2px 0px 0px #1A1A1A',
         'hard-lg': '6px 6px 0px 0px #1A1A1A',
-        'hard-xl': '8px 8px 0px 0px #1A1A1A',
       },
-      borderWidth: {
-        '3': '3px', // 统一的粗描边
-      },
-      animation: {
-        'wiggle-fast': 'wiggle-fast 0.5s ease-in-out infinite',
-        'bounce-wild': 'bounce-wild 1s ease-in-out infinite',
-        'float': 'float 4s ease-in-out infinite',
-      },
-      keyframes: {
-        'wiggle-fast': {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+      // Typography 配置保留基本结构，但颜色我们将由 Global CSS 强制接管
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.text-ink'),
+            maxWidth: 'none',
+            'h1, h2, h3': {
+              fontFamily: theme('fontFamily.display'),
+              fontWeight: '900', // 标题极粗
+              letterSpacing: '0.02em',
+            },
+            code: {
+              color: theme('colors.accent-blue'),
+              backgroundColor: '#E0F2F1',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.375rem',
+              fontWeight: '600',
+            },
+          },
         },
-        'bounce-wild': {
-          '0%, 100%': { transform: 'translateY(0) scale(1)' },
-          '50%': { transform: 'translateY(-15px) scale(1.05)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-      },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

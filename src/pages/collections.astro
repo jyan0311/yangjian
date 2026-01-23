@@ -2,6 +2,10 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
+// Base URL for proper routing (ensure trailing slash)
+const base = import.meta.env.BASE_URL;
+const baseUrl = base.endsWith('/') ? base : base + '/';
+
 // 获取所有包含"合集"标签的文章
 const allPosts = await getCollection('posts');
 const collectionPosts = allPosts
@@ -26,7 +30,7 @@ const groupedPosts: Record<string, any[]> = collectionPosts.reduce((groups, post
       
       <!-- 返回按钮 -->
       <nav class="mb-10">
-        <a href="/" class="inline-flex items-center gap-2 font-bold text-lg hover:-translate-x-2 transition-transform">
+        <a href={baseUrl} class="inline-flex items-center gap-2 font-bold text-lg hover:-translate-x-2 transition-transform">
           <span class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">←</span>
           <span>Back to Garden</span>
         </a>
@@ -84,7 +88,7 @@ const groupedPosts: Record<string, any[]> = collectionPosts.reduce((groups, post
                       </div>
                       <div class="flex flex-wrap gap-2 flex-1">
                         {post.data.tags.map((tag: string) => (
-                          <a href={`/tags/${tag.toLowerCase().replace(' ', '-')}`} 
+                          <a href={`${baseUrl}tags/${tag.toLowerCase().replace(' ', '-')}`} 
                              class={`${tag === '合集' ? 'bg-accent-blue' : tag === category ? 'bg-accent-coral' : 'bg-gray-200'} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110`}>
                             {tag}
                           </a>
@@ -97,7 +101,7 @@ const groupedPosts: Record<string, any[]> = collectionPosts.reduce((groups, post
 
                     <!-- 文章标题和描述 -->
                     <h3 class="font-display text-xl leading-tight mb-3 text-text-ink hover:text-accent-coral transition-colors">
-                      <a href={`/posts/${post.slug}`} class="block">
+                      <a href={`${baseUrl}posts/${post.slug}`} class="block">
                         {post.data.title}
                       </a>
                     </h3>
@@ -111,7 +115,7 @@ const groupedPosts: Record<string, any[]> = collectionPosts.reduce((groups, post
                       {post.data.featured && (
                         <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">⭐ Featured</span>
                       )}
-                      <a href={`/posts/${post.slug}`} 
+                      <a href={`${baseUrl}posts/${post.slug}`} 
                          class="bg-accent-mint border-2 border-black px-4 py-2 text-sm font-bold rounded hover:scale-105 transition-transform ml-auto">
                         阅读 →
                       </a>
@@ -162,7 +166,7 @@ const groupedPosts: Record<string, any[]> = collectionPosts.reduce((groups, post
 
       <!-- 返回首页 -->
       <div class="text-center mt-12">
-        <a href="/" 
+        <a href={baseUrl} 
            class="group relative inline-block">
           <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
           <span class="relative block bg-usagi border-3 border-black px-8 py-3 text-lg font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
