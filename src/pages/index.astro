@@ -1,183 +1,160 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Dummy data for recent notes
-const recentNotes = [
+// Demo Content - Usagi's Chaotic Energy
+const posts = [
   {
     id: 1,
-    title: "Why I Love AI 🤖",
-    excerpt: "Deep learning isn't just math—it's magic disguised as matrices!",
-    date: "2026-01-20",
-    emoji: "🧠",
-    color: "bg-usagi-yellow",
+    title: "YAA HA! I broke the CUDA drivers AGAIN!",
+    tag: "AI Grief",
+    summary: "*Screaming in binary* followed by a solution that shouldn't work but does. Somehow reinstalling PyTorch 47 times fixed it???",
+    color: "bg-accent-coral",
+    date: "2026-01-22",
   },
   {
     id: 2,
-    title: "Melbourne Coffee Guide ☕",
-    excerpt: "Ranking every café within 5km of Monash. Spoiler: I have strong opinions.",
-    date: "2026-01-18",
-    emoji: "☕",
-    color: "bg-usagi-pink",
+    title: "My thesis defense strategy: Just yell 'URA!'",
+    tag: "Monash Life",
+    summary: "A solid academic plan rooted in pure confidence. If you say it loud enough, the committee will believe your p-value is significant.",
+    color: "bg-usagi-yellow",
+    date: "2026-01-20",
   },
   {
     id: 3,
-    title: "Learning Rust (Again) 🦀",
-    excerpt: "The borrow checker is my frenemy. We're in couple's therapy.",
-    date: "2026-01-15",
-    emoji: "🦀",
-    color: "bg-yellow-200",
+    title: "Collecting shiny data (Scraping)",
+    tag: "Coding",
+    summary: "The internet is just a giant pile of shiny things for my dataset. BeautifulSoup? More like BeautifulLOOT! 💎",
+    color: "bg-accent-mint",
+    date: "2026-01-18",
   },
-  {
-    id: 4,
-    title: "Favorite Anime of 2025",
-    excerpt: "Chiikawa continues to heal my soul. Usagi is life.",
-    date: "2026-01-12",
-    emoji: "🐰",
-    color: "bg-usagi-yellow",
-  },
-  {
-    id: 5,
-    title: "Building a RAG System",
-    excerpt: "Vector databases are cool but have you tried just... reading the docs?",
-    date: "2026-01-10",
-    emoji: "📚",
-    color: "bg-purple-200",
-  },
-  {
-    id: 6,
-    title: "My Digital Garden Setup",
-    excerpt: "Obsidian + Astro + GitHub Pages = Chef's kiss 👌",
-    date: "2026-01-08",
+];
     emoji: "🌱",
     color: "bg-green-200",
   },
 ];
 ---
 
-<Layout title="Usagi's Digital Garden 🐰 | Home">
-  <!-- Hero Section: Chaotic & Cute -->
-  <section class="relative overflow-hidden bg-usagi-cream pt-12 pb-16 md:pt-20 md:pb-24">
-    <div class="max-w-5xl mx-auto px-4 relative z-10">
-      <!-- Floating decorative elements -->
-      <div class="absolute -top-4 -left-4 md:top-10 md:left-10 animate-float">
-        <div class="text-6xl md:text-8xl opacity-80">🐰</div>
-      </div>
-      <div class="absolute -top-2 -right-4 md:top-20 md:right-20 animate-bounce-slow">
-        <div class="text-4xl md:text-6xl opacity-70">✨</div>
-      </div>
-      <div class="absolute bottom-10 right-1/4 animate-wiggle hidden md:block">
-        <div class="text-5xl opacity-60">🌟</div>
-      </div>
-
-      <!-- Main Hero Card -->
-      <div 
-        class="bg-usagi-yellow border-4 border-usagi-black shadow-neo-xl p-8 md:p-12 transform hover:rotate-1 transition-transform duration-300"
-      >
-        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-          <!-- Avatar/Character -->
-          <div class="shrink-0">
-            <div 
-              class="w-32 h-32 md:w-40 md:h-40 bg-usagi-pink border-4 border-usagi-black shadow-neo rounded-full flex items-center justify-center text-6xl md:text-7xl hover-bounce"
-            >
-              🐰
-            </div>
-          </div>
-
-          <!-- Hero Text -->
-          <div class="text-center md:text-left">
-            <h1 class="text-4xl md:text-6xl font-black text-usagi-brown mb-3 leading-tight">
-              Heyaa! I'm Usagi 🌟
-            </h1>
-            <p class="text-xl md:text-2xl font-bold text-usagi-brown mb-4">
-              Monash AI Student · Code Enthusiast · Digital Gardener
-            </p>
-            <p class="text-base md:text-lg text-usagi-brown/80 max-w-2xl">
-              Welcome to my chaotic corner of the internet! I write about AI, build weird projects, 
-              and occasionally share coherent thoughts. Mostly I just vibe. 🎵
-            </p>
-          </div>
-        </div>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
-          <a 
-            href="#notes" 
-            class="bg-usagi-pink border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-brown hover-bounce inline-block"
-          >
-            📝 Read My Notes
-          </a>
-          <a 
-            href="/about" 
-            class="bg-white border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-brown hover-bounce inline-block"
-          >
-            🐰 About Me
-          </a>
-          <a 
-            href="https://github.com/yangjian" 
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-usagi-brown border-3 border-usagi-black shadow-neo px-6 py-3 font-bold text-usagi-cream hover-bounce inline-block"
-          >
-            💻 GitHub
-          </a>
+<Layout title="USAGI'S HOUSE · Home">
+  <!-- HERO SECTION: Comic Panel with Usagi -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-blue-300 via-blue-200 to-cream min-h-[60vh] border-b-3 border-black">
+    <!-- Background: CSS Art Clouds -->
+    <div class="absolute inset-0">
+      <!-- Cloud 1 (Left) -->
+      <div class="absolute top-12 left-8 md:left-16 w-24 md:w-32 h-12 md:h-16 bg-white border-3 border-black rounded-full animate-float"></div>
+      <div class="absolute top-12 left-16 md:left-24 w-16 md:w-20 h-8 md:h-12 bg-white border-3 border-black rounded-full"></div>
+      
+      <!-- Cloud 2 (Right) -->
+      <div class="absolute top-20 right-8 md:right-16 w-28 md:w-40 h-14 md:h-20 bg-white border-3 border-black rounded-full animate-float-delayed"></div>
+      <div class="absolute top-20 right-16 md:right-28 w-18 md:w-24 h-10 md:h-14 bg-white border-3 border-black rounded-full"></div>
+      
+      <!-- Sun Burst (Top Right) -->
+      <div class="absolute top-8 right-8 md:top-12 md:right-12">
+        <div class="w-16 md:w-24 h-16 md:h-24 bg-usagi-yellow border-3 border-black rounded-full shadow-hard"></div>
+        <!-- Sun rays -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-40">
+          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 -translate-y-full"></div>
+          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 translate-y-0 rotate-45"></div>
+          <div class="absolute top-1/2 left-1/2 w-10 h-2 bg-usagi-yellow translate-x-0 -translate-y-1/2"></div>
+          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 translate-y-0 -rotate-45"></div>
         </div>
       </div>
+    </div>
 
-      <!-- Cute Sub-banner -->
-      <div class="mt-8 text-center">
-        <div class="inline-block bg-white border-3 border-usagi-black shadow-neo px-6 py-3 transform -rotate-1">
-          <p class="text-sm md:text-base font-bold text-usagi-brown">
-            ⚡ Last updated: January 2026 · Status: <span class="text-usagi-pink">Vibing</span>
+    <!-- CHARACTER LAYER: USAGI IMAGES (CRITICAL!) -->
+    <div class="absolute inset-0 pointer-events-none">
+      <!-- Usagi #1: Main Character (Yelling/Excited) -->
+      <!-- IMPORTANT: Replace placeholder with actual Usagi image -->
+      <div class="absolute bottom-12 right-8 md:right-20 w-32 md:w-48 h-32 md:h-48 bg-white border-4 border-black rounded-3xl shadow-hard-xl animate-wiggle-fast overflow-hidden">
+        <div class="w-full h-full flex items-center justify-center">
+          <div class="text-center">
+            <div class="text-6xl mb-2">🐰</div>
+            <div class="text-xs font-bold px-2">YAA HA!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usagi #2: Peeking from behind cloud -->
+      <div class="hidden md:block absolute top-20 left-1/3 w-24 h-24 bg-white border-4 border-black rounded-full shadow-hard animate-bounce-wild overflow-hidden">
+        <div class="w-full h-full flex items-center justify-center">
+          <div class="text-4xl">🐰</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TITLE OVERLAY -->
+    <div class="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
+      <div class="text-center">
+        <!-- Main Title -->
+        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl text-white mb-6" style="text-shadow: 3px 3px 0px #1A1A1A, -1px -1px 0px #1A1A1A;">
+          USAGI'S HOUSE
+        </h1>
+        
+        <!-- Subtitle Tag -->
+        <div class="inline-block bg-usagi-yellow border-3 border-black px-6 py-3 shadow-hard transform -rotate-2">
+          <p class="font-bold text-sm md:text-base uppercase tracking-wide">
+            🔥 AI Research · Chaos Logs · Monash Student 🔥
           </p>
+        </div>
+
+        <!-- Quick Nav Buttons -->
+        <div class="flex flex-wrap gap-3 mt-8 justify-center">
+          <a href="#notes" class="bg-accent-coral border-3 border-black px-5 py-2 font-bold uppercase text-sm shadow-hard card-pop inline-block text-white">
+            📝 Read Notes
+          </a>
+          <a href="/about" class="bg-white border-3 border-black px-5 py-2 font-bold uppercase text-sm shadow-hard card-pop inline-block">
+            🐰 About Usagi
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Recent Notes: Masonry/Grid Layout -->
-  <section id="notes" class="py-16 md:py-24 bg-usagi-cream">
+  <!-- CONTENT GRID: Trading Card Style -->
+  <section id="notes" class="py-16 md:py-24 bg-cream">
     <div class="max-w-6xl mx-auto px-4">
       <!-- Section Header -->
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-5xl font-black text-usagi-brown mb-4 inline-block">
-          Recent Notes 📚
-        </h2>
-        <p class="text-lg md:text-xl text-usagi-brown/70 max-w-2xl mx-auto">
-          A collection of thoughts, tutorials, rants, and random observations from my digital garden.
+      <div class="mb-12">
+        <div class="inline-block bg-accent-mint border-3 border-black px-6 py-2 shadow-hard mb-4">
+          <h2 class="font-display text-3xl md:text-5xl text-white">
+            RECENT CHAOS
+          </h2>
+        </div>
+        <p class="text-lg md:text-xl text-text-ink/70 max-w-2xl">
+          A collection of unhinged thoughts, coding disasters, and questionable academic decisions.
         </p>
       </div>
 
-      <!-- Masonry Grid -->
+      <!-- Masonry Grid of Trading Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recentNotes.map((note) => (
-          <article 
-            class={`${note.color} border-3 border-usagi-black shadow-neo hover:shadow-neo-xl transition-all duration-200 hover-bounce p-6 group cursor-pointer`}
-          >
-            <!-- Emoji Icon -->
-            <div class="text-5xl mb-4 group-hover:animate-bounce">
-              {note.emoji}
+        {posts.map((post) => (
+          <article class={`${post.color} border-3 border-black shadow-hard card-pop p-6 cursor-pointer group`}>
+            <!-- Tag Label -->
+            <div class="inline-block bg-black border-2 border-black px-3 py-1 mb-4">
+              <span class="text-white text-xs font-bold uppercase tracking-wider">
+                {post.tag}
+              </span>
             </div>
 
             <!-- Title -->
-            <h3 class="text-xl md:text-2xl font-bold text-usagi-brown mb-2 leading-tight">
-              {note.title}
+            <h3 class="font-display text-2xl md:text-3xl text-text-ink mb-3 leading-tight group-hover:underline">
+              {post.title}
             </h3>
 
-            <!-- Excerpt -->
-            <p class="text-sm md:text-base text-usagi-brown/80 mb-4 leading-relaxed">
-              {note.excerpt}
+            <!-- Summary -->
+            <p class="text-sm md:text-base text-text-ink/80 leading-relaxed mb-4">
+              {post.summary}
             </p>
 
-            <!-- Date -->
-            <div class="flex items-center justify-between">
-              <time class="text-xs md:text-sm font-medium text-usagi-brown/60" datetime={note.date}>
-                {new Date(note.date).toLocaleDateString('en-US', { 
+            <!-- Date & Arrow -->
+            <div class="flex items-center justify-between pt-4 border-t-2 border-black/20">
+              <time class="text-xs font-medium text-text-ink/60 uppercase" datetime={post.date}>
+                {new Date(post.date).toLocaleDateString('en-US', { 
                   month: 'short', 
-                  day: 'numeric', 
-                  year: 'numeric' 
+                  day: 'numeric',
+                  year: 'numeric'
                 })}
               </time>
-              <span class="text-usagi-brown font-bold text-sm group-hover:translate-x-1 transition-transform">
+              <span class="text-black font-black text-xl group-hover:translate-x-1 transition-transform">
                 →
               </span>
             </div>
@@ -185,39 +162,23 @@ const recentNotes = [
         ))}
       </div>
 
-      <!-- View All Link -->
+      <!-- View All Button -->
       <div class="text-center mt-12">
-        <a 
-          href="/notes" 
-          class="inline-block bg-usagi-yellow border-3 border-usagi-black shadow-neo hover:shadow-neo-xl px-8 py-4 font-black text-lg text-usagi-brown hover-bounce"
-        >
-          View All Notes →
+        <a href="/notes" class="inline-block bg-usagi-yellow border-3 border-black px-8 py-4 font-black text-lg uppercase shadow-hard-lg card-pop">
+          View All Chaos Logs →
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Fun Stats Section (Optional Eye Candy) -->
-  <section class="py-12 md:py-16 bg-gradient-to-b from-usagi-cream to-usagi-yellow/20">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
-          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">42</div>
-          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Notes Written</div>
-        </div>
-        <div class="bg-usagi-pink border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
-          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">∞</div>
-          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Coffee Consumed</div>
-        </div>
-        <div class="bg-usagi-yellow border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
-          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">127</div>
-          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Hours Coding</div>
-        </div>
-        <div class="bg-purple-200 border-3 border-usagi-black shadow-neo p-6 text-center hover-bounce">
-          <div class="text-3xl md:text-4xl font-black text-usagi-brown mb-2">3</div>
-          <div class="text-sm md:text-base font-bold text-usagi-brown/70">Usagi Plushies</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- FLOATING ACTION BUTTON (Geometric Star) -->
+  <div class="fixed bottom-8 right-8 z-50">
+    <button 
+      class="w-16 h-16 bg-accent-coral border-3 border-black shadow-hard-lg animate-bounce-wild"
+      style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
+      aria-label="Quick Actions"
+    >
+      <span class="sr-only">Quick Actions</span>
+    </button>
+  </div>
 </Layout>

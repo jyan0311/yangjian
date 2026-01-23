@@ -5,8 +5,8 @@ interface Props {
 }
 
 const { 
-  title = "Usagi's Digital Garden 🐰",
-  description = "A chaotic and cute space for thoughts, notes, and AI adventures by a Monash AI Student"
+  title = "USAGI'S HOUSE · Chaotic Digital Garden",
+  description = "A retro comic-style blog by a Monash AI student with pure Usagi energy"
 } = Astro.props;
 ---
 
@@ -20,11 +20,11 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <!-- Google Fonts: M PLUS Rounded 1c (Multiple weights for flexibility) -->
+    <!-- Google Fonts: Retro Display + Geometric Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Varela+Round&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
@@ -38,8 +38,8 @@ const {
       body {
         display: flex;
         flex-direction: column;
-        background-color: #FFFDF5;
-        color: #2D2305;
+        background-color: #FDFBF7;
+        color: #1A1A1A;
       }
 
       main {
@@ -50,45 +50,34 @@ const {
         flex-shrink: 0;
       }
 
-      /* Custom animations for bouncy interactions */
-      .hover-bounce {
-        transition: transform 0.2s ease-in-out;
+      /* Card hover effect */
+      .card-pop {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
       }
 
-      .hover-bounce:hover {
-        transform: scale(1.05) rotate(-2deg);
-      }
-
-      .hover-bounce:active {
-        transform: scale(0.95);
-      }
-
-      /* Thick border everywhere for that hand-drawn look */
-      .neo-border {
-        border: 3px solid #000000;
+      .card-pop:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px 0px #1A1A1A;
       }
 
       /* Text selection styling */
       ::selection {
-        background-color: #FFE153;
-        color: #000000;
+        background-color: #F4D03F;
+        color: #1A1A1A;
       }
     </style>
   </head>
-  <body class="font-rounded antialiased">
+  <body class="font-sans antialiased">
     <!-- Main Content Area -->
     <main class="min-h-screen">
       <slot />
     </main>
 
     <!-- Sticky Footer -->
-    <footer class="bg-usagi-yellow border-t-4 border-usagi-black py-6 mt-12">
+    <footer class="bg-usagi-yellow border-t-3 border-black py-6 mt-12">
       <div class="max-w-6xl mx-auto px-4 text-center">
-        <p class="text-usagi-brown font-bold text-sm md:text-base">
-          Made with 🐰 and ✨ by a Monash AI Student
-        </p>
-        <p class="text-usagi-brown text-xs mt-2 opacity-80">
-          Powered by Astro · Styled with Usagi Energy · © {new Date().getFullYear()}
+        <p class="text-text-ink font-bold text-sm md:text-base">
+          Made with 🐰 chaos energy by a Monash AI Student · 2026
         </p>
       </div>
     </footer>

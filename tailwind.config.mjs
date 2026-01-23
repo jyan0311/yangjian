@@ -4,50 +4,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Usagi's signature color palette
-        usagi: {
-          yellow: '#FFE153',    // High-energy Usagi Yellow (Primary)
-          pink: '#FFB6C1',      // Soft Pink for cheeks/accents
-          cream: '#FFFDF5',     // Warm off-white/cream background
-          brown: '#2D2305',     // Deep brown for text/borders
-          black: '#000000',     // Pure black for sharp lines
-        },
+        // Retro Comic Book Palette
+        cream: '#FDFBF7',           // Cream Paper Background
+        'usagi-yellow': '#F4D03F',  // Mustard Yellow (Primary)
+        'accent-coral': '#E76F51',  // Coral Red (Highlights)
+        'accent-mint': '#2A9D8F',   // Mint Green (Decor)
+        'text-ink': '#1A1A1A',      // Soft Black (Ink/Borders)
       },
       fontFamily: {
-        // Rounded kawaii fonts
-        sans: ['"M PLUS Rounded 1c"', '"Varela Round"', 'ui-rounded', 'system-ui', 'sans-serif'],
-        rounded: ['"M PLUS Rounded 1c"', 'ui-rounded', 'sans-serif'],
+        // Giant Retro Serif for titles
+        display: ['"Dela Gothic One"', 'serif'],
+        // Geometric sans for body
+        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        // Hard Neo-Pop shadows (no blur!)
-        'neo': '4px 4px 0px 0px #000000',
-        'neo-sm': '2px 2px 0px 0px #000000',
-        'neo-lg': '6px 6px 0px 0px #000000',
-        'neo-xl': '8px 8px 0px 0px #000000',
-        'neo-pink': '4px 4px 0px 0px #FFB6C1',
-        'neo-yellow': '4px 4px 0px 0px #FFE153',
-      },
-      dropShadow: {
-        'neo': '4px 4px 0px #000000',
-        'neo-sm': '2px 2px 0px #000000',
+        // Hard Drop Shadows (Comic Style)
+        'hard': '4px 4px 0px 0px #1A1A1A',
+        'hard-sm': '2px 2px 0px 0px #1A1A1A',
+        'hard-lg': '6px 6px 0px 0px #1A1A1A',
+        'hard-xl': '8px 8px 0px 0px #1A1A1A',
       },
       borderWidth: {
         '3': '3px',
-        '5': '5px',
       },
       animation: {
-        'bounce-slow': 'bounce 2s infinite',
-        'wiggle': 'wiggle 1s ease-in-out infinite',
-        'float': 'float 3s ease-in-out infinite',
+        // Usagi's chaotic movements
+        'wiggle-fast': 'wiggle-fast 0.5s ease-in-out infinite',
+        'bounce-wild': 'bounce-wild 1s ease-in-out infinite',
+        'float': 'float 4s ease-in-out infinite',
+        'float-delayed': 'float 5s ease-in-out 1.5s infinite',
       },
       keyframes: {
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+        'wiggle-fast': {
+          '0%, 100%': { transform: 'rotate(-5deg)' },
+          '50%': { transform: 'rotate(5deg)' },
+        },
+        'bounce-wild': {
+          '0%, 100%': { transform: 'translateY(0) scale(1)' },
+          '50%': { transform: 'translateY(-25px) scale(1.05)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { transform: 'translateY(-15px)' },
         },
       },
     },
