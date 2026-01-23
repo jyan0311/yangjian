@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+  
+  return allTags.map((tag) => {
+    const filteredPosts = posts.filter(post => post.data.tags.includes(tag));
+    return {
+      params: { tag: tag.toLowerCase().replace(' ', '-') },
+      props: { 
+        tag: tag,
+        posts: filteredPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+      },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+
+// 颜色配置
+const tagColors = {
+  'ai grief': 'bg-accent-coral',
+  'monash life': 'bg-usagi', 
+  'coding': 'bg-accent-mint',
+  'research': 'bg-accent-ochre',
+  '合集': 'bg-accent-blue',
+  'python': 'bg-accent-mint',
+  'ai': 'bg-accent-coral',
+  'deep learning': 'bg-accent-coral',
+  'academic writing': 'bg-accent-ochre'
+};
+
+const getTagColor = (tagName: string) => {
+  const key = tagName.toLowerCase();
+  return (tagColors as any)[key] || 'bg-gray-200';
+};
+---
+
+<Layout title={`标签: ${tag} | Usagi's Digital Garden`}>
+  <div class="min-h-screen bg-cream py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- 返回按钮 -->
+      <nav class="mb-10">
+        <a href="/" class="inline-flex items-center gap-2 font-bold text-lg hover:-translate-x-2 transition-transform">
+          <span class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">←</span>
+          <span>Back to Garden</span>
+        </a>
+      </nav>
+
+      <!-- 标签头部 -->
+      <header class="text-center mb-12">
+        <div class="inline-block mb-4">
+          <span class={`${getTagColor(tag)} border-3 border-black px-8 py-4 font-bold text-2xl uppercase rounded-2xl shadow-hard transform hover:scale-105 transition-transform`}>
+            {tag}
+          </span>
+        </div>
+        
+        <h1 class="font-display text-4xl md:text-6xl text-text-ink mb-4">
+          探索 <span class="text-accent-coral underline decoration-wavy decoration-4">{tag}</span> 话题
+        </h1>
+        
+        <p class="text-xl text-gray-600">
+          找到了 <strong>{posts.length}</strong> 篇相关文章
+        </p>
+      </header>
+
+      <!-- 文章列表 -->
+      <div class="space-y-8">
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <article class="bg-white border-3 border-black rounded-2xl shadow-hard hover:shadow-hard-lg transition-all duration-200 hover:-translate-y-1">
+              <div class="p-8 md:p-10">
+                
+                <!-- 标签和日期 -->
+                <div class="flex flex-wrap gap-2 items-center mb-6">
+                  {post.data.tags.map((postTag) => (
+                    <a href={`/tags/${postTag.toLowerCase().replace(' ', '-')}`} 
+                       class={`${getTagColor(postTag)} border-2 border-black px-3 py-1 rounded text-sm font-bold uppercase hover:brightness-110 transform hover:-rotate-1 transition-all ${postTag === tag ? 'ring-2 ring-offset-2 ring-black' : ''}`}>
+                      {postTag}
+                    </a>
+                  ))}
+                  <span class="text-sm font-bold text-gray-400 ml-auto">📅 {post.data.date}</span>
+                  {post.data.featured && (
+                    <span class="bg-usagi text-black px-2 py-1 rounded text-sm font-bold">⭐ Featured</span>
+                  )}
+                </div>
+
+                <!-- 文章标题和描述 -->
+                <div class="mb-6">
+                  <h2 class="font-display text-3xl md:text-4xl leading-tight mb-4 text-text-ink hover:text-accent-coral transition-colors">
+                    <a href={`/posts/${post.slug}`} class="block">{post.data.title}</a>
+                  </h2>
+                  
+                  <p class="text-lg text-gray-700 leading-relaxed">
+                    {post.data.description}
+                  </p>
+                </div>
+
+                <!-- 阅读按钮 -->
+                <div class="flex justify-between items-center pt-6 border-t-2 border-dashed border-gray-200">
+                  <div class="text-sm text-gray-500">
+                    点击阅读完整文章
+                  </div>
+                  <a href={`/posts/${post.slug}`} 
+                     class="group relative inline-block">
+                    <span class="absolute inset-0 bg-black translate-x-1 translate-y-1 rounded-lg"></span>
+                    <span class="relative block bg-accent-coral border-2 border-black px-6 py-2 text-lg font-black uppercase rounded-lg transform transition-transform group-hover:-translate-y-1 group-active:translate-y-0">
+                      阅读文章 →
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))
+        ) : (
+          <div class="text-center py-20">
+            <div class="bg-white border-3 border-dashed border-black rounded-2xl p-12">
+              <div class="text-6xl mb-4">🐰</div>
+              <h3 class="font-display text-2xl mb-4">还没有相关文章...</h3>
+              <p class="text-gray-600 mb-6">这个标签下暂时还没有内容，请稍后再来看看！</p>
+              <a href="/" class="inline-block bg-usagi border-2 border-black px-6 py-2 font-bold rounded hover:scale-105 transition-transform">
+                浏览所有文章
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- 相关标签推荐 -->
+      {posts.length > 0 && (
+        <section class="mt-16">
+          <div class="bg-white border-3 border-black rounded-2xl p-8 shadow-hard">
+            <h3 class="font-display text-2xl mb-6 text-center">🏷️ 相关标签</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+              {[...new Set(posts.flatMap(post => post.data.tags))].filter(relatedTag => relatedTag !== tag).map((relatedTag) => (
+                <a href={`/tags/${relatedTag.toLowerCase().replace(' ', '-')}`} 
+                   class={`${getTagColor(relatedTag)} border-2 border-black px-4 py-2 rounded font-bold hover:scale-110 hover:shadow-md transition-all transform hover:-rotate-1`}>
+                  {relatedTag}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+    </div>
+  </div>
+</Layout>
+
+<style>
+  /* 自定义样式 */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

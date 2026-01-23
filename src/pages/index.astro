@@ -1,180 +1,213 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Demo Content - Usagi's Chaotic Energy
-const posts = [
-  {
-    id: 1,
-    title: "YAA HA! I broke the CUDA drivers AGAIN!",
-    tag: "AI Grief",
-    summary: "*Screaming in binary* followed by a solution that shouldn't work but does. Somehow reinstalling PyTorch 47 times fixed it???",
-    color: "bg-accent-coral",
-    date: "2026-01-22",
-  },
-  {
-    id: 2,
-    title: "My thesis defense strategy: Just yell 'URA!'",
-    tag: "Monash Life",
-    summary: "A solid academic plan rooted in pure confidence. If you say it loud enough, the committee will believe your p-value is significant.",
-    color: "bg-usagi-yellow",
-    date: "2026-01-20",
-  },
-  {
-    id: 3,
-    title: "Collecting shiny data (Scraping)",
-    tag: "Coding",
-    summary: "The internet is just a giant pile of shiny things for my dataset. BeautifulSoup? More like BeautifulLOOT! 💎",
-    color: "bg-accent-mint",
-    date: "2026-01-18",
-  },
+// --- 配置数据 ---
+const tags = [
+  { name: "AI Grief", slug: "ai-grief", color: "bg-accent-coral", rotate: "-rotate-2" },
+  { name: "Monash Life", slug: "monash-life", color: "bg-usagi", rotate: "rotate-1" },
+  { name: "Coding", slug: "coding", color: "bg-accent-mint", rotate: "-rotate-3" },
+  { name: "Research", slug: "research", color: "bg-accent-ochre", rotate: "rotate-2" },
+  { name: "合集", slug: "合集", color: "bg-accent-blue", rotate: "rotate-1" },
+  { name: "Python", slug: "python", color: "bg-accent-mint", rotate: "-rotate-1" },
 ];
+
+// 获取所有文章
+const allPosts = await getCollection('posts');
+// 按日期排序（最新的在前面）
+const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+// 获取所有标签
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))];
+
+// 颜色映射
+const getTagColor = (tag: string) => {
+  const tagConfig = tags.find(t => t.name === tag || t.slug === tag.toLowerCase().replace(' ', '-'));
+  return tagConfig?.color || 'bg-gray-200';
+};
 ---
 
-<Layout title="USAGI'S HOUSE · Home">
-  <!-- HERO SECTION: Comic Panel with Usagi -->
-  <section class="relative overflow-hidden bg-gradient-to-b from-blue-300 via-blue-200 to-cream min-h-[60vh] border-b-3 border-black">
-    <!-- Background: CSS Art Clouds -->
-    <div class="absolute inset-0">
-      <!-- Cloud 1 (Left) -->
-      <div class="absolute top-12 left-8 md:left-16 w-24 md:w-32 h-12 md:h-16 bg-white border-3 border-black rounded-full animate-float"></div>
-      <div class="absolute top-12 left-16 md:left-24 w-16 md:w-20 h-8 md:h-12 bg-white border-3 border-black rounded-full"></div>
+<Layout title="Usagi's Digital Garden">
+  
+  <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 pointer-events-none">
+    <div class="max-w-7xl mx-auto flex justify-between items-start">
+      <div class="pointer-events-auto bg-white border-3 border-black px-4 py-2 shadow-hard rotate-[-2deg] hover:rotate-0 transition-transform cursor-default">
+        <span class="font-display text-xl">🐰 USAGI.LOG</span>
+      </div>
       
-      <!-- Cloud 2 (Right) -->
-      <div class="absolute top-20 right-8 md:right-16 w-28 md:w-40 h-14 md:h-20 bg-white border-3 border-black rounded-full animate-float-delayed"></div>
-      <div class="absolute top-20 right-16 md:right-28 w-18 md:w-24 h-10 md:h-14 bg-white border-3 border-black rounded-full"></div>
-      
-      <!-- Sun Burst (Top Right) -->
-      <div class="absolute top-8 right-8 md:top-12 md:right-12">
-        <div class="w-16 md:w-24 h-16 md:h-24 bg-usagi-yellow border-3 border-black rounded-full shadow-hard"></div>
-        <!-- Sun rays -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-40">
-          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 -translate-y-full"></div>
-          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 translate-y-0 rotate-45"></div>
-          <div class="absolute top-1/2 left-1/2 w-10 h-2 bg-usagi-yellow translate-x-0 -translate-y-1/2"></div>
-          <div class="absolute top-1/2 left-1/2 w-2 h-10 bg-usagi-yellow -translate-x-1/2 translate-y-0 -rotate-45"></div>
-        </div>
+      <div class="pointer-events-auto flex gap-3">
+        <a href="/collections" class="bg-accent-blue text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
+          📚 合集
+        </a>
+        <a href="https://github.com/pangxianyuy" target="_blank" class="bg-black text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
+          GitHub
+        </a>
+        <button class="bg-accent-coral border-3 border-black w-12 h-12 flex items-center justify-center font-bold shadow-hard rounded-full hover:scale-110 active:scale-95 transition-all">
+          ?
+        </button>
       </div>
     </div>
+  </nav>
 
-    <!-- CHARACTER LAYER: USAGI IMAGES (CRITICAL!) -->
-    <div class="absolute inset-0 pointer-events-none">
-      <!-- Usagi #1: Main Character (Yelling/Excited) -->
-      <!-- IMPORTANT: Replace placeholder with actual Usagi image -->
-      <div class="absolute bottom-12 right-8 md:right-20 w-32 md:w-48 h-32 md:h-48 bg-white border-4 border-black rounded-3xl shadow-hard-xl animate-wiggle-fast overflow-hidden">
-        <div class="w-full h-full flex items-center justify-center">
-          <div class="text-center">
-            <div class="text-6xl mb-2">🐰</div>
-            <div class="text-xs font-bold px-2">YAA HA!</div>
+  <header class="relative min-h-[70vh] flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
+    
+    <div class="absolute top-20 left-10 text-6xl opacity-20 rotate-12 select-none">🥕</div>
+    <div class="absolute bottom-20 right-10 text-8xl opacity-20 -rotate-12 select-none">✨</div>
+
+    <div class="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+      
+      <div class="md:col-span-7 text-center md:text-left">
+        <div class="inline-block bg-accent-mint border-2 border-black px-3 py-1 font-mono text-xs font-bold mb-4 shadow-hard-sm">
+          STATUS: VIBING
+        </div>
+        <h1 class="font-display text-6xl md:text-8xl leading-[0.9] text-text-ink mb-6 drop-shadow-[4px_4px_0px_#FFF]">
+          CHAOS <br/> <span class="text-accent-coral">GARDEN</span>
+        </h1>
+        <p class="font-sans text-xl bg-white/60 backdrop-blur-sm border-3 border-black p-6 rounded-2xl shadow-hard max-w-lg transform -rotate-1 hover:rotate-0 transition-transform">
+          <b>Hi, I'm Usagi!</b> A Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
+        </p>
+        
+        <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
+          <a href="#notes" class="group relative inline-block">
+            <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
+            <span class="relative block bg-usagi border-3 border-black px-8 py-3 text-lg font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
+              Read Notes
+            </span>
+          </a>
+          <button class="group relative inline-block">
+            <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
+            <span class="relative block bg-white border-3 border-black px-8 py-3 text-lg font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
+              About Me
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="md:col-span-5 flex justify-center relative">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-accent-ochre/80 rotate-2 z-20 backdrop-blur-[1px] shadow-sm"></div>
+        
+        <div class="bg-white p-4 pb-12 border-2 border-gray-200 shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 w-72 md:w-80 group cursor-pointer">
+          <div class="border-3 border-black aspect-square overflow-hidden bg-gray-100 relative">
+             <img src="/images/usagi-face.png" alt="Usagi Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+             
+             <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="text-4xl animate-bounce">🐰</span>
+             </div>
+          </div>
+          <div class="mt-4 font-handwriting text-center text-gray-500 font-bold text-xl group-hover:text-accent-coral transition-colors">
+            Monash, 2026
           </div>
         </div>
-      </div>
 
-      <!-- Usagi #2: Peeking from behind cloud -->
-      <div class="hidden md:block absolute top-20 left-1/3 w-24 h-24 bg-white border-4 border-black rounded-full shadow-hard animate-bounce-wild overflow-hidden">
-        <div class="w-full h-full flex items-center justify-center">
-          <div class="text-4xl">🐰</div>
-        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-usagi rounded-full -z-10 border-3 border-black"></div>
       </div>
     </div>
+  </header>
 
-    <!-- TITLE OVERLAY -->
-    <div class="relative z-10 flex items-center justify-center min-h-[60vh] px-4">
-      <div class="text-center">
-        <!-- Main Title -->
-        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl text-white mb-6" style="text-shadow: 3px 3px 0px #1A1A1A, -1px -1px 0px #1A1A1A;">
-          USAGI'S HOUSE
-        </h1>
-        
-        <!-- Subtitle Tag -->
-        <div class="inline-block bg-usagi-yellow border-3 border-black px-6 py-3 shadow-hard transform -rotate-2">
-          <p class="font-bold text-sm md:text-base uppercase tracking-wide">
-            🔥 AI Research · Chaos Logs · Monash Student 🔥
-          </p>
+  <section id="notes" class="py-20 px-4 relative z-20">
+    <div class="max-w-6xl mx-auto">
+      
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <div class="bg-black text-white px-4 py-2 font-display text-lg border-3 border-white rotate-[-2deg] shadow-md">
+          SELECT TAG:
         </div>
-
-        <!-- Quick Nav Buttons -->
-        <div class="flex flex-wrap gap-3 mt-8 justify-center">
-          <a href="#notes" class="bg-accent-coral border-3 border-black px-5 py-2 font-bold uppercase text-sm shadow-hard card-pop inline-block text-white">
-            📝 Read Notes
+        {tags.map((tag) => (
+          <a 
+            href={`/tags/${tag.slug}`} 
+            class={`${tag.color} ${tag.rotate} border-3 border-black px-6 py-2 font-bold text-black shadow-hard hover:scale-110 hover:shadow-hard-lg hover:z-10 transition-all cursor-pointer block active:scale-95`}
+          >
+            {tag.name}
           </a>
-          <a href="/about" class="bg-white border-3 border-black px-5 py-2 font-bold uppercase text-sm shadow-hard card-pop inline-block">
-            🐰 About Usagi
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTENT GRID: Trading Card Style -->
-  <section id="notes" class="py-16 md:py-24 bg-cream">
-    <div class="max-w-6xl mx-auto px-4">
-      <!-- Section Header -->
-      <div class="mb-12">
-        <div class="inline-block bg-accent-mint border-3 border-black px-6 py-2 shadow-hard mb-4">
-          <h2 class="font-display text-3xl md:text-5xl text-white">
-            RECENT CHAOS
-          </h2>
-        </div>
-        <p class="text-lg md:text-xl text-text-ink/70 max-w-2xl">
-          A collection of unhinged thoughts, coding disasters, and questionable academic decisions.
-        </p>
-      </div>
-
-      <!-- Masonry Grid of Trading Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <article class={`${post.color} border-3 border-black shadow-hard card-pop p-6 cursor-pointer group`}>
-            <!-- Tag Label -->
-            <div class="inline-block bg-black border-2 border-black px-3 py-1 mb-4">
-              <span class="text-white text-xs font-bold uppercase tracking-wider">
-                {post.tag}
-              </span>
-            </div>
-
-            <!-- Title -->
-            <h3 class="font-display text-2xl md:text-3xl text-text-ink mb-3 leading-tight group-hover:underline">
-              {post.title}
-            </h3>
-
-            <!-- Summary -->
-            <p class="text-sm md:text-base text-text-ink/80 leading-relaxed mb-4">
-              {post.summary}
-            </p>
-
-            <!-- Date & Arrow -->
-            <div class="flex items-center justify-between pt-4 border-t-2 border-black/20">
-              <time class="text-xs font-medium text-text-ink/60 uppercase" datetime={post.date}>
-                {new Date(post.date).toLocaleDateString('en-US', { 
-                  month: 'short', 
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-              </time>
-              <span class="text-black font-black text-xl group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </div>
-          </article>
         ))}
       </div>
 
-      <!-- View All Button -->
-      <div class="text-center mt-12">
-        <a href="/notes" class="inline-block bg-usagi-yellow border-3 border-black px-8 py-4 font-black text-lg uppercase shadow-hard-lg card-pop">
-          View All Chaos Logs →
-        </a>
+      <!-- 特色文章 -->
+      <div class="mb-12">
+        <h2 class="font-display text-3xl mb-6 text-center">
+          ✨ <span class="text-accent-coral">Featured Posts</span>
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {posts.filter(post => post.data.featured).slice(0, 2).map((post) => (
+            <article class="group relative h-full">
+              <div class="h-full bg-gradient-to-br from-white to-cream border-3 border-black rounded-xl p-8 shadow-hard transition-all duration-200 group-hover:-translate-y-2 group-hover:shadow-hard-lg flex flex-col">
+                
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.map((tag) => (
+                    <a href={`/tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110 transform hover:-rotate-1 transition-all`}>
+                      {tag}
+                    </a>
+                  ))}
+                  <span class="text-xs font-bold text-gray-400 self-center ml-auto">{post.data.date}</span>
+                </div>
+
+                <h3 class="font-display text-2xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
+                  <a href={`/posts/${post.slug}`} class="block">{post.data.title}</a>
+                </h3>
+
+                <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed">
+                  {post.data.description}
+                </p>
+
+                <div class="pt-4 border-t-2 border-dashed border-gray-200 flex justify-between items-center">
+                  <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">⭐ FEATURED</span>
+                  <a href={`/posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors">➜</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
+
+      <!-- 所有文章 -->
+      <div class="mb-12">
+        <h2 class="font-display text-3xl mb-6 text-center">
+          📚 <span class="text-accent-coral">All Posts</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <article class="group relative h-full">
+              <div class="h-full bg-white border-3 border-black rounded-xl p-6 shadow-hard transition-all duration-200 group-hover:-translate-y-2 group-hover:shadow-hard-lg flex flex-col">
+                
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <a href={`/tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110`}>
+                      {tag}
+                    </a>
+                  ))}
+                  {post.data.tags.length > 2 && (
+                    <span class="bg-gray-200 border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase">+{post.data.tags.length - 2}</span>
+                  )}
+                  <span class="text-xs font-bold text-gray-400 self-center ml-auto">{post.data.date}</span>
+                </div>
+
+                <h3 class="font-display text-xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
+                  <a href={`/posts/${post.slug}`} class="block">{post.data.title}</a>
+                </h3>
+
+                <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
+                  {post.data.description}
+                </p>
+
+                <div class="pt-4 border-t-2 border-dashed border-gray-200 flex justify-between items-center">
+                  {post.data.featured && (
+                    <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">✨</span>
+                  )}
+                  <a href={`/posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors ml-auto">➜</a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
     </div>
   </section>
-
-  <!-- FLOATING ACTION BUTTON (Geometric Star) -->
-  <div class="fixed bottom-8 right-8 z-50">
-    <button 
-      class="w-16 h-16 bg-accent-coral border-3 border-black shadow-hard-lg animate-bounce-wild"
-      style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
-      aria-label="Quick Actions"
-    >
-      <span class="sr-only">Quick Actions</span>
-    </button>
-  </div>
 </Layout>
+
+<style>
+  /* 简单的手写字体模拟 */
+  .font-handwriting {
+    font-family: 'Space Grotesk', cursive; /* 实际项目中可以引入 'Indie Flower' */
+    transform: rotate(-2deg);
+  }
+</style>

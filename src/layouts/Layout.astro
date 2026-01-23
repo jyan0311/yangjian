@@ -7,8 +7,8 @@ interface Props {
 }
 
 const { 
-  title = "USAGI'S HOUSE · Chaotic Digital Garden",
-  description = "A retro comic-style blog by a Monash AI student with pure Usagi energy"
+  title = "USAGI'S GARDEN",
+  description = "A chaotic digital garden by a Monash AI student."
 } = Astro.props;
 ---
 
@@ -19,69 +19,43 @@ const {
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <!-- Google Fonts: Retro Display + Geometric Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
 
-    <!-- Custom Global Styles -->
     <style is:global>
-      /* Ensure body takes full height for sticky footer */
-      html, body {
-        height: 100%;
-      }
-
+      /* --- 核心：纸张纹理生成器 --- */
       body {
-        display: flex;
-        flex-direction: column;
-        background-color: #FDFBF7;
+        background-color: #FDFBF7; /* 米色底 */
         color: #1A1A1A;
       }
 
-      main {
-        flex: 1 0 auto;
+      /* 使用 CSS 伪元素生成噪点纹理，不依赖图片文件 */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.05; /* 调整透明度来控制纹理明显程度 */
+        z-index: -1;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
       }
 
-      footer {
-        flex-shrink: 0;
-      }
+      /* 滚动条美化 */
+      ::-webkit-scrollbar { width: 14px; }
+      ::-webkit-scrollbar-track { background: #FDFBF7; border-left: 3px solid #000; }
+      ::-webkit-scrollbar-thumb { background: #FFE153; border: 3px solid #000; border-radius: 99px; }
+      ::-webkit-scrollbar-thumb:hover { background: #E76F51; }
 
-      /* Card hover effect */
-      .card-pop {
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-      }
-
-      .card-pop:hover {
-        transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0px 0px #1A1A1A;
-      }
-
-      /* Text selection styling */
-      ::selection {
-        background-color: #F4D03F;
-        color: #1A1A1A;
-      }
+      ::selection { background-color: #E76F51; color: white; }
     </style>
   </head>
-  <body class="font-sans antialiased">
-    <!-- Main Content Area -->
-    <main class="min-h-screen">
-      <slot />
-    </main>
-
-    <!-- Sticky Footer -->
-    <footer class="bg-usagi-yellow border-t-3 border-black py-6 mt-12">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-        <p class="text-text-ink font-bold text-sm md:text-base">
-          Made with 🐰 chaos energy by a Monash AI Student · 2026
-        </p>
-      </div>
-    </footer>
+  <body class="font-sans antialiased flex flex-col min-h-screen">
+    <slot />
   </body>
 </html>
