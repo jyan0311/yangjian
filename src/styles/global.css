@@ -175,7 +175,7 @@
 
 /* --- Citation rail (Thinking Machines style) --- */
 .article-prose sup {
-  font-size: 0.72em;
+  font-size: 0.66em;
   line-height: 1;
 }
 
@@ -195,6 +195,7 @@
   border-top: 2px dashed #d1d5db;
   margin-top: 2.5rem;
   padding-top: 1.25rem;
+  font-size: 0.92rem;
 }
 
 .article-prose .footnotes hr {
@@ -228,28 +229,53 @@
 
 @media (min-width: 1280px) {
   .article-prose {
+    position: relative;
+    padding-right: 14rem;
+  }
+
+  .article-prose .footnotes {
+    display: none;
+  }
+
+  .article-footnote-rail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12.5rem;
+    pointer-events: none;
+  }
+
+  .article-sidenote {
+    position: absolute;
+    left: 0;
+    width: 100%;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 19rem;
-    column-gap: 2.25rem;
+    grid-template-columns: 1.1rem 1fr;
+    column-gap: 0.45rem;
     align-items: start;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: #4b5563;
+    pointer-events: auto;
   }
 
-  .article-prose > :not(.footnotes) {
-    grid-column: 1;
+  .article-sidenote-number {
+    font-weight: 800;
+    color: #1f2937;
+    font-family: "M PLUS Rounded 1c", "Noto Sans SC", sans-serif;
   }
 
-  .article-prose > .footnotes {
-    grid-column: 2;
-    grid-row: 1;
-    position: sticky;
-    top: 5.5rem;
-    max-height: calc(100vh - 7rem);
-    overflow: auto;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: 0;
-    padding-left: 0.25rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
+  .article-sidenote-content a {
+    color: #3f6271 !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 2px;
+  }
+
+  .article-sidenote-content p {
+    margin: 0;
+  }
+
+  .article-sidenote .footnote-backref {
+    display: none;
   }
 }

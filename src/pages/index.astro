@@ -58,26 +58,26 @@ const getTagColor = (tag: string) => {
     <div class="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
       
       <div class="md:col-span-7 text-center md:text-left">
-        <div class="inline-block bg-accent-mint border-2 border-black px-3 py-1 font-mono text-xs font-bold mb-4 shadow-hard-sm">
+        <div class="inline-block bg-accent-mint border-2 border-black px-3 py-1 font-mono text-[10px] font-bold mb-4 shadow-hard-sm">
           STATUS: CODING
         </div>
-        <h1 class="font-display text-6xl md:text-8xl leading-[0.9] text-text-ink mb-6 drop-shadow-[4px_4px_0px_#FFF]">
-          杨 <br/> <span class="text-accent-coral">几安</span>
+        <h1 class="font-display text-5xl md:text-7xl leading-[0.92] text-text-ink mb-6 drop-shadow-[4px_4px_0px_#FFF]">
+          杨几安 <br/> <span class="text-accent-coral">JiAn Yang</span>
         </h1>
-        <p class="font-sans text-xl bg-white/60 backdrop-blur-sm border-3 border-black p-6 rounded-2xl shadow-hard max-w-lg transform -rotate-1 hover:rotate-0 transition-transform">
-          <b>Hi, I'm jianyang!</b> A Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
+        <p class="font-sans text-base md:text-lg bg-white/60 backdrop-blur-sm border-3 border-black p-6 rounded-2xl shadow-hard max-w-lg transform -rotate-1 hover:rotate-0 transition-transform">
+          <b>Hi, </b>I'm  a Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
         </p>
         
         <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
           <a href="#notes" class="group relative inline-block">
             <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
-            <span class="relative block bg-usagi border-3 border-black px-8 py-3 text-lg font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
+            <span class="relative block bg-usagi border-3 border-black px-7 py-2.5 text-base font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
               Read Notes
             </span>
           </a>
           <button class="group relative inline-block">
             <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
-            <span class="relative block bg-white border-3 border-black px-8 py-3 text-lg font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
+            <span class="relative block bg-white border-3 border-black px-7 py-2.5 text-base font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
               About Me
             </span>
           </button>
@@ -90,12 +90,8 @@ const getTagColor = (tag: string) => {
         <div class="bg-white p-4 pb-12 border-2 border-gray-200 shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 w-72 md:w-80 group cursor-pointer">
           <div class="border-3 border-black aspect-square overflow-hidden bg-gray-100 relative">
              <img src={`${baseUrl}images/usagi-face.png`} alt="Usagi Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-             
-             <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                <span class="text-4xl animate-bounce">🐰</span>
-             </div>
           </div>
-          <div class="mt-4 font-handwriting text-center text-gray-500 font-bold text-xl group-hover:text-accent-coral transition-colors">
+          <div class="mt-4 font-handwriting text-center text-gray-500 font-bold text-base md:text-lg group-hover:text-accent-coral transition-colors">
             I like Usagi!!!
           </div>
         </div>

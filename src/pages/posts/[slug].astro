@@ -172,6 +172,82 @@ const stickers = Array.from({ length: 12 }).map(() => ({
     const bar = document.getElementById('progress-bar');
     if (bar) bar.style.width = scrolled + "%";
   });
+
+  function getFootnoteNumber(noteId: string) {
+    const match = noteId.match(/(\d+)/);
+    return match ? match[1] : noteId;
+  }
+
+  function buildSidenotes() {
+    const prose = document.querySelector('.article-prose');
+    if (!prose) return;
+
+    const oldRail = prose.querySelector('.article-footnote-rail');
+    if (oldRail) oldRail.remove();
+
+    const isDesktop = window.matchMedia('(min-width: 1280px)').matches;
+    if (!isDesktop) return;
+
+    const footnotes = prose.querySelector('.footnotes');
+    if (!footnotes) return;
+
+    const noteMap = new Map();
+    footnotes.querySelectorAll('ol > li[id]').forEach((li) => {
+      noteMap.set(li.id, li);
+    });
+
+    const refs = prose.querySelectorAll('sup a[href^="#fn"]');
+    if (!refs.length) return;
+
+    const rail = document.createElement('aside');
+    rail.className = 'article-footnote-rail';
+    prose.appendChild(rail);
+
+    let lastBottom = -8;
+    const proseRect = prose.getBoundingClientRect();
+
+    refs.forEach((ref) => {
+      const href = ref.getAttribute('href');
+      if (!href) return;
+
+      const noteId = decodeURIComponent(href.replace(/^#/, ''));
+      const sourceNote = noteMap.get(noteId);
+      if (!sourceNote) return;
+
+      const sidenote = document.createElement('div');
+      sidenote.className = 'article-sidenote';
+
+      const number = document.createElement('span');
+      number.className = 'article-sidenote-number';
+      number.textContent = `${getFootnoteNumber(noteId)}.`;
+
+      const content = document.createElement('div');
+      content.className = 'article-sidenote-content';
+      content.innerHTML = sourceNote.innerHTML;
+      content.querySelectorAll('.footnote-backref').forEach((backref) => backref.remove());
+
+      sidenote.appendChild(number);
+      sidenote.appendChild(content);
+      rail.appendChild(sidenote);
+
+      const refRect = ref.getBoundingClientRect();
+      const targetTop = refRect.top - proseRect.top - 4;
+      const top = Math.max(targetTop, lastBottom + 12);
+      sidenote.style.top = `${top}px`;
+      lastBottom = top + sidenote.offsetHeight;
+    });
+  }
+
+  const scheduleBuildSidenotes = (() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    return () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(buildSidenotes, 50);
+    };
+  })();
+
+  window.addEventListener('load', buildSidenotes);
+  window.addEventListener('resize', scheduleBuildSidenotes);
 </script>
 
 <style>
