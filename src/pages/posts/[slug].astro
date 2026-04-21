@@ -73,7 +73,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       ))}
     </div>
 
-    <div class="relative z-10 max-w-[1400px] mx-auto px-4 py-12">
+    <div class="relative z-10 max-w-[1600px] mx-auto px-5 xl:px-8 py-12">
       
       <nav class="mb-12 flex justify-between items-center">
         <a href={baseUrl} class="bg-white border-2 border-black px-4 py-2 rounded-full font-bold shadow-hard hover:scale-105 transition-transform flex items-center gap-2">
@@ -110,7 +110,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       </aside>
 
       <!-- 主内容区域，在大屏幕上留出左侧空间给导航 -->
-      <div class="lg:ml-72 xl:ml-80">
+      <div class="lg:ml-64 xl:ml-72">
         <main>
           
           <header class="mb-10 text-center md:text-left">
@@ -137,7 +137,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
             ></div>
           </header>
 
-          <div class="bg-white border-3 border-black rounded-3xl shadow-hard-xl p-8 md:p-16">
+          <div class="bg-white border-3 border-black rounded-3xl shadow-hard-xl p-6 md:p-10 xl:p-12">
             <div class="prose prose-xl prose-slate max-w-none article-prose
               prose-headings:font-display prose-headings:text-text-ink prose-headings:scroll-mt-20
               prose-a:text-accent-coral prose-a:no-underline hover:prose-a:underline 
@@ -181,6 +181,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
   function buildSidenotes() {
     const prose = document.querySelector('.article-prose');
     if (!prose) return;
+    prose.classList.remove('has-sidenotes');
 
     const oldRail = prose.querySelector('.article-footnote-rail');
     if (oldRail) oldRail.remove();
@@ -196,7 +197,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       noteMap.set(li.id, li);
     });
 
-    const refs = prose.querySelectorAll('sup a[href^="#fn"]');
+    const refs = prose.querySelectorAll('sup a[data-footnote-ref], sup a[href^="#fn"], sup a[href^="#user-content-fn"]');
     if (!refs.length) return;
 
     const rail = document.createElement('aside');
@@ -204,6 +205,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
     prose.appendChild(rail);
 
     let lastBottom = -8;
+    let noteCount = 0;
     const proseRect = prose.getBoundingClientRect();
 
     refs.forEach((ref) => {
@@ -224,7 +226,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       const content = document.createElement('div');
       content.className = 'article-sidenote-content';
       content.innerHTML = sourceNote.innerHTML;
-      content.querySelectorAll('.footnote-backref').forEach((backref) => backref.remove());
+      content.querySelectorAll('.footnote-backref, .data-footnote-backref, [data-footnote-backref]').forEach((backref) => backref.remove());
 
       sidenote.appendChild(number);
       sidenote.appendChild(content);
@@ -235,7 +237,12 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       const top = Math.max(targetTop, lastBottom + 12);
       sidenote.style.top = `${top}px`;
       lastBottom = top + sidenote.offsetHeight;
+      noteCount += 1;
     });
+
+    if (noteCount > 0) {
+      prose.classList.add('has-sidenotes');
+    }
   }
 
   const scheduleBuildSidenotes = (() => {

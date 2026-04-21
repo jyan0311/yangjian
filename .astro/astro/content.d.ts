@@ -169,6 +169,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"资料_LLM领域的全景视图.md": {
+	id: "资料_LLM领域的全景视图.md";
+  slug: "资料_llm领域的全景视图";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 
 	};

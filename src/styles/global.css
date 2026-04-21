@@ -227,13 +227,32 @@
   color: #9ca3af !important;
 }
 
+.article-prose {
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+}
+
+.article-prose p,
+.article-prose li {
+  font-size: 1.06rem;
+  line-height: 1.9;
+  color: #1f2937;
+  letter-spacing: 0.01em;
+}
+
+.article-prose h1,
+.article-prose h2,
+.article-prose h3 {
+  margin-top: 1.75em;
+  margin-bottom: 0.75em;
+}
+
 @media (min-width: 1280px) {
   .article-prose {
     position: relative;
-    padding-right: 14rem;
+    padding-right: 12.5rem;
   }
 
-  .article-prose .footnotes {
+  .article-prose.has-sidenotes .footnotes {
     display: none;
   }
 
@@ -241,7 +260,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 12.5rem;
+    width: 11rem;
     pointer-events: none;
   }
 
