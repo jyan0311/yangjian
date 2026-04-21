@@ -175,7 +175,7 @@
 
 /* --- Citation rail (Thinking Machines style) --- */
 .article-prose sup {
-  font-size: 0.66em;
+  font-size: 0.56em;
   line-height: 1;
 }
 
@@ -247,9 +247,8 @@
 }
 
 @media (min-width: 1280px) {
-  .article-prose {
+  .post-main-shell {
     position: relative;
-    padding-right: 12.5rem;
   }
 
   .article-prose.has-sidenotes .footnotes {
@@ -259,8 +258,8 @@
   .article-footnote-rail {
     position: absolute;
     top: 0;
-    right: 0;
-    width: 11rem;
+    right: -10.75rem;
+    width: 9.25rem;
     pointer-events: none;
   }
 
@@ -272,8 +271,8 @@
     grid-template-columns: 1.1rem 1fr;
     column-gap: 0.45rem;
     align-items: start;
-    font-size: 0.8rem;
-    line-height: 1.35;
+    font-size: 0.7rem;
+    line-height: 1.28;
     color: #4b5563;
     pointer-events: auto;
   }

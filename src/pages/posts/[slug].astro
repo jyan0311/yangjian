@@ -110,7 +110,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       </aside>
 
       <!-- 主内容区域，在大屏幕上留出左侧空间给导航 -->
-      <div class="lg:ml-64 xl:ml-72">
+      <div class="post-main-shell lg:ml-64 xl:ml-72">
         <main>
           
           <header class="mb-10 text-center md:text-left">
@@ -183,7 +183,10 @@ const stickers = Array.from({ length: 12 }).map(() => ({
     if (!prose) return;
     prose.classList.remove('has-sidenotes');
 
-    const oldRail = prose.querySelector('.article-footnote-rail');
+    const shell = document.querySelector('.post-main-shell');
+    if (!shell) return;
+
+    const oldRail = shell.querySelector('.article-footnote-rail');
     if (oldRail) oldRail.remove();
 
     const isDesktop = window.matchMedia('(min-width: 1280px)').matches;
@@ -202,11 +205,11 @@ const stickers = Array.from({ length: 12 }).map(() => ({
 
     const rail = document.createElement('aside');
     rail.className = 'article-footnote-rail';
-    prose.appendChild(rail);
+    shell.appendChild(rail);
 
     let lastBottom = -8;
     let noteCount = 0;
-    const proseRect = prose.getBoundingClientRect();
+    const shellRect = shell.getBoundingClientRect();
 
     refs.forEach((ref) => {
       const href = ref.getAttribute('href');
@@ -233,7 +236,7 @@ const stickers = Array.from({ length: 12 }).map(() => ({
       rail.appendChild(sidenote);
 
       const refRect = ref.getBoundingClientRect();
-      const targetTop = refRect.top - proseRect.top - 4;
+      const targetTop = refRect.top - shellRect.top - 4;
       const top = Math.max(targetTop, lastBottom + 12);
       sidenote.style.top = `${top}px`;
       lastBottom = top + sidenote.offsetHeight;
