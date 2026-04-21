@@ -155,6 +155,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"论文_EasyDistill.md": {
+	id: "论文_EasyDistill.md";
+  slug: "论文_easydistill";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"论文_微软使用GAN的思路做黑盒蒸馏.md": {
+	id: "论文_微软使用GAN的思路做黑盒蒸馏.md";
+  slug: "论文_微软使用gan的思路做黑盒蒸馏";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 };
 
 	};

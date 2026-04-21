@@ -172,3 +172,84 @@
   border: none;
   color: #fff !important;
 }
+
+/* --- Citation rail (Thinking Machines style) --- */
+.article-prose sup {
+  font-size: 0.72em;
+  line-height: 1;
+}
+
+.article-prose sup a {
+  font-family: "M PLUS Rounded 1c", "Noto Sans SC", sans-serif;
+  font-weight: 700;
+  text-decoration: none !important;
+  color: #4a5568 !important;
+  margin-left: 2px;
+}
+
+.article-prose sup a:hover {
+  color: #E76F51 !important;
+}
+
+.article-prose .footnotes {
+  border-top: 2px dashed #d1d5db;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+}
+
+.article-prose .footnotes hr {
+  display: none;
+}
+
+.article-prose .footnotes p {
+  margin: 0;
+}
+
+.article-prose .footnotes ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.article-prose .footnotes li {
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.article-prose .footnotes li::marker {
+  color: #111827;
+  font-weight: 700;
+}
+
+.article-prose .footnote-backref {
+  text-decoration: none !important;
+  margin-left: 0.35rem;
+  color: #9ca3af !important;
+}
+
+@media (min-width: 1280px) {
+  .article-prose {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 19rem;
+    column-gap: 2.25rem;
+    align-items: start;
+  }
+
+  .article-prose > :not(.footnotes) {
+    grid-column: 1;
+  }
+
+  .article-prose > .footnotes {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+    padding-left: 0.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
