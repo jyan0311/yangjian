@@ -1,3 +1,12 @@
+---
+title: "ORPO Distill 实验笔记"
+description: "关于将 ORPO（Odds Ratio Preference Optimization）用于蒸馏与偏好对齐的实验要点与数据格式说明。"
+date: "2026-06-11"
+tags: ["LLM", "ORPO", "distillation"]
+featured: false
+draft: false
+---
+
 ### 一、 实验核心要素
 
 要复现这篇论文，你需要准备以下核心组件：

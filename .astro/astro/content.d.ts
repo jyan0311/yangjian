@@ -141,9 +141,44 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
+"ORPO_Distill.md": {
+	id: "ORPO_Distill.md";
+  slug: "orpo_distill";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"SPIN算法的完整流程.md": {
+	id: "SPIN算法的完整流程.md";
+  slug: "spin算法的完整流程";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "llm-rlhf-active-learning.md": {
 	id: "llm-rlhf-active-learning.md";
   slug: "llm-rlhf-active-learning";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/2026-06-11-multi-agent-intro.md": {
+	id: "multi-agent/2026-06-11-multi-agent-intro.md";
+  slug: "multi-agent/2026-06-11-multi-agent-intro";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/agent的学习.md": {
+	id: "multi-agent/agent的学习.md";
+  slug: "multi-agent/agent的学习";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/multi_agent学习.md": {
+	id: "multi-agent/multi_agent学习.md";
+  slug: "multi-agent/multi_agent学习";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -155,9 +190,51 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"toy_experiment.md": {
+	id: "toy_experiment.md";
+  slug: "toy_experiment";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"不确定性衡量.md": {
+	id: "不确定性衡量.md";
+  slug: "不确定性衡量";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "论文_EasyDistill.md": {
 	id: "论文_EasyDistill.md";
   slug: "论文_easydistill";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"论文_balckdistll_DAIL.md": {
+	id: "论文_balckdistll_DAIL.md";
+  slug: "论文_balckdistll_dail";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"论文_onpolicydistillation.md": {
+	id: "论文_onpolicydistillation.md";
+  slug: "论文_onpolicydistillation";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"论文_什么是ORPO.md": {
+	id: "论文_什么是ORPO.md";
+  slug: "论文_什么是orpo";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"论文_使用MCTS模拟得到优质路径后进行ORPO.md": {
+	id: "论文_使用MCTS模拟得到优质路径后进行ORPO.md";
+  slug: "论文_使用mcts模拟得到优质路径后进行orpo";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

@@ -9,8 +9,8 @@ const baseUrl = base.endsWith('/') ? base : base + '/';
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
-    // 返回数组以支持嵌套子路径（catch-all 路由）
-    params: { slug: post.slug.split('/') },
+    // 使用字符串形式的 slug（支持包含斜杠的嵌套路径，例如 'multi-agent/xxx'）
+    params: { slug: post.slug },
     props: { post },
   }));
 }
