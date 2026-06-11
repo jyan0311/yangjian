@@ -9,7 +9,8 @@ const baseUrl = base.endsWith('/') ? base : base + '/';
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    // 返回数组以支持嵌套子路径（catch-all 路由）
+    params: { slug: post.slug.split('/') },
     props: { post },
   }));
 }
