@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { rehypeStripCodeBackticks } from './src/plugins/rehype-strip-code-backticks.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,6 +12,6 @@ export default defineConfig({
   integrations: [tailwind()],
   markdown: {
     remarkPlugins: [remarkGfm, remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [rehypeKatex, rehypeStripCodeBackticks],
   },
 });

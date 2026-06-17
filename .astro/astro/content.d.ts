@@ -190,6 +190,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"quant_alpha/lijian_MCTS_alpha.md": {
+	id: "quant_alpha/lijian_MCTS_alpha.md";
+  slug: "quant_alpha/lijian_mcts_alpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "toy_experiment.md": {
 	id: "toy_experiment.md";
   slug: "toy_experiment";
