@@ -1,3 +1,13 @@
+---
+title: "量化交易｜FactorEngine 论文学习笔记"
+description: "这篇论文提出了 **FactorEngine（FE）**，一个将因子表示为 **图灵完备的 Python 程序**，并通过 **宏-微协同进化（Macro-Micro Co-evolution）** 框架来持续优化因子的自动化挖掘系统。它将因子逻辑的语义探索（由 LLM 负责）与参数的具体数值调优（由贝叶斯搜索负责）**完全解耦**，同时引入了一个**多智能体知识引导模块**，将金融研究报告转化为可执行的初始种子因子。实验表明，FactorEngine 在预测稳定性（IC/ICIR）和组合收益（超额年化收益）上相比基线实现了显著提升（IC 提升 58%，超额收益提升 126%）。"
+date: "2026-06-17"
+tags: ["LLM", "Alpha", "Bayes"]
+featured: false
+draft: false
+---
+
+
 # 量化交易｜FactorEngine 论文学习笔记
 > **论文全称**：FactorEngine: A Program-level Knowledge-Infused Factor Mining Framework for Quantitative Investment  
 > **作者**：Qinhong Lin, Ruitao Feng, Yinglun Feng, Zhenxin Huang, Yukun Chen, Zhongliang Yang, Linna Zhou, Binjie Fei, Jiaqi Liu, Yu Li  
@@ -202,3 +212,112 @@ FactorEngine 的算法流程遵循一个**树结构的进化搜索（Tree-based 
 - **资源效率**：
   - **Token 与成本**：FE 在 200 轮迭代中的运行成本为 **12.0 美元**，略高于 AlphaAgent（11.6 美元），但远低于 RD-Agent（16.9 美元）。
   - **可执行性**：FE 生成的因子代码**可执行比率高达 99%**，且仅需 32% 的 API 调用用于调试（Debug），显著优于 AlphaAgent（51%）和 RD-Agent（68%）。这表明 FE 的代码生成质量极高，几乎一次性通过语法校验。
+
+
+## 九、它具体训练了什么
+
+**FactorEngine 的微观参数调优，是利用贝叶斯优化（Bayesian Optimization）训练一个不断更新的概率代理模型（Surrogate Model），来精准推测和寻优因子程序中“一组”具体数值参数（如窗口期、权重系数等）的最佳组合。该过程完全由本地高性能计算执行，与 LLM 的逻辑推理完全解耦。**
+
+
+#### 1. 底层算法：贝叶斯优化（Bayesian Optimization）
+
+微观参数调优的底层算法是 **贝叶斯优化**，论文明确其实现支持：
+- **TPE（Tree-structured Parzen Estimator）**
+- **高斯过程（Gaussian Process）**
+
+#### 2. 优化的目标函数
+
+对于给定的因子程序  $P$ 及其参数向量  $\theta \in \Theta$，优化目标是找到使因子评估分数  $f(P, \theta)$ 最大化的参数组合：
+
+$$
+\theta^* = \arg\max_{\theta \in \Theta} f(P, \theta)
+$$
+
+其中：
+-  $\theta$：因子程序中的可调参数向量（如 `[窗口期, 权重1, 权重2, 衰减系数]`）
+-  $f(P, \theta)$：评估函数，返回该因子在验证集上的 **Fitness Score（FS）**：
+  $$
+  FS = \frac{1}{4} \left( IC \times 10 + ICIR + RIC \times 10 + RICIR \right)
+  $$
+
+#### 3. 训练对象：概率代理模型（Surrogate Model）
+
+这里的“训练”特指**训练一个代理模型来近似黑盒目标函数  $f(P, \theta)$**。
+
+| 概念 | 解释 |
+| :--- | :--- |
+| **为什么需要代理模型？** | 每评估一组参数（即运行一次完整回测）涉及大量数据 I/O 和矩阵运算，成本极高。若暴力穷举（Grid Search / Random Search），计算量不可接受。 |
+| **训练数据从哪来？** | 从参数空间中随机采样若干组  $\theta$（如 5~10 组），送入回测引擎得到对应的 FS，构成初始训练集  $\{(\theta_i, y_i)\}_{i=1}^n$。 |
+| **如何训练？** | 用这些数据对拟合一个概率模型（如高斯过程 GP）。该模型能够输出：**(1)** 对任意新参数  $\theta$ 的 FS 预测均值  $\mu(\theta)$；**(2)** 该预测的不确定性（方差） $\sigma^2(\theta)$。 |
+| **训练的演进本质** | 随着迭代次数增加，采样点不断增多，代理模型的后验分布持续更新，其对目标函数  $f(P, \theta)$ 的近似越来越精确——这一过程即为“训练”的数学实质。 |
+
+#### 4. 如何决定下一步采样：期望提升（Expected Improvement, EI）
+
+代理模型训练完成后，通过最大化 **采集函数（Acquisition Function）** 来决定下一次该尝试哪组参数。论文采用 **期望提升（Expected Improvement, EI）**：
+
+$$
+EI(\theta) = \int_{-\infty}^{\infty} \max(y^* - y, 0) \cdot p(y|\theta) \, dy
+$$
+
+| 符号 | 含义 |
+| :--- | :--- |
+|  $y^*$ | 当前已观测到的最佳 FS 分数 |
+|  $y$ | 代理模型预测的 FS 分数（随机变量） |
+|  $p(y|\theta)$ | 代理模型给出的参数  $\theta$ 对应的 FS 概率分布 |
+
+**EI 的平衡机制**：
+- **利用（Exploitation）**：倾向于选择预测均值  $\mu(\theta)$ 高的区域（大概率有好结果）
+- **探索（Exploration）**：倾向于选择预测方差  $\sigma^2(\theta)$ 大的区域（不确定性高，可能有隐藏极值）
+
+EI 最大的那组  $\theta$，即为下一轮真实回测的候选参数。
+
+
+
+#### 5. 调优对象：一组参数，而非单个参数
+
+微观调优**不是**孤立地逐个调整单一参数，而是**联合优化一组参数的整体最优组合**。
+
+在 FactorEngine 的 Prompt 设计（附录 A.6）中，LLM 被要求明确定义需要调优的参数名称、类型和搜索范围。例如：
+
+```json
+{
+  "w_v": {"type": "float", "low": 0.3, "high": 0.9},
+  "N_r": {"type": "int", "low": 5, "high": 30}
+}
+```
+
+这代表贝叶斯优化会在**二维连续-离散混合空间**中，同时搜索：
+- `w_v`（权重系数）：在 0.3 到 0.9 之间连续变化
+- `N_r`（回看窗口）：在 5 到 30 之间取整数值
+
+#### 6. 为什么要联合优化？（多参数交互效应）
+
+贝叶斯优化的核心优势在于它能捕捉**参数间的交互效应（Interaction Effects）**：
+
+| 场景 | 孤立调参（错误） | 联合调参（正确） |
+| :--- | :--- | :--- |
+| 窗口期=5 时，最优权重可能是 0.3 | 固定窗口=10，只调权重 | 同时变化两个参数，发现 (窗口=20, 权重=0.7) 才是全局最优 |
+| 窗口期=30 时，最优权重可能升至 0.7 | 得到局部次优解 | 找到全局最优组合 |
+
+因此，微观调优是在高维空间中寻找**全局最优的  $\theta$ 向量**，而非多轮单变量扫描。
+
+
+```
+输入：因子程序 P，LLM 划定的参数范围 Θ = {θ₁, θ₂, ...}
+输出：最优参数组合 θ* 及对应的最优适应度 FS*
+
+初始化：
+  从 Θ 中随机采样 n 组 θ → 运行回测 → 获得 n 个 FS 值
+  → 构成初始训练集 D = {(θᵢ, FSᵢ)}
+
+循环（直到达到预算轮次）：
+  1. 用 D 训练/更新代理模型（GP 或 TPE）
+  2. 对 Θ 中的所有候选 θ，计算 EI(θ)
+  3. 选择 θ_new = argmax EI(θ)
+  4. 将 θ_new 送入回测引擎，获得 FS_new
+  5. 将 (θ_new, FS_new) 加入 D
+  6. 若 FS_new > FS*，更新 FS* = FS_new，θ* = θ_new
+
+返回：θ* 和 FS*
+```
+
