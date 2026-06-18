@@ -1,5 +1,5 @@
 ---
-title: "量化交易｜Navigating the Alpha Jungle 论文学习笔记"
+title: "量化交易｜TradingAgents 论文学习笔记"
 description: "这篇论文提出了 **TradingAgents**，一个**多智能体 LLM 交易框架**，通过模拟真实交易公司的组织架构（分析师团队、研究员团队、交易员、风险管理团队、基金经理），让不同角色的 LLM 代理各司其职、通过结构化沟通协作，最终做出更稳健的交易决策。实验表明，该框架在累积收益、夏普比率等指标上显著优于传统规则策略及其他 LLM 代理方法。"
 date: "2026-06-18"
 tags: ["Multi-Agent", "Trade" ]
