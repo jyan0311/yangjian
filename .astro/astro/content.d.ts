@@ -141,65 +141,156 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
-"AFAC比赛.md": {
-	id: "AFAC比赛.md";
-  slug: "afac比赛";
+"afac/baseline-framework/index.md": {
+	id: "afac/baseline-framework/index.md";
+  slug: "afac/baseline-framework";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"ORPO_Distill.md": {
-	id: "ORPO_Distill.md";
-  slug: "orpo_distill";
+"engineering/python-web-scraping/index.md": {
+	id: "engineering/python-web-scraping/index.md";
+  slug: "engineering/python-web-scraping";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"SPIN算法的完整流程.md": {
-	id: "SPIN算法的完整流程.md";
-  slug: "spin算法的完整流程";
+"experiments/alpha360-future-leakage/index.md": {
+	id: "experiments/alpha360-future-leakage/index.md";
+  slug: "experiments/alpha360-future-leakage";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"llm-rlhf-active-learning.md": {
-	id: "llm-rlhf-active-learning.md";
-  slug: "llm-rlhf-active-learning";
+"llm-research/dail-imitation-learning/index.md": {
+	id: "llm-research/dail-imitation-learning/index.md";
+  slug: "llm-research/dail-imitation-learning";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"multi-agent/TradeAgents.md": {
-	id: "multi-agent/TradeAgents.md";
-  slug: "multi-agent/tradeagents";
+"llm-research/easydistill/index.md": {
+	id: "llm-research/easydistill/index.md";
+  slug: "llm-research/easydistill";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"multi-agent/agent的学习.md": {
-	id: "multi-agent/agent的学习.md";
-  slug: "multi-agent/agent的学习";
+"llm-research/gad-black-box-distillation/index.md": {
+	id: "llm-research/gad-black-box-distillation/index.md";
+  slug: "llm-research/gad-black-box-distillation";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"multi-agent/multi_agent学习.md": {
-	id: "multi-agent/multi_agent学习.md";
-  slug: "multi-agent/multi_agent学习";
+"llm-research/llm-landscape/index.md": {
+	id: "llm-research/llm-landscape/index.md";
+  slug: "llm-research/llm-landscape";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"multi-agent/开源项目学习和整理.md": {
-	id: "multi-agent/开源项目学习和整理.md";
-  slug: "multi-agent/开源项目学习和整理";
+"llm-research/on-policy-distillation/index.md": {
+	id: "llm-research/on-policy-distillation/index.md";
+  slug: "llm-research/on-policy-distillation";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"python-web-scraping.md": {
-	id: "python-web-scraping.md";
-  slug: "python-web-scraping";
+"llm-research/orpo-distill/index.md": {
+	id: "llm-research/orpo-distill/index.md";
+  slug: "llm-research/orpo-distill";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/orpo-introduction/index.md": {
+	id: "llm-research/orpo-introduction/index.md";
+  slug: "llm-research/orpo-introduction";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/rlhf-active-learning/index.md": {
+	id: "llm-research/rlhf-active-learning/index.md";
+  slug: "llm-research/rlhf-active-learning";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/sipf-process-feedback/index.md": {
+	id: "llm-research/sipf-process-feedback/index.md";
+  slug: "llm-research/sipf-process-feedback";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/spin-online-dpo/index.md": {
+	id: "llm-research/spin-online-dpo/index.md";
+  slug: "llm-research/spin-online-dpo";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/toy-experiment/index.md": {
+	id: "llm-research/toy-experiment/index.md";
+  slug: "llm-research/toy-experiment";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/uncertainty-estimation/index.md": {
+	id: "llm-research/uncertainty-estimation/index.md";
+  slug: "llm-research/uncertainty-estimation";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/agent-learning/index.md": {
+	id: "multi-agent/agent-learning/index.md";
+  slug: "multi-agent/agent-learning";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/multi-agent-learning/index.md": {
+	id: "multi-agent/multi-agent-learning/index.md";
+  slug: "multi-agent/multi-agent-learning";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/open-source-projects/index.md": {
+	id: "multi-agent/open-source-projects/index.md";
+  slug: "multi-agent/open-source-projects";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"multi-agent/tradingagents/index.md": {
+	id: "multi-agent/tradingagents/index.md";
+  slug: "multi-agent/tradingagents";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qlib-backtest/build-backtest-system/01-data-eda/index.md": {
+	id: "qlib-backtest/build-backtest-system/01-data-eda/index.md";
+  slug: "qlib-backtest/build-backtest-system/01-data-eda";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qlib-backtest/build-backtest-system/02-factor-backtest/index.md": {
+	id: "qlib-backtest/build-backtest-system/02-factor-backtest/index.md";
+  slug: "qlib-backtest/build-backtest-system/02-factor-backtest";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"qlib-backtest/build-backtest-system/03-adjusted-price/index.md": {
+	id: "qlib-backtest/build-backtest-system/03-adjusted-price/index.md";
+  slug: "qlib-backtest/build-backtest-system/03-adjusted-price";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -211,9 +302,65 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"quant-alpha/agent-evolution-alpha/index.md": {
+	id: "quant-alpha/agent-evolution-alpha/index.md";
+  slug: "quant-alpha/agent-evolution-alpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/agent-factor-mining-notes/index.md": {
+	id: "quant-alpha/agent-factor-mining-notes/index.md";
+  slug: "quant-alpha/agent-factor-mining-notes";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/agent-factor-mining-primer/index.md": {
+	id: "quant-alpha/agent-factor-mining-primer/index.md";
+  slug: "quant-alpha/agent-factor-mining-primer";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "quant-alpha/alpha-mining-evolution-review/index.md": {
 	id: "quant-alpha/alpha-mining-evolution-review/index.md";
   slug: "quant-alpha/alpha-mining-evolution-review";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/backtest-data/index.md": {
+	id: "quant-alpha/backtest-data/index.md";
+  slug: "quant-alpha/backtest-data";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/factor-evaluation/good-factor-crypto/index.md": {
+	id: "quant-alpha/factor-evaluation/good-factor-crypto/index.md";
+  slug: "quant-alpha/factor-evaluation/good-factor-crypto";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/factor-evaluation/good-factor-principles/index.md": {
+	id: "quant-alpha/factor-evaluation/good-factor-principles/index.md";
+  slug: "quant-alpha/factor-evaluation/good-factor-principles";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/factor-evaluation/good-factor-stock/index.md": {
+	id: "quant-alpha/factor-evaluation/good-factor-stock/index.md";
+  slug: "quant-alpha/factor-evaluation/good-factor-stock";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/factor-evaluation/rethinking-good-factor/index.md": {
+	id: "quant-alpha/factor-evaluation/rethinking-good-factor/index.md";
+  slug: "quant-alpha/factor-evaluation/rethinking-good-factor";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -225,6 +372,27 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"quant-alpha/factorengine/index.md": {
+	id: "quant-alpha/factorengine/index.md";
+  slug: "quant-alpha/factorengine";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/lijian-mcts-alpha/index.md": {
+	id: "quant-alpha/lijian-mcts-alpha/index.md";
+  slug: "quant-alpha/lijian-mcts-alpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/materialization/index.md": {
+	id: "quant-alpha/materialization/index.md";
+  slug: "quant-alpha/materialization";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "quant-alpha/mcts-alpha-jungle/index.md": {
 	id: "quant-alpha/mcts-alpha-jungle/index.md";
   slug: "quant-alpha/mcts-alpha-jungle";
@@ -232,93 +400,23 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant_alpha/FactorEngine.md": {
-	id: "quant_alpha/FactorEngine.md";
-  slug: "quant_alpha/factorengine";
+"quant-alpha/qlib-algorithm-flow/index.md": {
+	id: "quant-alpha/qlib-algorithm-flow/index.md";
+  slug: "quant-alpha/qlib-algorithm-flow";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant_alpha/lijian_MCTS_alpha.md": {
-	id: "quant_alpha/lijian_MCTS_alpha.md";
-  slug: "quant_alpha/lijian_mcts_alpha";
+"quant-alpha/quant-agent-overview/index.md": {
+	id: "quant-alpha/quant-agent-overview/index.md";
+  slug: "quant-alpha/quant-agent-overview";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant_alpha/qlib完整算法流程.md": {
-	id: "quant_alpha/qlib完整算法流程.md";
-  slug: "quant_alpha/qlib完整算法流程";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/quantaAlpha的代码实现复盘.md": {
-	id: "quant_alpha/quantaAlpha的代码实现复盘.md";
-  slug: "quant_alpha/quantaalpha的代码实现复盘";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/一文讲清什么是agent_因子挖掘.md": {
-	id: "quant_alpha/一文讲清什么是agent_因子挖掘.md";
-  slug: "quant_alpha/一文讲清什么是agent_因子挖掘";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/什么是好因子（crypto实证）.md": {
-	id: "quant_alpha/什么是好因子（crypto实证）.md";
-  slug: "quant_alpha/什么是好因子crypto实证";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/什么是好因子（股票实证）.md": {
-	id: "quant_alpha/什么是好因子（股票实证）.md";
-  slug: "quant_alpha/什么是好因子股票实证";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/什么样的因子是好因子.md": {
-	id: "quant_alpha/什么样的因子是好因子.md";
-  slug: "quant_alpha/什么样的因子是好因子";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/从agent进化角度挖掘alpha.md": {
-	id: "quant_alpha/从agent进化角度挖掘alpha.md";
-  slug: "quant_alpha/从agent进化角度挖掘alpha";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/梳理agent因子挖掘.md": {
-	id: "quant_alpha/梳理agent因子挖掘.md";
-  slug: "quant_alpha/梳理agent因子挖掘";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/碎片_什么是物化.md": {
-	id: "quant_alpha/碎片_什么是物化.md";
-  slug: "quant_alpha/碎片_什么是物化";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/股票回测数据.md": {
-	id: "quant_alpha/股票回测数据.md";
-  slug: "quant_alpha/股票回测数据";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant_alpha/重新思考什么样的因子是好因子.md": {
-	id: "quant_alpha/重新思考什么样的因子是好因子.md";
-  slug: "quant_alpha/重新思考什么样的因子是好因子";
+"quant-alpha/quantaalpha-code-review/index.md": {
+	id: "quant-alpha/quantaalpha-code-review/index.md";
+  slug: "quant-alpha/quantaalpha-code-review";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -365,114 +463,16 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"toy_experiment.md": {
-	id: "toy_experiment.md";
-  slug: "toy_experiment";
+"workbench/week-1-factor-output/index.md": {
+	id: "workbench/week-1-factor-output/index.md";
+  slug: "workbench/week-1-factor-output";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"不确定性衡量.md": {
-	id: "不确定性衡量.md";
-  slug: "不确定性衡量";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"使用qlib搭建回测系统/1_qlib量价数据分析.md": {
-	id: "使用qlib搭建回测系统/1_qlib量价数据分析.md";
-  slug: "使用qlib搭建回测系统/1_qlib量价数据分析";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"使用qlib搭建回测系统/2_qlib量价回测系统.md": {
-	id: "使用qlib搭建回测系统/2_qlib量价回测系统.md";
-  slug: "使用qlib搭建回测系统/2_qlib量价回测系统";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"使用qlib搭建回测系统/3_什么是复权.md": {
-	id: "使用qlib搭建回测系统/3_什么是复权.md";
-  slug: "使用qlib搭建回测系统/3_什么是复权";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"实验记录/alpha360未来信息泄露问题.md": {
-	id: "实验记录/alpha360未来信息泄露问题.md";
-  slug: "实验记录/alpha360未来信息泄露问题";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"工作笔记/第一周-因子挖掘输出分析.md": {
-	id: "工作笔记/第一周-因子挖掘输出分析.md";
-  slug: "工作笔记/第一周-因子挖掘输出分析";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"工作笔记/第一周.md": {
-	id: "工作笔记/第一周.md";
-  slug: "工作笔记/第一周";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_EasyDistill.md": {
-	id: "论文_EasyDistill.md";
-  slug: "论文_easydistill";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_balckdistll_DAIL.md": {
-	id: "论文_balckdistll_DAIL.md";
-  slug: "论文_balckdistll_dail";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_onpolicydistillation.md": {
-	id: "论文_onpolicydistillation.md";
-  slug: "论文_onpolicydistillation";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_什么是ORPO.md": {
-	id: "论文_什么是ORPO.md";
-  slug: "论文_什么是orpo";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_使用MCTS模拟得到优质路径后进行ORPO.md": {
-	id: "论文_使用MCTS模拟得到优质路径后进行ORPO.md";
-  slug: "论文_使用mcts模拟得到优质路径后进行orpo";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"论文_微软使用GAN的思路做黑盒蒸馏.md": {
-	id: "论文_微软使用GAN的思路做黑盒蒸馏.md";
-  slug: "论文_微软使用gan的思路做黑盒蒸馏";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"资料_LLM领域的全景视图.md": {
-	id: "资料_LLM领域的全景视图.md";
-  slug: "资料_llm领域的全景视图";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"闲谈_agent4fin.md": {
-	id: "闲谈_agent4fin.md";
-  slug: "闲谈_agent4fin";
+"workbench/week-1/index.md": {
+	id: "workbench/week-1/index.md";
+  slug: "workbench/week-1";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

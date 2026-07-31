@@ -30,6 +30,19 @@ export const isPublicPost = (post: PostEntry) => !post.data.draft;
 
 export const isRenderablePost = (post: PostEntry) => post.id.toLowerCase() !== 'readme.md';
 
+const topicLabels: Record<string, string> = {
+  afac: '科研竞赛',
+  engineering: '工具与工程',
+  experiments: '实验记录',
+  'llm-research': 'LLM 研究',
+  'multi-agent': '多智能体',
+  'qlib-backtest': 'Qlib 回测系统',
+  'quant-alpha': '量化 Alpha',
+  reproduction: '论文复现',
+  'schema-evolve': 'SchemaEvolve',
+  workbench: '工作笔记',
+};
+
 export const topicOrder = [
   '量化 Alpha',
   'SchemaEvolve',
@@ -78,25 +91,8 @@ export const sortByDateDesc = (posts: PostEntry[]) =>
   });
 
 export const getPrimaryTopic = (post: PostEntry) => {
-  if (post.data.category) return post.data.category;
-
-  const pathTopic = post.id.split('/').slice(0, -1).join('/');
-  const firstTag = post.data.tags?.[0];
-
-  if (pathTopic.startsWith('quant-alpha')) return '量化 Alpha';
-  if (pathTopic === 'quant_alpha') return '量化 Alpha';
-  if (pathTopic === 'multi-agent') return '多智能体';
-  if (pathTopic.startsWith('qlib-backtest')) return 'Qlib 回测系统';
-  if (pathTopic === '使用qlib搭建回测系统') return 'Qlib 回测系统';
-  if (pathTopic.startsWith('schema-evolve')) return 'SchemaEvolve';
-  if (pathTopic.startsWith('reproduction')) return '论文复现';
-  if (pathTopic === '实验记录') return '实验记录';
-  if (pathTopic === '工作笔记') return '工作笔记';
-  if (firstTag === 'LLM') return 'LLM 研究';
-  if (firstTag === 'Qlib') return 'Qlib 回测系统';
-  if (firstTag === 'AFAC') return '科研竞赛';
-  if (['Web', 'Python'].includes(firstTag || '')) return '工具与工程';
-  return '未分类';
+  const topLevelFolder = post.id.split('/')[0];
+  return topicLabels[topLevelFolder] || '未分类';
 };
 
 export const normalizeTag = (tag: string) => {
