@@ -135,6 +135,29 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
       return aside;
     };
 
+    const stackSidenotes = () => {
+      const notes = Array.from(article.querySelectorAll<HTMLElement>('.inline-citation'));
+      let lastBottom = 0;
+      const gap = 14;
+
+      notes
+        .map((note) => {
+          const block = note.closest<HTMLElement>('.has-inline-citation');
+          return { note, block, top: block?.getBoundingClientRect().top ?? note.getBoundingClientRect().top };
+        })
+        .sort((a, b) => a.top - b.top)
+        .forEach(({ note, block }) => {
+          if (!block) return;
+          note.style.transform = '';
+          const blockTop = block.getBoundingClientRect().top + window.scrollY;
+          const currentTop = note.getBoundingClientRect().top + window.scrollY;
+          const desiredTop = Math.max(currentTop, lastBottom + gap);
+          const offset = desiredTop - blockTop;
+          note.style.top = `${Math.max(0, offset)}px`;
+          lastBottom = desiredTop + note.offsetHeight;
+        });
+    };
+
     let externalLinkIndex = 1;
     const citedBlocks = Array.from(article.querySelectorAll('p, li, blockquote'));
 
@@ -182,6 +205,12 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
     });
 
     article.classList.add('has-citation-rail');
+    stackSidenotes();
+
+    window.addEventListener('resize', stackSidenotes, { passive: true });
+    if ('fonts' in document) {
+      document.fonts.ready.then(stackSidenotes);
+    }
   };
 
   buildCitationRail();
