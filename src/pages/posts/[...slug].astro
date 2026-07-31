@@ -103,10 +103,10 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
     footnotes.forEach((note, index) => {
       const clonedNote = note.cloneNode(true) as HTMLElement;
       clonedNote.querySelectorAll('.footnote-backref, [data-footnote-backref]').forEach((backref) => backref.remove());
-      const number = note.id.match(/\d+/)?.[0] || String(index + 1);
-      footnoteItems.set(number, {
+      const key = note.id.replace(/^user-content-fn-/, '').replace(/^fn-/, '');
+      footnoteItems.set(key, {
         type: 'footnote',
-        number,
+        number: String(index + 1),
         html: clonedNote.innerHTML,
         href: `#${note.id}`,
       });
@@ -145,13 +145,16 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
       const seen = new Set<string>();
 
       blockElement.querySelectorAll('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
-        const noteNumber = ref.getAttribute('href')?.match(/\d+/)?.[0];
-        if (!noteNumber || seen.has(`fn-${noteNumber}`)) return;
-        const item = footnoteItems.get(noteNumber);
+        const noteKey = ref
+          .getAttribute('href')
+          ?.replace(/^#user-content-fn-/, '')
+          .replace(/^#fn-/, '');
+        if (!noteKey || seen.has(`fn-${noteKey}`)) return;
+        const item = footnoteItems.get(noteKey);
         if (!item) return;
-        seen.add(`fn-${noteNumber}`);
+        seen.add(`fn-${noteKey}`);
         items.push(item);
-        ref.setAttribute('href', `#inline-fn-${noteNumber}`);
+        ref.setAttribute('href', `#inline-fn-${noteKey}`);
       });
 
       blockElement.querySelectorAll('a[href^="http"]').forEach((link) => {
@@ -170,8 +173,11 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
       if (!items.length) return;
       blockElement.classList.add('has-inline-citation');
       const aside = createSidenote(items);
-      const firstFootnote = items.find((item): item is Extract<CitationItem, { type: 'footnote' }> => item.type === 'footnote');
-      if (firstFootnote) aside.id = `inline-fn-${firstFootnote.number}`;
+      const firstFootnoteRef = blockElement
+        .querySelector('sup a[data-footnote-ref], sup a[href^="#inline-fn-"]')
+        ?.getAttribute('href')
+        ?.replace(/^#inline-fn-/, '');
+      if (firstFootnoteRef) aside.id = `inline-fn-${firstFootnoteRef}`;
       blockElement.append(aside);
     });
 
