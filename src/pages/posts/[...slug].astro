@@ -1,15 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-
-// Base URL handling
-const base = import.meta.env.BASE_URL;
-const baseUrl = base.endsWith('/') ? base : base + '/';
+import {
+  basePath,
+  formatDate,
+  getPostDescription,
+  getTagUrl,
+  isRenderablePost,
+  isPublicPost,
+} from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  const posts = (await getCollection('posts')).filter((post) => isPublicPost(post) && isRenderablePost(post));
   return posts.map((post) => ({
-    // 使用字符串形式的 slug（支持包含斜杠的嵌套路径，例如 'multi-agent/xxx'）
     params: { slug: post.slug },
     props: { post },
   }));
@@ -17,253 +20,70 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
-
-// --- 🔧 工具函数：解析 Description (支持加粗/斜体) ---
-function parseDescription(text: string) {
-  if (!text) return "";
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent-coral">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em class="text-accent-mint">$1</em>'); 
-}
-const descriptionHtml = parseDescription(post.data.description);
-
-// --- 🐰 随机乌萨奇生成器 (Background Generator) ---
-
-// ⚠️ 关键：使用 baseUrl 确保 GitHub Pages 上也能正确加载
-const stickerImages = [
-  `${baseUrl}images/usagi-face.png`,
-  `${baseUrl}images/usagi-1.jpeg`,
-  `${baseUrl}images/usagi-2.jpeg`,
-  `${baseUrl}images/usagi-3.jpeg`,
-  `${baseUrl}images/usagi-4.jpeg`,
-  `${baseUrl}images/usagi-5.jpeg`,
-  `${baseUrl}images/usagi-6.jpeg`,
-];
-
-// 生成 12 个随机背景乌萨奇
-const stickers = Array.from({ length: 12 }).map(() => ({
-  src: stickerImages[Math.floor(Math.random() * stickerImages.length)],
-  top: Math.random() * 90 + 5,      
-  left: Math.random() * 90 + 5,     
-  rotate: Math.random() * 60 - 30,  // 旋转角度
-  size: Math.random() * 160 + 120,  // 大小增加一倍 (120-280px)
-  opacity: Math.random() * 0.25 + 0.15 // 稍微提高透明度让颜色更明显
-}));
+const baseUrl = basePath();
+const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
 ---
 
-<Layout title={post.data.title}>
-  
-  <div class="fixed top-0 left-0 h-2 bg-accent-coral z-[100]" id="progress-bar" style="width: 0%"></div>
+<Layout title={post.data.title} description={getPostDescription(post)}>
+  <div class="reading-progress" id="progress-bar"></div>
 
-  <article class="min-h-screen bg-cream relative overflow-hidden">
-    
-    <div class="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-      {stickers.map((s) => (
-        <img 
-          src={s.src}
-          class="absolute transition-all duration-700"
-          style={{
-            top: `${s.top}%`,
-            left: `${s.left}%`,
-            width: `${s.size}px`,
-            transform: `rotate(${s.rotate}deg)`,
-            opacity: s.opacity,
-          }}
-          alt=""
-        />
-      ))}
-    </div>
-
-    <div class="relative z-10 max-w-[1600px] mx-auto px-5 xl:px-8 py-12">
-      
-      <nav class="mb-12 flex justify-between items-center">
-        <a href={baseUrl} class="bg-white border-2 border-black px-4 py-2 rounded-full font-bold shadow-hard hover:scale-105 transition-transform flex items-center gap-2">
-          <span>🐰</span> Back to Garden
-        </a>
+  <main class="article-shell">
+    <header class="topbar article-topbar">
+      <a class="brand" href={baseUrl}>杨几安</a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href={baseUrl}>首页</a>
+        <a href={`${baseUrl}collections`}>合集</a>
+        <a href={`${baseUrl}#notes`}>笔记</a>
       </nav>
+    </header>
 
-      <!-- 固定在左侧的导航窗格 -->
-      <aside class="hidden lg:block fixed left-4 xl:left-8 top-24 w-64 z-50" style="max-height: calc(100vh - 8rem);">
-        <div class="bg-white/95 backdrop-blur-md border-3 border-black rounded-2xl p-6 shadow-hard relative group overflow-y-auto" style="max-height: calc(100vh - 10rem);">
-            <div class="absolute -top-3 left-6 w-4 h-8 bg-accent-coral border-2 border-black rounded-sm z-20"></div>
-            
-            <h3 class="font-display text-xl mb-4 border-b-2 border-black pb-2 flex items-center gap-2">
-              <span>📖</span> Index
-            </h3>
-            
-            <ul class="space-y-3 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar">
-              {headings.map((heading) => (
-                <li class={`
-                  text-sm font-bold transition-all hover:translate-x-1
-                  ${heading.depth === 2 ? 'mt-3 text-text-ink' : 'ml-4 text-xs text-gray-500 font-normal'}
-                `}>
-                  <a href={`#${heading.slug}`} class="hover:text-accent-coral block py-1 border-l-2 border-transparent hover:border-accent-coral pl-2">
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
+    <div class="article-layout">
+      {visibleHeadings.length > 0 && (
+        <aside class="toc-panel" aria-label="文章目录">
+          <p class="eyebrow">On this page</p>
+          <nav>
+            {visibleHeadings.map((heading) => (
+              <a class={`depth-${heading.depth}`} href={`#${heading.slug}`}>{heading.text}</a>
+            ))}
+          </nav>
+        </aside>
+      )}
 
-          <div class="mt-6 pt-4 border-t-2 border-dashed border-gray-300 text-center text-xs text-gray-400 font-mono">
-            READING...
+      <article class="article-main">
+        <header class="article-header">
+          <div class="note-tags">
+            {post.data.tags.map((tag) => (
+              <a href={getTagUrl(tag)}>{tag}</a>
+            ))}
+          </div>
+          <h1>{post.data.title}</h1>
+          <div class="article-meta">
+            <time>{formatDate(post.data.date)}</time>
+            {post.data.featured && <span>Featured</span>}
+          </div>
+          <p>{getPostDescription(post)}</p>
+        </header>
+
+        <div class="article-card">
+          <div class="prose prose-slate max-w-none article-prose">
+            <Content />
           </div>
         </div>
-      </aside>
-
-      <!-- 主内容区域，在大屏幕上留出左侧空间给导航 -->
-      <div class="post-main-shell lg:ml-64 xl:ml-72">
-        <main>
-          
-          <header class="mb-10 text-center md:text-left">
-            <div class="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
-              {post.data.tags.map((tag) => (
-                <span class="bg-accent-coral border-2 border-black px-3 py-1 rounded text-sm font-bold uppercase shadow-sm">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <h1 class="font-display text-4xl md:text-6xl leading-tight text-text-ink mb-6">
-              {post.data.title}
-            </h1>
-
-            <div class="flex items-center gap-4 text-gray-600 font-bold justify-center md:justify-start">
-              <span>📅 {post.data.date}</span>
-              {post.data.featured && <span class="bg-usagi text-black px-2 py-0.5 rounded text-xs border border-black">✨ Featured</span>}
-            </div>
-
-            <div 
-              class="text-lg text-gray-700 mt-8 bg-white/80 backdrop-blur border-3 border-black p-6 rounded-2xl shadow-hard text-left"
-              set:html={descriptionHtml}
-            ></div>
-          </header>
-
-          <div class="bg-white border-3 border-black rounded-3xl shadow-hard-xl p-6 md:p-10 xl:p-12">
-            <div class="prose prose-lg prose-slate max-w-none article-prose
-              prose-headings:font-display prose-headings:text-text-ink prose-headings:scroll-mt-20
-              prose-a:text-accent-coral prose-a:no-underline hover:prose-a:underline 
-              prose-img:rounded-xl prose-img:border-3 prose-img:border-black prose-img:shadow-hard
-              prose-blockquote:border-l-4 prose-blockquote:border-usagi">
-              
-              <Content />
-              
-            </div>
-          </div>
-
-          <footer class="mt-12 flex justify-between items-center bg-white border-3 border-black p-6 rounded-2xl shadow-hard">
-            <div>
-              <p class="font-bold text-gray-500 text-sm">END OF LOG</p>
-              <a href={baseUrl} class="text-2xl font-display hover:text-accent-coral hover:underline">← Return Home</a>
-            </div>
-            <div class="text-4xl animate-bounce-wild">🥕</div>
-          </footer>
-
-        </main>
-      </div>
+      </article>
     </div>
-  </article>
+  </main>
 </Layout>
 
 <script>
-  // 简单的阅读进度条
-  window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const progressBar = document.getElementById('progress-bar');
+
+  const updateProgress = () => {
+    if (!progressBar) return;
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    const bar = document.getElementById('progress-bar');
-    if (bar) bar.style.width = scrolled + "%";
-  });
+    progressBar.style.width = height > 0 ? `${(scrollTop / height) * 100}%` : '0%';
+  };
 
-  function getFootnoteNumber(noteId: string) {
-    const match = noteId.match(/(\d+)/);
-    return match ? match[1] : noteId;
-  }
-
-  function buildSidenotes() {
-    const prose = document.querySelector('.article-prose');
-    if (!prose) return;
-    prose.classList.remove('has-sidenotes');
-
-    const shell = document.querySelector('.post-main-shell');
-    if (!shell) return;
-
-    const oldRail = shell.querySelector('.article-footnote-rail');
-    if (oldRail) oldRail.remove();
-
-    const isDesktop = window.matchMedia('(min-width: 1280px)').matches;
-    if (!isDesktop) return;
-
-    const footnotes = prose.querySelector('.footnotes');
-    if (!footnotes) return;
-
-    const noteMap = new Map();
-    footnotes.querySelectorAll('ol > li[id]').forEach((li) => {
-      noteMap.set(li.id, li);
-    });
-
-    const refs = prose.querySelectorAll('sup a[data-footnote-ref], sup a[href^="#fn"], sup a[href^="#user-content-fn"]');
-    if (!refs.length) return;
-
-    const rail = document.createElement('aside');
-    rail.className = 'article-footnote-rail';
-    shell.appendChild(rail);
-
-    let lastBottom = -8;
-    let noteCount = 0;
-    const shellRect = shell.getBoundingClientRect();
-
-    refs.forEach((ref) => {
-      const href = ref.getAttribute('href');
-      if (!href) return;
-
-      const noteId = decodeURIComponent(href.replace(/^#/, ''));
-      const sourceNote = noteMap.get(noteId);
-      if (!sourceNote) return;
-
-      const sidenote = document.createElement('div');
-      sidenote.className = 'article-sidenote';
-
-      const number = document.createElement('span');
-      number.className = 'article-sidenote-number';
-      number.textContent = `${getFootnoteNumber(noteId)}.`;
-
-      const content = document.createElement('div');
-      content.className = 'article-sidenote-content';
-      content.innerHTML = sourceNote.innerHTML;
-      content.querySelectorAll('.footnote-backref, .data-footnote-backref, [data-footnote-backref]').forEach((backref) => backref.remove());
-
-      sidenote.appendChild(number);
-      sidenote.appendChild(content);
-      rail.appendChild(sidenote);
-
-      const refRect = ref.getBoundingClientRect();
-      const targetTop = refRect.top - shellRect.top - 4;
-      const top = Math.max(targetTop, lastBottom + 12);
-      sidenote.style.top = `${top}px`;
-      lastBottom = top + sidenote.offsetHeight;
-      noteCount += 1;
-    });
-
-    if (noteCount > 0) {
-      prose.classList.add('has-sidenotes');
-    }
-  }
-
-  const scheduleBuildSidenotes = (() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(buildSidenotes, 50);
-    };
-  })();
-
-  window.addEventListener('load', buildSidenotes);
-  window.addEventListener('resize', scheduleBuildSidenotes);
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
 </script>
-
-<style>
-  /* 自定义滚动条给目录用 */
-  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background: #E76F51; border-radius: 4px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
-</style>

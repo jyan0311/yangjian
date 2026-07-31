@@ -1,210 +1,151 @@
 ---
-import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import {
+  formatDate,
+  getAllTags,
+  getPostDescription,
+  getPostUrl,
+  getTagUrl,
+  getTopicGroups,
+  isRenderablePost,
+  isPublicPost,
+  sortByDateDesc,
+} from '../lib/posts';
 
-// Base URL for proper routing (ensure trailing slash)
-const base = import.meta.env.BASE_URL;
-const baseUrl = base.endsWith('/') ? base : base + '/';
-
-// --- 配置数据 ---
-const tags = [
-  { name: "INTJ", slug: "intj", color: "bg-accent-coral", rotate: "-rotate-2" },
-  { name: "Thinking", slug: "thinking", color: "bg-usagi", rotate: "rotate-1" },
-  { name: "Coding", slug: "coding", color: "bg-accent-mint", rotate: "-rotate-3" },
-  { name: "Research", slug: "research", color: "bg-accent-ochre", rotate: "rotate-2" },
-  { name: "LLM", slug: "llm", color: "bg-accent-blue", rotate: "rotate-1" },
-  { name: "Trading", slug: "trading", color: "bg-accent-mint", rotate: "-rotate-1" },
-];
-
-// 获取所有文章
-const allPosts = await getCollection('posts');
-// 按日期排序（最新的在前面）
-const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-
-// 颜色映射
-const getTagColor = (tag: string) => {
-  const tagConfig = tags.find(t => t.name === tag || t.slug === tag.toLowerCase().replace(' ', '-'));
-  return tagConfig?.color || 'bg-gray-200';
-};
+const allPosts = (await getCollection('posts')).filter((post) => isPublicPost(post) && isRenderablePost(post));
+const posts = sortByDateDesc(allPosts);
+const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
+const recentPosts = posts.slice(0, 8);
+const topicGroups = getTopicGroups(posts);
+const topTopics = Object.entries(topicGroups).sort((a, b) => b[1].length - a[1].length);
+const tags = getAllTags(posts);
+const latestPost = posts[0];
+const activeSince = posts[posts.length - 1];
 ---
 
-<Layout title="Usagi's Digital Garden">
-  
-  <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4 pointer-events-none">
-    <div class="max-w-7xl mx-auto flex justify-between items-start">
-      <div class="pointer-events-auto bg-white border-3 border-black px-4 py-2 shadow-hard rotate-[-2deg] hover:rotate-0 transition-transform cursor-default">
-        <span class="font-display text-xl"> USAGI</span>
-      </div>
-      
-      <div class="pointer-events-auto flex gap-3">
-        <a href={`${baseUrl}collections`} class="bg-accent-blue text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
-          📚 合集
-        </a>
-        <a href="https://github.com/pangxianyuy" target="_blank" class="bg-black text-white border-3 border-black px-4 py-2 font-bold shadow-hard hover:bg-accent-ochre hover:text-black transition-colors active:translate-y-1 active:shadow-none">
-          GitHub
-        </a>
-        <button class="bg-accent-coral border-3 border-black w-12 h-12 flex items-center justify-center font-bold shadow-hard rounded-full hover:scale-110 active:scale-95 transition-all">
-          ?
-        </button>
-      </div>
-    </div>
-  </nav>
+<Layout title="杨几安的研究主页" description="杨几安的个人主页、研究笔记与量化/LLM 数字花园。">
+  <main class="site-shell">
+    <header class="topbar">
+      <a class="brand" href={import.meta.env.BASE_URL}>杨几安</a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#notes">笔记</a>
+        <a href="#topics">主题</a>
+        <a href="#tags">标签</a>
+        <a href="https://github.com/pangxianyuy" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+    </header>
 
-  <header class="relative min-h-[70vh] flex flex-col items-center justify-center px-4 pt-20 overflow-hidden">
-    
-    <div class="absolute top-20 left-10 text-6xl opacity-20 rotate-12 select-none">🥕</div>
-    <div class="absolute bottom-20 right-10 text-8xl opacity-20 -rotate-12 select-none">✨</div>
-
-    <div class="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-      
-      <div class="md:col-span-7 text-center md:text-left">
-        <div class="inline-block bg-accent-mint border-2 border-black px-3 py-1 font-mono text-[10px] font-bold mb-4 shadow-hard-sm">
-          STATUS: CODING
-        </div>
-        <h1 class="font-display text-5xl md:text-7xl leading-[0.92] text-text-ink mb-6 drop-shadow-[4px_4px_0px_#FFF]">
-          杨几安 <br/> <span class="text-accent-coral">JiAn Yang</span>
-        </h1>
-        <p class="font-sans text-base md:text-lg bg-white/60 backdrop-blur-sm border-3 border-black p-6 rounded-2xl shadow-hard max-w-lg transform -rotate-1 hover:rotate-0 transition-transform">
-          <b>Hi, </b>I'm  a Monash AI student turning coffee into code and code into errors. Welcome to my collection of notes, rants, and research.
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Monash AI Student · LLM · Quant Research</p>
+        <h1>把研究、实验和代码复盘整理成可继续生长的知识库。</h1>
+        <p class="hero-text">
+          这里主要记录 LLM 推理与蒸馏、量化 Alpha 因子挖掘、Qlib 回测系统、多智能体框架，以及工作中的实验复盘。页面的目标不是可爱装饰，而是让笔记更容易被重新找到、串起来、继续写下去。
         </p>
-        
-        <div class="flex flex-wrap gap-4 mt-8 justify-center md:justify-start">
-          <a href="#notes" class="group relative inline-block">
-            <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
-            <span class="relative block bg-usagi border-3 border-black px-7 py-2.5 text-base font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
-              Read Notes
-            </span>
-          </a>
-          <button class="group relative inline-block">
-            <span class="absolute inset-0 bg-black translate-x-2 translate-y-2 rounded-xl"></span>
-            <span class="relative block bg-white border-3 border-black px-7 py-2.5 text-base font-black uppercase rounded-xl transform transition-transform group-hover:-translate-y-1 group-active:translate-y-1">
-              About Me
-            </span>
-          </button>
+        <div class="hero-actions">
+          <a class="button primary" href="#notes">浏览最新笔记</a>
+          <a class="button secondary" href={`${import.meta.env.BASE_URL}collections`}>查看主题合集</a>
         </div>
       </div>
 
-      <div class="md:col-span-5 flex justify-center relative">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-accent-ochre/80 rotate-2 z-20 backdrop-blur-[1px] shadow-sm"></div>
-        
-        <div class="bg-white p-4 pb-12 border-2 border-gray-200 shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 w-72 md:w-80 group cursor-pointer">
-          <div class="border-3 border-black aspect-square overflow-hidden bg-gray-100 relative">
-             <img src={`${baseUrl}images/usagi-face.png`} alt="Usagi Portrait" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+      <aside class="profile-panel" aria-label="主页概览">
+        <img src={`${import.meta.env.BASE_URL}images/usagi-face.png`} alt="个人头像" />
+        <dl>
+          <div>
+            <dt>笔记总数</dt>
+            <dd>{posts.length}</dd>
           </div>
-          <div class="mt-4 font-handwriting text-center text-gray-500 font-bold text-base md:text-lg group-hover:text-accent-coral transition-colors">
-            huh!?!?
+          <div>
+            <dt>主题数</dt>
+            <dd>{topTopics.length}</dd>
           </div>
-        </div>
+          <div>
+            <dt>最新更新</dt>
+            <dd>{formatDate(latestPost?.data.date)}</dd>
+          </div>
+          <div>
+            <dt>开始整理</dt>
+            <dd>{formatDate(activeSince?.data.date)}</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
 
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-usagi rounded-full -z-10 border-3 border-black"></div>
+    {featuredPosts.length > 0 && (
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="eyebrow">Featured</p>
+          <h2>优先阅读</h2>
+        </div>
+        <div class="featured-grid">
+          {featuredPosts.map((post) => (
+            <article class="note-card featured-card">
+              <div class="note-meta">
+                <time>{formatDate(post.data.date)}</time>
+                <span>{post.data.tags[0]}</span>
+              </div>
+              <h3><a href={getPostUrl(post)}>{post.data.title}</a></h3>
+              <p>{getPostDescription(post)}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section id="topics" class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Map</p>
+        <h2>按研究主题进入</h2>
       </div>
-    </div>
-  </header>
-
-  <section id="notes" class="py-20 px-4 relative z-20">
-    <div class="max-w-6xl mx-auto">
-      
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <div class="bg-black text-white px-4 py-2 font-display text-lg border-3 border-white rotate-[-2deg] shadow-md">
-          SELECT TAG:
-        </div>
-        {tags.map((tag) => (
-          <a 
-            href={`${baseUrl}tags/${tag.slug}`} 
-            class={`${tag.color} ${tag.rotate} border-3 border-black px-6 py-2 font-bold text-black shadow-hard hover:scale-110 hover:shadow-hard-lg hover:z-10 transition-all cursor-pointer block active:scale-95`}
-          >
-            {tag.name}
+      <div class="topic-grid">
+        {topTopics.map(([topic, group]) => (
+          <a class="topic-card" href={`${import.meta.env.BASE_URL}collections#${encodeURIComponent(topic)}`}>
+            <span>{topic}</span>
+            <strong>{group.length} 篇</strong>
+            <small>{group[0].data.title}</small>
           </a>
         ))}
       </div>
+    </section>
 
-      <!-- 特色文章 -->
-      <div class="mb-12">
-        <h2 class="font-display text-3xl mb-6 text-center">
-          ✨ <span class="text-accent-coral">Featured Posts</span>
-        </h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {posts.filter(post => post.data.featured).slice(0, 2).map((post) => (
-            <article class="group relative h-full">
-              <div class="h-full bg-gradient-to-br from-white to-cream border-3 border-black rounded-xl p-8 shadow-hard transition-all duration-200 group-hover:-translate-y-2 group-hover:shadow-hard-lg flex flex-col">
-                
-                <div class="flex flex-wrap gap-2 mb-4">
-                  {post.data.tags.map((tag) => (
-                    <a href={`${baseUrl}tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110 transform hover:-rotate-1 transition-all`}>
-                      {tag}
-                    </a>
-                  ))}
-                  <span class="text-xs font-bold text-gray-400 self-center ml-auto">{post.data.date}</span>
-                </div>
-
-                <h3 class="font-display text-2xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
-                  <a href={`${baseUrl}posts/${post.slug}`} class="block">{post.data.title}</a>
-                </h3>
-
-                <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed">
-                  {post.data.description}
-                </p>
-
-                <div class="pt-4 border-t-2 border-dashed border-gray-200 flex justify-between items-center">
-                  <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">⭐ FEATURED</span>
-                  <a href={`${baseUrl}posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors">➜</a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+    <section id="notes" class="section-block notes-layout">
+      <div class="section-heading sticky-heading">
+        <p class="eyebrow">Latest</p>
+        <h2>最近笔记</h2>
+        <p>按更新时间排列，适合快速回到正在推进的问题。</p>
       </div>
 
-      <!-- 所有文章 -->
-      <div class="mb-12">
-        <h2 class="font-display text-3xl mb-6 text-center">
-          📚 <span class="text-accent-coral">All Posts</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <article class="group relative h-full">
-              <div class="h-full bg-white border-3 border-black rounded-xl p-6 shadow-hard transition-all duration-200 group-hover:-translate-y-2 group-hover:shadow-hard-lg flex flex-col">
-                
-                <div class="flex flex-wrap gap-2 mb-4">
-                  {post.data.tags.slice(0, 2).map((tag) => (
-                    <a href={`${baseUrl}tags/${tag.toLowerCase().replace(' ', '-')}`} class={`${getTagColor(tag)} border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase hover:brightness-110`}>
-                      {tag}
-                    </a>
-                  ))}
-                  {post.data.tags.length > 2 && (
-                    <span class="bg-gray-200 border-2 border-black px-2 py-1 rounded text-xs font-bold uppercase">+{post.data.tags.length - 2}</span>
-                  )}
-                  <span class="text-xs font-bold text-gray-400 self-center ml-auto">{post.data.date}</span>
-                </div>
-
-                <h3 class="font-display text-xl mb-3 leading-tight group-hover:text-accent-coral transition-colors">
-                  <a href={`${baseUrl}posts/${post.slug}`} class="block">{post.data.title}</a>
-                </h3>
-
-                <p class="text-sm text-gray-600 mb-6 flex-grow leading-relaxed line-clamp-3">
-                  {post.data.description}
-                </p>
-
-                <div class="pt-4 border-t-2 border-dashed border-gray-200 flex justify-between items-center">
-                  {post.data.featured && (
-                    <span class="bg-usagi px-2 py-1 rounded text-xs font-bold">✨</span>
-                  )}
-                  <a href={`${baseUrl}posts/${post.slug}`} class="w-8 h-8 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors ml-auto">➜</a>
-                </div>
+      <div class="note-list">
+        {recentPosts.map((post) => (
+          <article class="note-row">
+            <div class="note-row-date">
+              <time>{formatDate(post.data.date)}</time>
+            </div>
+            <div>
+              <div class="note-tags">
+                {post.data.tags.slice(0, 3).map((tag) => (
+                  <a href={getTagUrl(tag)}>{tag}</a>
+                ))}
               </div>
-            </article>
-          ))}
-        </div>
+              <h3><a href={getPostUrl(post)}>{post.data.title}</a></h3>
+              <p>{getPostDescription(post)}</p>
+            </div>
+          </article>
+        ))}
       </div>
+    </section>
 
-    </div>
-  </section>
+    <section id="tags" class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Index</p>
+        <h2>标签索引</h2>
+      </div>
+      <div class="tag-cloud">
+        {tags.map((tag) => (
+          <a href={getTagUrl(tag)}>{tag}</a>
+        ))}
+      </div>
+    </section>
+  </main>
 </Layout>
-
-<style>
-  /* 简单的手写字体模拟 */
-  .font-handwriting {
-    font-family: 'Space Grotesk', cursive; /* 实际项目中可以引入 'Indie Flower' */
-    transform: rotate(-2deg);
-  }
-</style>
