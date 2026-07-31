@@ -449,6 +449,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"quant-research/schema-alpha/gp-to-rl-formulaic-alpha/index.md": {
+	id: "quant-research/schema-alpha/gp-to-rl-formulaic-alpha/index.md";
+  slug: "quant-research/schema-alpha/gp-to-rl-formulaic-alpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "quant-research/schema-alpha/lgbm-reward-model/index.md": {
 	id: "quant-research/schema-alpha/lgbm-reward-model/index.md";
   slug: "quant-research/schema-alpha/lgbm-reward-model";
@@ -459,6 +466,13 @@ declare module 'astro:content' {
 "quant-research/schema-alpha/schema-plan-vs-factor/index.md": {
 	id: "quant-research/schema-alpha/schema-plan-vs-factor/index.md";
   slug: "quant-research/schema-alpha/schema-plan-vs-factor";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/traditional-factor-investing-and-mining/index.md": {
+	id: "quant-research/schema-alpha/traditional-factor-investing-and-mining/index.md";
+  slug: "quant-research/schema-alpha/traditional-factor-investing-and-mining";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
