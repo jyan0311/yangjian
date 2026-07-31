@@ -36,7 +36,7 @@ const baseUrl = basePath();
 
     <section class="collection-list">
       {groupedPosts.map(([topic, topicPosts]) => (
-        <section class="collection-section" id={encodeURIComponent(topic)}>
+        <section class="collection-section" id={topic}>
           <div class="collection-heading">
             <div>
               <p class="eyebrow">{topicPosts.length} notes</p>

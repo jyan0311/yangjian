@@ -38,16 +38,18 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
     </header>
 
     <div class="article-layout">
-      {visibleHeadings.length > 0 && (
-        <aside class="toc-panel" aria-label="文章目录">
-          <p class="eyebrow">On this page</p>
-          <nav>
-            {visibleHeadings.map((heading) => (
-              <a class={`depth-${heading.depth}`} href={`#${heading.slug}`}>{heading.text}</a>
-            ))}
-          </nav>
-        </aside>
-      )}
+      <aside class="toc-panel" aria-label="文章目录">
+        {visibleHeadings.length > 0 && (
+          <>
+            <p class="eyebrow">On this page</p>
+            <nav>
+              {visibleHeadings.map((heading) => (
+                <a class={`depth-${heading.depth}`} href={`#${heading.slug}`}>{heading.text}</a>
+              ))}
+            </nav>
+          </>
+        )}
+      </aside>
 
       <article class="article-main">
         <header class="article-header">
@@ -70,6 +72,13 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
           </div>
         </div>
       </article>
+
+      <aside class="citation-panel" aria-label="引用来源">
+        <p class="eyebrow">References</p>
+        <div class="citation-list" id="citation-list">
+          <p class="citation-empty">正文中的脚注和外部链接会整理到这里。</p>
+        </div>
+      </aside>
     </div>
   </main>
 </Layout>
@@ -86,4 +95,63 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
 
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+
+  const buildCitationRail = () => {
+    const article = document.querySelector('.article-prose');
+    const list = document.getElementById('citation-list');
+    if (!article || !list) return;
+
+    type CitationItem =
+      { type: 'footnote'; number: string; html: string } |
+      { type: 'link'; text: string; href: string };
+
+    const footnotes = Array.from(article.querySelectorAll('.footnotes ol > li[id]'));
+    const footnoteItems: CitationItem[] = footnotes.map((note, index) => {
+      const clonedNote = note.cloneNode(true) as HTMLElement;
+      clonedNote.querySelectorAll('.footnote-backref, [data-footnote-backref]').forEach((backref) => backref.remove());
+      return {
+        type: 'footnote',
+        number: note.id.match(/\d+/)?.[0] || String(index + 1),
+        html: clonedNote.innerHTML,
+      };
+    });
+
+    const externalLinks: Array<{ type: 'link'; text: string; href: string }> = Array.from(article.querySelectorAll('a[href^="http"]'))
+      .filter((link) => !link.closest('.footnotes'))
+      .map((link) => ({
+        type: 'link',
+        text: link.textContent?.trim() || link.getAttribute('href') || '外部链接',
+        href: link.getAttribute('href') || '',
+      }));
+
+    const dedupedLinks = externalLinks.filter((link, index, links) =>
+      link.href && links.findIndex((item) => item.href === link.href) === index
+    );
+
+    const items: CitationItem[] = [...footnoteItems, ...dedupedLinks];
+    if (!items.length) return;
+
+    list.innerHTML = items.map((item, index) => {
+      if (item.type === 'footnote') {
+        return `<article class="citation-item" id="side-fn-${item.number}">
+          <span class="citation-index">[${item.number}]</span>
+          <div>${item.html}</div>
+        </article>`;
+      }
+
+      return `<article class="citation-item">
+        <span class="citation-index">${String(index + 1).padStart(2, '0')}</span>
+        <a href="${item.href}" target="_blank" rel="noreferrer">${item.text}</a>
+      </article>`;
+    }).join('');
+
+    article.querySelectorAll('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
+      const noteNumber = ref.getAttribute('href')?.match(/\d+/)?.[0];
+      if (noteNumber) ref.setAttribute('href', `#side-fn-${noteNumber}`);
+    });
+
+    article.classList.add('has-citation-rail');
+  };
+
+  buildCitationRail();
 </script>

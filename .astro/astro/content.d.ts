@@ -204,6 +204,27 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"qlib-backtest/local-backtest-data/index.md": {
+	id: "qlib-backtest/local-backtest-data/index.md";
+  slug: "qlib-backtest/local-backtest-data";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/factor-evaluation/specific-return/index.md": {
+	id: "quant-alpha/factor-evaluation/specific-return/index.md";
+  slug: "quant-alpha/factor-evaluation/specific-return";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-alpha/mcts-alpha-jungle/index.md": {
+	id: "quant-alpha/mcts-alpha-jungle/index.md";
+  slug: "quant-alpha/mcts-alpha-jungle";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "quant_alpha/FactorEngine.md": {
 	id: "quant_alpha/FactorEngine.md";
   slug: "quant_alpha/factorengine";
@@ -291,6 +312,48 @@ declare module 'astro:content' {
 "quant_alpha/重新思考什么样的因子是好因子.md": {
 	id: "quant_alpha/重新思考什么样的因子是好因子.md";
   slug: "quant_alpha/重新思考什么样的因子是好因子";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"reproduction/alphaagent/index.md": {
+	id: "reproduction/alphaagent/index.md";
+  slug: "reproduction/alphaagent";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"reproduction/graphalpha/index.md": {
+	id: "reproduction/graphalpha/index.md";
+  slug: "reproduction/graphalpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"schema-evolve/experiment-diagnostics/bandit-factor-generalization/index.md": {
+	id: "schema-evolve/experiment-diagnostics/bandit-factor-generalization/index.md";
+  slug: "schema-evolve/experiment-diagnostics/bandit-factor-generalization";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"schema-evolve/framework/index.md": {
+	id: "schema-evolve/framework/index.md";
+  slug: "schema-evolve/framework";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"schema-evolve/lgbm-reward-model/index.md": {
+	id: "schema-evolve/lgbm-reward-model/index.md";
+  slug: "schema-evolve/lgbm-reward-model";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"schema-evolve/schema-plan-vs-factor/index.md": {
+	id: "schema-evolve/schema-plan-vs-factor/index.md";
+  slug: "schema-evolve/schema-plan-vs-factor";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

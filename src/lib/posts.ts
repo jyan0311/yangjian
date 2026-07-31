@@ -38,12 +38,18 @@ export const sortByDateDesc = (posts: PostEntry[]) =>
   });
 
 export const getPrimaryTopic = (post: PostEntry) => {
+  if (post.data.category) return post.data.category;
+
   const pathTopic = post.id.split('/').slice(0, -1).join('/');
   const firstTag = post.data.tags?.[0];
 
+  if (pathTopic.startsWith('quant-alpha')) return '量化 Alpha';
   if (pathTopic === 'quant_alpha') return '量化 Alpha';
   if (pathTopic === 'multi-agent') return '多智能体';
+  if (pathTopic.startsWith('qlib-backtest')) return 'Qlib 回测系统';
   if (pathTopic === '使用qlib搭建回测系统') return 'Qlib 回测系统';
+  if (pathTopic.startsWith('schema-evolve')) return 'SchemaEvolve';
+  if (pathTopic.startsWith('reproduction')) return '论文复现';
   if (pathTopic === '实验记录') return '实验记录';
   if (pathTopic === '工作笔记') return '工作笔记';
   if (firstTag === 'LLM') return 'LLM 研究';
@@ -74,3 +80,12 @@ export const getTopicGroups = (posts: PostEntry[]) =>
 
 export const getPostDescription = (post: PostEntry) =>
   post.data.description || '这是一篇尚未整理摘要的原始笔记。';
+
+export const getSeriesGroups = (posts: PostEntry[]) =>
+  sortByDateDesc(posts).reduce<Record<string, PostEntry[]>>((groups, post) => {
+    const series = post.data.series;
+    if (!series) return groups;
+    groups[series] ||= [];
+    groups[series].push(post);
+    return groups;
+  }, {});

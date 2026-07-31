@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import {
+  basePath,
   formatDate,
   getAllTags,
   getPostDescription,
@@ -22,12 +23,13 @@ const topTopics = Object.entries(topicGroups).sort((a, b) => b[1].length - a[1].
 const tags = getAllTags(posts);
 const latestPost = posts[0];
 const activeSince = posts[posts.length - 1];
+const baseUrl = basePath();
 ---
 
 <Layout title="杨几安的研究主页" description="杨几安的个人主页、研究笔记与量化/LLM 数字花园。">
   <main class="site-shell">
     <header class="topbar">
-      <a class="brand" href={import.meta.env.BASE_URL}>杨几安</a>
+      <a class="brand" href={baseUrl}>杨几安</a>
       <nav class="nav-links" aria-label="主导航">
         <a href="#notes">笔记</a>
         <a href="#topics">主题</a>
@@ -45,12 +47,19 @@ const activeSince = posts[posts.length - 1];
         </p>
         <div class="hero-actions">
           <a class="button primary" href="#notes">浏览最新笔记</a>
-          <a class="button secondary" href={`${import.meta.env.BASE_URL}collections`}>查看主题合集</a>
+          <a class="button secondary" href={`${baseUrl}collections`}>查看主题合集</a>
         </div>
       </div>
 
       <aside class="profile-panel" aria-label="主页概览">
-        <img src={`${import.meta.env.BASE_URL}images/usagi-face.png`} alt="个人头像" />
+        <figure class="profile-photo">
+          <img
+            src={`${baseUrl}images/profile.jpg`}
+            alt="杨几安的个人照片"
+            data-fallback={`${baseUrl}images/usagi-face.png`}
+          />
+          <figcaption>JiAn Yang</figcaption>
+        </figure>
         <dl>
           <div>
             <dt>笔记总数</dt>
@@ -100,7 +109,7 @@ const activeSince = posts[posts.length - 1];
       </div>
       <div class="topic-grid">
         {topTopics.map(([topic, group]) => (
-          <a class="topic-card" href={`${import.meta.env.BASE_URL}collections#${encodeURIComponent(topic)}`}>
+          <a class="topic-card" href={`${baseUrl}collections#${encodeURIComponent(topic)}`}>
             <span>{topic}</span>
             <strong>{group.length} 篇</strong>
             <small>{group[0].data.title}</small>
@@ -149,3 +158,15 @@ const activeSince = posts[posts.length - 1];
     </section>
   </main>
 </Layout>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('.profile-photo img[data-fallback]').forEach((image) => {
+    image.addEventListener('error', () => {
+      const fallback = image.dataset.fallback;
+      if (!fallback || image.src.endsWith(fallback)) return;
+      image.src = fallback;
+      image.alt = '个人照片占位图';
+      image.closest('.profile-photo')?.classList.add('is-fallback');
+    }, { once: true });
+  });
+</script>
