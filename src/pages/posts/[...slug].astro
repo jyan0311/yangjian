@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
 const baseUrl = basePath();
-const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
+const visibleHeadings = headings.filter((heading) => heading.depth > 1 && heading.depth <= 3 && heading.slug !== 'footnote-label');
 ---
 
 <Layout title={post.data.title} description={getPostDescription(post)}>
@@ -73,13 +73,6 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
           </div>
         </div>
       </article>
-
-      <aside class="citation-panel" aria-label="引用来源">
-        <p class="eyebrow">References</p>
-        <div class="citation-list" id="citation-list">
-          <p class="citation-empty">正文中的脚注和外部链接会整理到这里。</p>
-        </div>
-      </aside>
     </div>
   </main>
 </Layout>
@@ -99,56 +92,87 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
 
   const buildCitationRail = () => {
     const article = document.querySelector('.article-prose');
-    const list = document.getElementById('citation-list');
-    if (!article || !list) return;
+    if (!article) return;
 
     type CitationItem =
-      { type: 'footnote'; number: string; html: string } |
-      { type: 'link'; text: string; href: string };
+      { type: 'footnote'; number: string; html: string; href?: string } |
+      { type: 'link'; label: string; text: string; href: string };
 
     const footnotes = Array.from(article.querySelectorAll('.footnotes ol > li[id]'));
-    const footnoteItems: CitationItem[] = footnotes.map((note, index) => {
+    const footnoteItems = new Map<string, CitationItem>();
+    footnotes.forEach((note, index) => {
       const clonedNote = note.cloneNode(true) as HTMLElement;
       clonedNote.querySelectorAll('.footnote-backref, [data-footnote-backref]').forEach((backref) => backref.remove());
-      return {
+      const number = note.id.match(/\d+/)?.[0] || String(index + 1);
+      footnoteItems.set(number, {
         type: 'footnote',
-        number: note.id.match(/\d+/)?.[0] || String(index + 1),
+        number,
         html: clonedNote.innerHTML,
-      };
+        href: `#${note.id}`,
+      });
     });
 
-    const externalLinks: Array<{ type: 'link'; text: string; href: string }> = Array.from(article.querySelectorAll('a[href^="http"]'))
-      .filter((link) => !link.closest('.footnotes'))
-      .map((link) => ({
-        type: 'link',
-        text: link.textContent?.trim() || link.getAttribute('href') || '外部链接',
-        href: link.getAttribute('href') || '',
-      }));
+    const createSidenote = (items: CitationItem[]) => {
+      const aside = document.createElement('aside');
+      aside.className = 'inline-citation';
+      aside.setAttribute('aria-label', '本段引用来源');
 
-    const dedupedLinks = externalLinks.filter((link, index, links) =>
-      link.href && links.findIndex((item) => item.href === link.href) === index
-    );
+      items.forEach((item) => {
+        const entry = document.createElement('a');
+        entry.className = 'inline-citation-item';
+        if (item.type === 'footnote') {
+          entry.href = item.href || '#';
+          entry.innerHTML = `<span>[${item.number}]</span><div>${item.html}</div>`;
+        } else {
+          entry.href = item.href;
+          entry.target = '_blank';
+          entry.rel = 'noreferrer';
+          entry.innerHTML = `<span>${item.label}</span><div>${item.text}</div>`;
+        }
+        aside.append(entry);
+      });
 
-    const items: CitationItem[] = [...footnoteItems, ...dedupedLinks];
-    if (!items.length) return;
+      return aside;
+    };
 
-    list.innerHTML = items.map((item, index) => {
-      if (item.type === 'footnote') {
-        return `<article class="citation-item" id="side-fn-${item.number}">
-          <span class="citation-index">[${item.number}]</span>
-          <div>${item.html}</div>
-        </article>`;
-      }
+    let externalLinkIndex = 1;
+    const citedBlocks = Array.from(article.querySelectorAll('p, li, blockquote'));
 
-      return `<article class="citation-item">
-        <span class="citation-index">${String(index + 1).padStart(2, '0')}</span>
-        <a href="${item.href}" target="_blank" rel="noreferrer">${item.text}</a>
-      </article>`;
-    }).join('');
+    citedBlocks.forEach((block) => {
+      if (block.closest('.footnotes')) return;
+      const blockElement = block as HTMLElement;
+      const items: CitationItem[] = [];
+      const seen = new Set<string>();
 
-    article.querySelectorAll('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
-      const noteNumber = ref.getAttribute('href')?.match(/\d+/)?.[0];
-      if (noteNumber) ref.setAttribute('href', `#side-fn-${noteNumber}`);
+      blockElement.querySelectorAll('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
+        const noteNumber = ref.getAttribute('href')?.match(/\d+/)?.[0];
+        if (!noteNumber || seen.has(`fn-${noteNumber}`)) return;
+        const item = footnoteItems.get(noteNumber);
+        if (!item) return;
+        seen.add(`fn-${noteNumber}`);
+        items.push(item);
+        ref.setAttribute('href', `#inline-fn-${noteNumber}`);
+      });
+
+      blockElement.querySelectorAll('a[href^="http"]').forEach((link) => {
+        if (link.closest('sup')) return;
+        const href = link.getAttribute('href') || '';
+        if (!href || seen.has(href)) return;
+        seen.add(href);
+        items.push({
+          type: 'link',
+          label: String(externalLinkIndex++).padStart(2, '0'),
+          text: link.textContent?.trim() || href,
+          href,
+        });
+      });
+
+      if (!items.length) return;
+      blockElement.classList.add('has-inline-citation');
+      const aside = createSidenote(items);
+      const firstFootnote = items.find((item): item is Extract<CitationItem, { type: 'footnote' }> => item.type === 'footnote');
+      if (firstFootnote) aside.id = `inline-fn-${firstFootnote.number}`;
+      blockElement.append(aside);
     });
 
     article.classList.add('has-citation-rail');

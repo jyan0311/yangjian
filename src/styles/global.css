@@ -489,20 +489,19 @@ a {
 }
 
 .article-shell {
-  width: min(1480px, calc(100% - 32px));
+  width: min(1500px, calc(100% - 32px));
 }
 
 .article-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 800px) 260px;
-  gap: 34px;
+  grid-template-columns: 220px minmax(0, 960px);
+  gap: 42px;
   align-items: start;
   justify-content: center;
   padding: 42px 0 96px;
 }
 
-.toc-panel,
-.citation-panel {
+.toc-panel {
   position: sticky;
   top: 24px;
   max-height: calc(100vh - 48px);
@@ -532,66 +531,6 @@ a {
 
 .toc-panel a:hover {
   color: var(--accent);
-}
-
-.citation-panel {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
-  background: rgba(255, 253, 248, 0.76);
-}
-
-.citation-list {
-  display: grid;
-  gap: 10px;
-}
-
-.citation-empty,
-.citation-item {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.55;
-}
-
-.citation-item {
-  display: grid;
-  gap: 6px;
-  border-top: 1px solid var(--line);
-  padding-top: 10px;
-}
-
-.citation-item:first-child {
-  border-top: 0;
-  padding-top: 0;
-}
-
-.citation-index {
-  color: var(--accent);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-  font-weight: 900;
-}
-
-.citation-item a {
-  color: var(--accent-2);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-  overflow-wrap: anywhere;
-}
-
-.citation-item p,
-.citation-item li {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.55;
-}
-
-.citation-item code {
-  white-space: normal;
-  overflow-wrap: anywhere;
 }
 
 .article-prose.has-citation-rail .footnotes {
@@ -642,6 +581,7 @@ a {
 }
 
 .article-prose :where(p, li) {
+  position: relative;
   color: #2f2a24;
   font-size: 1.04rem;
   line-height: 1.92;
@@ -692,13 +632,23 @@ a {
   box-shadow: var(--shadow);
 }
 
-.article-prose code {
+.article-prose :not(pre) > code {
   border-radius: 5px;
   background: #efe8dc;
   color: #7a3f2f;
-  padding: 0.12em 0.38em;
+  padding: 0.08em 0.34em;
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.9em;
+  font-size: 0.86em;
+  line-height: 1.45;
+  white-space: break-spaces;
+  overflow-wrap: anywhere;
+}
+
+.article-prose :not(pre) > code::before,
+.article-prose :not(pre) > code::after,
+.article-prose pre code::before,
+.article-prose pre code::after {
+  content: none;
 }
 
 .article-prose pre {
@@ -708,12 +658,18 @@ a {
   background: var(--code-bg) !important;
   box-shadow: none;
   overflow-x: auto;
+  white-space: pre;
 }
 
 .article-prose pre code {
   background: transparent;
   color: #f6f1e8;
   padding: 0;
+  border: 0;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  white-space: pre;
+  overflow-wrap: normal;
 }
 
 .article-prose table {
@@ -735,6 +691,52 @@ a {
   border-radius: 8px;
   background: #fbf8f1;
   padding: 1rem;
+}
+
+.inline-citation {
+  position: absolute;
+  top: 0.12rem;
+  left: calc(100% + 28px);
+  display: grid;
+  width: 250px;
+  gap: 8px;
+  font-family: "Noto Sans SC", "M PLUS Rounded 1c", system-ui, sans-serif;
+}
+
+.inline-citation-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  border-left: 2px solid rgba(23, 103, 98, 0.28);
+  padding-left: 9px;
+  color: var(--muted);
+  text-decoration: none !important;
+}
+
+.inline-citation-item:hover {
+  color: var(--accent);
+}
+
+.inline-citation-item span {
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
+.inline-citation-item div,
+.inline-citation-item p,
+.inline-citation-item li {
+  margin: 0;
+  color: inherit;
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.inline-citation-item code {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {
@@ -769,15 +771,20 @@ a {
   }
 
   .sticky-heading,
-  .toc-panel,
-  .citation-panel {
+  .toc-panel {
     position: static;
   }
 
-  .toc-panel,
-  .citation-panel {
+  .toc-panel {
     max-height: none;
     margin-bottom: 30px;
+  }
+
+  .inline-citation {
+    position: static;
+    width: auto;
+    margin-top: 10px;
+    padding-left: 10px;
   }
 
   .note-row {
