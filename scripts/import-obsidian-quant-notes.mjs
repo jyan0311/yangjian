@@ -8,7 +8,7 @@ const postsRoot = path.join(workspaceRoot, 'src/content/posts');
 const imports = [
   {
     source: 'THU量化交易实习/3_完整的算法框架搭建.md',
-    target: 'schema-evolve/framework/index.md',
+    target: 'quant-research/framework/index.md',
     title: 'SchemaEvolve｜框架算法逻辑整理',
     description: '从 LLM agent、Bandit Selector、Leak Checker、Backtest Engine 与 reward buffer 的协作关系出发，整理 SchemaEvolve 的完整算法框架与数据流。',
     date: '2026-06-16',
@@ -19,7 +19,7 @@ const imports = [
   },
   {
     source: 'THU量化交易实习/4_完整的理解LGBM在这个算法的定位.md',
-    target: 'schema-evolve/lgbm-reward-model/index.md',
+    target: 'quant-research/lgbm-reward-model/index.md',
     title: 'SchemaEvolve｜LGBM Reward Model 在算法中的定位',
     description: '说明 SchemaEvolve 中 LGBM 不是收益预测模型，而是面向 schema plan 的 reward scorer；系统梳理其输入、标签、输出、训练方式与 bandit 选择链路。',
     date: '2026-06-16',
@@ -30,7 +30,7 @@ const imports = [
   },
   {
     source: 'THU量化交易实习/项目内容和进度/跑实验/【分析】挖掘出来的因子表现差.md',
-    target: 'schema-evolve/experiment-diagnostics/bandit-factor-generalization/index.md',
+    target: 'quant-research/experiment-diagnostics/bandit-factor-generalization/index.md',
     title: 'SchemaEvolve｜Bandit 挖掘因子样本外泛化诊断',
     description: '复盘一次 target_valid=500 的 bandit 因子挖掘实验：流程正常但 2021 valid 与 2022-2025 test 泛化偏弱，问题集中在样本内 reward 与样本外筛选口径不一致。',
     date: '2026-06-18',
@@ -52,7 +52,7 @@ const imports = [
   },
   {
     source: 'THU量化交易实习/论文阅读/AAAI_Navigating_the_alpha_jungle.md',
-    target: 'quant-alpha/mcts-alpha-jungle/index.md',
+    target: 'quant-research/mcts-alpha-jungle/index.md',
     title: '量化交易｜Navigating the Alpha Jungle 论文学习笔记',
     description: '学习 LLM + MCTS 公式型 Alpha 因子挖掘框架，重点整理虚拟扩展、多维反馈、相对排序评估与频繁子树避免机制。',
     date: '2026-06-17',
@@ -63,7 +63,7 @@ const imports = [
   },
   {
     source: '论文复现命令/GraphAlpha.md',
-    target: 'reproduction/graphalpha/index.md',
+    target: 'paper-reading/graphalpha/index.md',
     title: '论文复现｜GraphAlpha 使用本地 Qlib 数据的复现命令',
     description: '整理 GraphAlpha 使用 hf_data/cn_data 构建 qlib panel、检查数据与运行第一层 LLM 评估的命令，避免错误读取默认 ~/.qlib 数据。',
     date: '2026-06-18',
@@ -74,7 +74,7 @@ const imports = [
   },
   {
     source: '论文复现命令/AlphaAgent复现.md',
-    target: 'reproduction/alphaagent/index.md',
+    target: 'paper-reading/alphaagent/index.md',
     title: '论文复现｜AlphaAgent KDD 2025 完整复现流程',
     description: '整理 AlphaAgent 论文复现的关键流程：切换 legacy-main、创建 conda 环境、准备 Qlib/CSI500 数据、配置 LLM 与运行 mine/backtest。',
     date: '2026-06-18',
@@ -85,7 +85,7 @@ const imports = [
   },
   {
     source: 'THU量化交易实习/碎片的知识/什么是特异性收益和其计算方法.md',
-    target: 'quant-alpha/factor-evaluation/specific-return/index.md',
+    target: 'quant-research/factor-evaluation/specific-return/index.md',
     title: '量化基础｜什么是特异性收益及其计算方法',
     description: '解释特异性收益、纯 Alpha 与残差收益的含义，梳理 Barra 风险模型下剔除市场、行业和风格暴露后的收益计算逻辑。',
     date: '2026-06-16',
@@ -96,7 +96,7 @@ const imports = [
   },
   {
     source: 'THU量化交易实习/碎片的知识/真实的alpha因子长什么样子.md',
-    target: 'schema-evolve/schema-plan-vs-factor/index.md',
+    target: 'quant-research/schema-plan-vs-factor/index.md',
     title: 'SchemaEvolve｜真实 Alpha 因子与 Schema Plan 的关系',
     description: '从 Event、Context、Quality、Direction、Output 五维拆解出发，解释 SchemaEvolve 挖掘的对象与人工常规因子的区别。',
     date: '2026-06-16',

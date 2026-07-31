@@ -141,23 +141,16 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"posts": {
-"afac/baseline-framework/index.md": {
-	id: "afac/baseline-framework/index.md";
-  slug: "afac/baseline-framework";
+"competition/alpha360-future-leakage/index.md": {
+	id: "competition/alpha360-future-leakage/index.md";
+  slug: "competition/alpha360-future-leakage";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"engineering/python-web-scraping/index.md": {
-	id: "engineering/python-web-scraping/index.md";
-  slug: "engineering/python-web-scraping";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"experiments/alpha360-future-leakage/index.md": {
-	id: "experiments/alpha360-future-leakage/index.md";
-  slug: "experiments/alpha360-future-leakage";
+"competition/baseline-framework/index.md": {
+	id: "competition/baseline-framework/index.md";
+  slug: "competition/baseline-framework";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -274,6 +267,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"paper-reading/alphaagent/index.md": {
+	id: "paper-reading/alphaagent/index.md";
+  slug: "paper-reading/alphaagent";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"paper-reading/graphalpha/index.md": {
+	id: "paper-reading/graphalpha/index.md";
+  slug: "paper-reading/graphalpha";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "qlib-backtest/build-backtest-system/01-data-eda/index.md": {
 	id: "qlib-backtest/build-backtest-system/01-data-eda/index.md";
   slug: "qlib-backtest/build-backtest-system/01-data-eda";
@@ -302,177 +309,149 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/agent-evolution-alpha/index.md": {
-	id: "quant-alpha/agent-evolution-alpha/index.md";
-  slug: "quant-alpha/agent-evolution-alpha";
+"quant-research/agent-evolution-alpha/index.md": {
+	id: "quant-research/agent-evolution-alpha/index.md";
+  slug: "quant-research/agent-evolution-alpha";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/agent-factor-mining-notes/index.md": {
-	id: "quant-alpha/agent-factor-mining-notes/index.md";
-  slug: "quant-alpha/agent-factor-mining-notes";
+"quant-research/agent-factor-mining-notes/index.md": {
+	id: "quant-research/agent-factor-mining-notes/index.md";
+  slug: "quant-research/agent-factor-mining-notes";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/agent-factor-mining-primer/index.md": {
-	id: "quant-alpha/agent-factor-mining-primer/index.md";
-  slug: "quant-alpha/agent-factor-mining-primer";
+"quant-research/agent-factor-mining-primer/index.md": {
+	id: "quant-research/agent-factor-mining-primer/index.md";
+  slug: "quant-research/agent-factor-mining-primer";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/alpha-mining-evolution-review/index.md": {
-	id: "quant-alpha/alpha-mining-evolution-review/index.md";
-  slug: "quant-alpha/alpha-mining-evolution-review";
+"quant-research/alpha-mining-evolution-review/index.md": {
+	id: "quant-research/alpha-mining-evolution-review/index.md";
+  slug: "quant-research/alpha-mining-evolution-review";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/backtest-data/index.md": {
-	id: "quant-alpha/backtest-data/index.md";
-  slug: "quant-alpha/backtest-data";
+"quant-research/backtest-data/index.md": {
+	id: "quant-research/backtest-data/index.md";
+  slug: "quant-research/backtest-data";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factor-evaluation/good-factor-crypto/index.md": {
-	id: "quant-alpha/factor-evaluation/good-factor-crypto/index.md";
-  slug: "quant-alpha/factor-evaluation/good-factor-crypto";
+"quant-research/experiment-diagnostics/bandit-factor-generalization/index.md": {
+	id: "quant-research/experiment-diagnostics/bandit-factor-generalization/index.md";
+  slug: "quant-research/experiment-diagnostics/bandit-factor-generalization";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factor-evaluation/good-factor-principles/index.md": {
-	id: "quant-alpha/factor-evaluation/good-factor-principles/index.md";
-  slug: "quant-alpha/factor-evaluation/good-factor-principles";
+"quant-research/factor-evaluation/good-factor-crypto/index.md": {
+	id: "quant-research/factor-evaluation/good-factor-crypto/index.md";
+  slug: "quant-research/factor-evaluation/good-factor-crypto";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factor-evaluation/good-factor-stock/index.md": {
-	id: "quant-alpha/factor-evaluation/good-factor-stock/index.md";
-  slug: "quant-alpha/factor-evaluation/good-factor-stock";
+"quant-research/factor-evaluation/good-factor-principles/index.md": {
+	id: "quant-research/factor-evaluation/good-factor-principles/index.md";
+  slug: "quant-research/factor-evaluation/good-factor-principles";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factor-evaluation/rethinking-good-factor/index.md": {
-	id: "quant-alpha/factor-evaluation/rethinking-good-factor/index.md";
-  slug: "quant-alpha/factor-evaluation/rethinking-good-factor";
+"quant-research/factor-evaluation/good-factor-stock/index.md": {
+	id: "quant-research/factor-evaluation/good-factor-stock/index.md";
+  slug: "quant-research/factor-evaluation/good-factor-stock";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factor-evaluation/specific-return/index.md": {
-	id: "quant-alpha/factor-evaluation/specific-return/index.md";
-  slug: "quant-alpha/factor-evaluation/specific-return";
+"quant-research/factor-evaluation/rethinking-good-factor/index.md": {
+	id: "quant-research/factor-evaluation/rethinking-good-factor/index.md";
+  slug: "quant-research/factor-evaluation/rethinking-good-factor";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/factorengine/index.md": {
-	id: "quant-alpha/factorengine/index.md";
-  slug: "quant-alpha/factorengine";
+"quant-research/factor-evaluation/specific-return/index.md": {
+	id: "quant-research/factor-evaluation/specific-return/index.md";
+  slug: "quant-research/factor-evaluation/specific-return";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/lijian-mcts-alpha/index.md": {
-	id: "quant-alpha/lijian-mcts-alpha/index.md";
-  slug: "quant-alpha/lijian-mcts-alpha";
+"quant-research/factorengine/index.md": {
+	id: "quant-research/factorengine/index.md";
+  slug: "quant-research/factorengine";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/materialization/index.md": {
-	id: "quant-alpha/materialization/index.md";
-  slug: "quant-alpha/materialization";
+"quant-research/framework/index.md": {
+	id: "quant-research/framework/index.md";
+  slug: "quant-research/framework";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/mcts-alpha-jungle/index.md": {
-	id: "quant-alpha/mcts-alpha-jungle/index.md";
-  slug: "quant-alpha/mcts-alpha-jungle";
+"quant-research/lgbm-reward-model/index.md": {
+	id: "quant-research/lgbm-reward-model/index.md";
+  slug: "quant-research/lgbm-reward-model";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/qlib-algorithm-flow/index.md": {
-	id: "quant-alpha/qlib-algorithm-flow/index.md";
-  slug: "quant-alpha/qlib-algorithm-flow";
+"quant-research/lijian-mcts-alpha/index.md": {
+	id: "quant-research/lijian-mcts-alpha/index.md";
+  slug: "quant-research/lijian-mcts-alpha";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/quant-agent-overview/index.md": {
-	id: "quant-alpha/quant-agent-overview/index.md";
-  slug: "quant-alpha/quant-agent-overview";
+"quant-research/materialization/index.md": {
+	id: "quant-research/materialization/index.md";
+  slug: "quant-research/materialization";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-alpha/quantaalpha-code-review/index.md": {
-	id: "quant-alpha/quantaalpha-code-review/index.md";
-  slug: "quant-alpha/quantaalpha-code-review";
+"quant-research/mcts-alpha-jungle/index.md": {
+	id: "quant-research/mcts-alpha-jungle/index.md";
+  slug: "quant-research/mcts-alpha-jungle";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"reproduction/alphaagent/index.md": {
-	id: "reproduction/alphaagent/index.md";
-  slug: "reproduction/alphaagent";
+"quant-research/qlib-algorithm-flow/index.md": {
+	id: "quant-research/qlib-algorithm-flow/index.md";
+  slug: "quant-research/qlib-algorithm-flow";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"reproduction/graphalpha/index.md": {
-	id: "reproduction/graphalpha/index.md";
-  slug: "reproduction/graphalpha";
+"quant-research/quant-agent-overview/index.md": {
+	id: "quant-research/quant-agent-overview/index.md";
+  slug: "quant-research/quant-agent-overview";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"schema-evolve/experiment-diagnostics/bandit-factor-generalization/index.md": {
-	id: "schema-evolve/experiment-diagnostics/bandit-factor-generalization/index.md";
-  slug: "schema-evolve/experiment-diagnostics/bandit-factor-generalization";
+"quant-research/quantaalpha-code-review/index.md": {
+	id: "quant-research/quantaalpha-code-review/index.md";
+  slug: "quant-research/quantaalpha-code-review";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"schema-evolve/framework/index.md": {
-	id: "schema-evolve/framework/index.md";
-  slug: "schema-evolve/framework";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"schema-evolve/lgbm-reward-model/index.md": {
-	id: "schema-evolve/lgbm-reward-model/index.md";
-  slug: "schema-evolve/lgbm-reward-model";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"schema-evolve/schema-plan-vs-factor/index.md": {
-	id: "schema-evolve/schema-plan-vs-factor/index.md";
-  slug: "schema-evolve/schema-plan-vs-factor";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"workbench/week-1-factor-output/index.md": {
-	id: "workbench/week-1-factor-output/index.md";
-  slug: "workbench/week-1-factor-output";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"workbench/week-1/index.md": {
-	id: "workbench/week-1/index.md";
-  slug: "workbench/week-1";
+"quant-research/schema-plan-vs-factor/index.md": {
+	id: "quant-research/schema-plan-vs-factor/index.md";
+  slug: "quant-research/schema-plan-vs-factor";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

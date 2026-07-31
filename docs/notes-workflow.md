@@ -28,7 +28,7 @@ draft: false
 
 ```text
 src/content/posts/
-├── quant-alpha/
+├── quant-research/
 │   ├── llm-factor-mining-review/
 │   │   └── index.md
 │   ├── mcts-alpha-jungle/
@@ -45,20 +45,16 @@ src/content/posts/
 │       │   └── index.md
 │       └── 03-adjusted-price/
 │           └── index.md
-├── schema-evolve/
-│   ├── framework/
-│   │   └── index.md
-│   ├── lgbm-reward-model/
-│   │   └── index.md
-│   └── experiment-diagnostics/
-│       └── bandit-factor-generalization.md
-├── reproduction/
+├── paper-reading/
 │   ├── graphalpha/
 │   │   └── index.md
 │   └── alphaagent/
 │       └── index.md
-└── workbench/
-    └── 2026-06-week-1/
+├── competition/
+│   └── baseline-framework/
+│       └── index.md
+└── INTJ/
+    └── 认知与决策笔记/
         └── index.md
 ```
 
@@ -70,21 +66,18 @@ src/content/posts/
 
 ## 推荐分类
 
-- `quant-alpha/`：量化 Alpha、LLM 因子挖掘、论文综述、因子评估方法论。
-- `schema-evolve/`：SchemaEvolve 算法、工程实现、实验诊断。
+- `quant-research/`：量化 Alpha、SchemaEvolve、LLM 因子挖掘、论文综述、因子评估方法论。
 - `qlib-backtest/`：Qlib 数据、回测、特征库、复权和工程链路。
 - `llm-research/`：LLM 对齐、蒸馏、推理、主动学习、论文阅读。
 - `multi-agent/`：多智能体框架、交易 Agent、项目拆解。
-- `reproduction/`：论文和开源项目复现命令。
-- `experiments/`：实验排查、结果复盘、baseline 修复。
-- `afac/`：AFAC 等科研竞赛材料。
-- `engineering/`：工程工具、爬虫、脚本和非研究主线技术笔记。
-- `workbench/`：还没整理成正式文章的过程材料。
+- `paper-reading/`：论文阅读、论文复现和开源项目复现命令。
+- `competition/`：科研竞赛材料、baseline 和赛题实验。
+- `INTJ/`：认知、决策、个人方法论等非技术主题。
 
 ## 写作建议
 
 - 新文章优先写到 `src/content/posts/<研究主题文件夹>/<系列或文章>/index.md`。
-- 图片放在文章同级的 `images/` 文件夹里，例如 `src/content/posts/quant-alpha/mcts-alpha-jungle/images/flow.png`。
+- 图片放在文章同级的 `images/` 文件夹里，例如 `src/content/posts/quant-research/mcts-alpha-jungle/images/flow.png`。
 - `title` 尽量使用 `领域｜具体问题`，例如 `量化交易｜Alpha360 未来信息泄露问题的排查与修复`。
 - `description` 写给未来的自己，说明“为什么需要重读这篇”。
 - `tags` 保持 3 到 6 个，优先使用稳定概念，少用一次性形容词。

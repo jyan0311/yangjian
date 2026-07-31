@@ -37,21 +37,16 @@ const topicLabels: Record<string, string> = {
   'multi-agent': '多智能体',
   'qlib-backtest': 'Qlib 回测系统',
   'quant-research': '量化研究',
-  'paper-reading': '论文阅读'
+  'paper-reading': '论文阅读',
 };
 
 export const topicOrder = [
-  '量化 Alpha',
-  'SchemaEvolve',
-  'Qlib 回测系统',
   'LLM 研究',
+  'Qlib 回测系统',
   '多智能体',
-  '论文复现',
-  '实验记录',
+  '论文阅读',
   '科研竞赛',
-  '工具与工程',
-  '工作笔记',
-  '未分类',
+  'INTJ',
 ];
 
 const tagAliases = new Map(
@@ -163,18 +158,16 @@ export const getSeriesName = (post: PostEntry) => {
   const title = post.data.title || '';
   const firstTag = post.data.tags?.[0];
 
-  if (id.startsWith('schema-evolve/')) return 'SchemaEvolve 框架与实验';
-  if (id.startsWith('reproduction/')) return 'Alpha 因子挖掘复现命令';
-  if (id.startsWith('qlib-backtest/') || id.startsWith('使用qlib搭建回测系统/')) return 'Qlib 数据与回测链路';
+  if (id.startsWith('qlib-backtest/')) return 'Qlib 数据与回测链路';
   if (id.startsWith('multi-agent/')) return '多智能体系统学习';
-  if (id.startsWith('实验记录/')) return '实验排查与结果复盘';
-  if (id.startsWith('工作笔记/')) return '工作周记与过程记录';
+  if (id.startsWith('competition/')) return '科研竞赛材料';
+  if (id.startsWith('paper-reading/')) return '论文阅读与复现';
 
-  if (id.startsWith('quant-alpha/') || id.startsWith('quant_alpha/')) {
+  if (id.startsWith('quant-research/')) {
     if (title.includes('好因子') || title.includes('特异性收益')) return '因子评估方法论';
     if (title.includes('quanta') || title.includes('Qlib') || title.includes('算法流程')) return 'QuantaAlpha 代码与实验';
     if (title.includes('MCTS') || title.includes('agent') || title.includes('Alpha')) return 'LLM Alpha 因子挖掘论文';
-    return '量化 Alpha 研究札记';
+    return '量化研究札记';
   }
 
   if (firstTag === 'LLM' || title.includes('Distill') || title.includes('ORPO') || title.startsWith('论文_')) return 'LLM 论文阅读';
