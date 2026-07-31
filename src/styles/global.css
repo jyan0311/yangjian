@@ -574,7 +574,6 @@ a {
 
 .article-prose {
   max-width: 100%;
-  overflow-x: hidden;
   font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
@@ -696,9 +695,11 @@ a {
 .inline-citation {
   position: absolute;
   top: 0.12rem;
-  left: calc(100% + 28px);
+  left: calc(100% + 24px);
+  z-index: 2;
   display: grid;
-  width: 250px;
+  width: min(260px, calc((100vw - 100%) / 2 - 36px));
+  min-width: 180px;
   gap: 8px;
   font-family: "Noto Sans SC", "M PLUS Rounded 1c", system-ui, sans-serif;
 }
