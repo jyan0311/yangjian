@@ -31,16 +31,13 @@ export const isPublicPost = (post: PostEntry) => !post.data.draft;
 export const isRenderablePost = (post: PostEntry) => post.id.toLowerCase() !== 'readme.md';
 
 const topicLabels: Record<string, string> = {
-  afac: '科研竞赛',
-  engineering: '工具与工程',
-  experiments: '实验记录',
+  competition: '科研竞赛',
+  INTJ: 'INTJ',
   'llm-research': 'LLM 研究',
   'multi-agent': '多智能体',
   'qlib-backtest': 'Qlib 回测系统',
-  'quant-alpha': '量化 Alpha',
-  reproduction: '论文复现',
-  'schema-evolve': 'SchemaEvolve',
-  workbench: '工作笔记',
+  'quant-research': '量化研究',
+  'paper-reading': '论文阅读'
 };
 
 export const topicOrder = [
