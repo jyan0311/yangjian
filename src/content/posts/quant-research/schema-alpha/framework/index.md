@@ -2,8 +2,8 @@
 title: "SchemaEvolve｜框架算法逻辑整理"
 description: "从 LLM agent、Bandit Selector、Leak Checker、Backtest Engine 与 reward buffer 的协作关系出发，整理 SchemaEvolve 的完整算法框架与数据流。"
 date: "2026-06-16"
-category: "SchemaEvolve"
-series: "SchemaEvolve 框架理解"
+category: "量化研究"
+series: "Schema Alpha"
 status: "polished"
 tags: ["SchemaEvolve","LLM","Alpha","Bandit","Backtest"]
 source: "Obsidian/【科研】量化交易/THU量化交易实习/3_完整的算法框架搭建.md"

@@ -2,8 +2,8 @@
 title: "SchemaEvolve｜LGBM Reward Model 在算法中的定位"
 description: "说明 SchemaEvolve 中 LGBM 不是收益预测模型，而是面向 schema plan 的 reward scorer；系统梳理其输入、标签、输出、训练方式与 bandit 选择链路。"
 date: "2026-06-16"
-category: "SchemaEvolve"
-series: "SchemaEvolve 框架理解"
+category: "量化研究"
+series: "Schema Alpha"
 status: "polished"
 tags: ["SchemaEvolve","LightGBM","Reward Model","Bandit"]
 source: "Obsidian/【科研】量化交易/THU量化交易实习/4_完整的理解LGBM在这个算法的定位.md"

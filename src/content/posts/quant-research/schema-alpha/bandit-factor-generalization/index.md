@@ -2,8 +2,8 @@
 title: "SchemaEvolve｜Bandit 挖掘因子样本外泛化诊断"
 description: "复盘一次 target_valid=500 的 bandit 因子挖掘实验：流程正常但 2021 valid 与 2022-2025 test 泛化偏弱，问题集中在样本内 reward 与样本外筛选口径不一致。"
 date: "2026-06-18"
-category: "SchemaEvolve"
-series: "SchemaEvolve 实验诊断"
+category: "量化研究"
+series: "Schema Alpha"
 status: "draft"
 tags: ["SchemaEvolve","Alpha","Experiment","Generalization","Backtest"]
 source: "Obsidian/【科研】量化交易/THU量化交易实习/项目内容和进度/跑实验/【分析】挖掘出来的因子表现差.md"

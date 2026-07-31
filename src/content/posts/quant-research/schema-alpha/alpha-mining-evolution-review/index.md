@@ -2,8 +2,8 @@
 title: "量化交易｜自动化因子挖掘中的变异、杂交与搜索范式"
 description: "系统梳理公式型 Alpha 因子挖掘从人工因子、遗传规划、质量多样性搜索、强化学习、神经符号方法到 LLM-MCTS 的演进，重点解释变异、杂交的具体做法与文献依据。"
 date: "2026-07-31"
-category: "量化 Alpha"
-series: "LLM Alpha 因子挖掘论文"
+category: "量化研究"
+series: "Schema Alpha"
 status: "polished"
 tags: ["Alpha", "Genetic Programming", "MCTS", "LLM", "论文阅读", "Factor Mining"]
 featured: true

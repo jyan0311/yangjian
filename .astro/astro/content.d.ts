@@ -323,30 +323,9 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-research/agent-factor-mining-primer/index.md": {
-	id: "quant-research/agent-factor-mining-primer/index.md";
-  slug: "quant-research/agent-factor-mining-primer";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant-research/alpha-mining-evolution-review/index.md": {
-	id: "quant-research/alpha-mining-evolution-review/index.md";
-  slug: "quant-research/alpha-mining-evolution-review";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
 "quant-research/backtest-data/index.md": {
 	id: "quant-research/backtest-data/index.md";
   slug: "quant-research/backtest-data";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant-research/experiment-diagnostics/bandit-factor-generalization/index.md": {
-	id: "quant-research/experiment-diagnostics/bandit-factor-generalization/index.md";
-  slug: "quant-research/experiment-diagnostics/bandit-factor-generalization";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">
@@ -393,20 +372,6 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-research/framework/index.md": {
-	id: "quant-research/framework/index.md";
-  slug: "quant-research/framework";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
-"quant-research/lgbm-reward-model/index.md": {
-	id: "quant-research/lgbm-reward-model/index.md";
-  slug: "quant-research/lgbm-reward-model";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".md"] };
 "quant-research/lijian-mcts-alpha/index.md": {
 	id: "quant-research/lijian-mcts-alpha/index.md";
   slug: "quant-research/lijian-mcts-alpha";
@@ -449,9 +414,51 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
-"quant-research/schema-plan-vs-factor/index.md": {
-	id: "quant-research/schema-plan-vs-factor/index.md";
-  slug: "quant-research/schema-plan-vs-factor";
+"quant-research/schema-alpha/agent-factor-mining-primer/index.md": {
+	id: "quant-research/schema-alpha/agent-factor-mining-primer/index.md";
+  slug: "quant-research/schema-alpha/agent-factor-mining-primer";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/alpha-mining-evolution-review/index.md": {
+	id: "quant-research/schema-alpha/alpha-mining-evolution-review/index.md";
+  slug: "quant-research/schema-alpha/alpha-mining-evolution-review";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/bandit-factor-generalization/index.md": {
+	id: "quant-research/schema-alpha/bandit-factor-generalization/index.md";
+  slug: "quant-research/schema-alpha/bandit-factor-generalization";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/factor-investing-terminology/index.md": {
+	id: "quant-research/schema-alpha/factor-investing-terminology/index.md";
+  slug: "quant-research/schema-alpha/factor-investing-terminology";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/framework/index.md": {
+	id: "quant-research/schema-alpha/framework/index.md";
+  slug: "quant-research/schema-alpha/framework";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/lgbm-reward-model/index.md": {
+	id: "quant-research/schema-alpha/lgbm-reward-model/index.md";
+  slug: "quant-research/schema-alpha/lgbm-reward-model";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"quant-research/schema-alpha/schema-plan-vs-factor/index.md": {
+	id: "quant-research/schema-alpha/schema-plan-vs-factor/index.md";
+  slug: "quant-research/schema-alpha/schema-plan-vs-factor";
   body: string;
   collection: "posts";
   data: InferEntrySchema<"posts">

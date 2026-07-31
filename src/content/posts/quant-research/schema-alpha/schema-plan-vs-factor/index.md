@@ -2,8 +2,8 @@
 title: "SchemaEvolve｜真实 Alpha 因子与 Schema Plan 的关系"
 description: "从 Event、Context、Quality、Direction、Output 五维拆解出发，解释 SchemaEvolve 挖掘的对象与人工常规因子的区别。"
 date: "2026-06-16"
-category: "SchemaEvolve"
-series: "SchemaEvolve 框架理解"
+category: "量化研究"
+series: "Schema Alpha"
 status: "draft"
 tags: ["SchemaEvolve","Alpha","Factor Design","Schema Plan"]
 source: "Obsidian/【科研】量化交易/THU量化交易实习/碎片的知识/真实的alpha因子长什么样子.md"
