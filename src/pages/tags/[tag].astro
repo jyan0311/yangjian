@@ -5,6 +5,8 @@ import {
   basePath,
   formatDate,
   getAllTags,
+  getNavigationTags,
+  getPostTags,
   getPostDescription,
   getPostUrl,
   getTagUrl,
@@ -22,7 +24,7 @@ export async function getStaticPaths() {
     params: { tag: slugifyTag(tag) },
     props: {
       tag,
-      posts: sortByDateDesc(posts.filter((post) => post.data.tags.includes(tag))),
+      posts: sortByDateDesc(posts.filter((post) => getPostTags(post).includes(tag))),
       allTags,
     },
   }));
@@ -30,7 +32,8 @@ export async function getStaticPaths() {
 
 const { tag, posts, allTags } = Astro.props;
 const baseUrl = basePath();
-const relatedTags = allTags.filter((item: string) => item !== tag).slice(0, 18);
+const relatedTags = getNavigationTags(posts, 18).filter(({ tag: item }) => item !== tag);
+const fallbackTags = allTags.filter((item: string) => item !== tag).slice(0, 18);
 ---
 
 <Layout title={`${tag} | 杨几安的研究主页`} description={`标签 ${tag} 下的研究笔记。`}>
@@ -59,7 +62,7 @@ const relatedTags = allTags.filter((item: string) => item !== tag).slice(0, 18);
             </div>
             <div>
               <div class="note-tags">
-                {post.data.tags.slice(0, 4).map((postTag: string) => (
+                {getPostTags(post).slice(0, 4).map((postTag: string) => (
                   <a class={postTag === tag ? 'active' : ''} href={getTagUrl(postTag)}>{postTag}</a>
                 ))}
               </div>
@@ -77,9 +80,13 @@ const relatedTags = allTags.filter((item: string) => item !== tag).slice(0, 18);
         <h2>其他标签</h2>
       </div>
       <div class="tag-cloud">
-        {relatedTags.map((relatedTag: string) => (
-          <a href={getTagUrl(relatedTag)}>{relatedTag}</a>
-        ))}
+        {relatedTags.length > 0
+          ? relatedTags.map(({ tag: relatedTag, count }) => (
+              <a href={getTagUrl(relatedTag)}>{relatedTag}<span>{count}</span></a>
+            ))
+          : fallbackTags.map((relatedTag: string) => (
+              <a href={getTagUrl(relatedTag)}>{relatedTag}</a>
+            ))}
       </div>
     </section>
   </main>

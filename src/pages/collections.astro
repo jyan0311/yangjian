@@ -5,15 +5,21 @@ import {
   basePath,
   formatDate,
   getPostDescription,
+  getPostTags,
   getPostUrl,
   getTagUrl,
-  getTopicGroups,
+  getSeriesGroups,
+  getTopicEntries,
   isRenderablePost,
   isPublicPost,
 } from '../lib/posts';
 
 const posts = (await getCollection('posts')).filter((post) => isPublicPost(post) && isRenderablePost(post));
-const groupedPosts = Object.entries(getTopicGroups(posts)).sort((a, b) => b[1].length - a[1].length);
+const groupedPosts = getTopicEntries(posts).map(([topic, topicPosts]) => ({
+  topic,
+  posts: topicPosts,
+  series: Object.entries(getSeriesGroups(topicPosts)).sort((a, b) => b[1].length - a[1].length),
+}));
 const baseUrl = basePath();
 ---
 
@@ -35,7 +41,7 @@ const baseUrl = basePath();
     </section>
 
     <section class="collection-list">
-      {groupedPosts.map(([topic, topicPosts]) => (
+      {groupedPosts.map(({ topic, posts: topicPosts, series }) => (
         <section class="collection-section" id={topic}>
           <div class="collection-heading">
             <div>
@@ -45,22 +51,33 @@ const baseUrl = basePath();
             <a href={`${baseUrl}#topics`}>返回主题地图</a>
           </div>
 
-          <div class="note-list compact">
-            {topicPosts.map((post) => (
-              <article class="note-row">
-                <div class="note-row-date">
-                  <time>{formatDate(post.data.date)}</time>
+          <div class="series-list">
+            {series.map(([seriesName, seriesPosts]) => (
+              <section class="series-section">
+                <div class="series-heading">
+                  <h3>{seriesName}</h3>
+                  <span>{seriesPosts.length} 篇</span>
                 </div>
-                <div>
-                  <div class="note-tags">
-                    {post.data.tags.slice(0, 4).map((tag) => (
-                      <a href={getTagUrl(tag)}>{tag}</a>
-                    ))}
-                  </div>
-                  <h3><a href={getPostUrl(post)}>{post.data.title}</a></h3>
-                  <p>{getPostDescription(post)}</p>
+
+                <div class="note-list compact">
+                  {seriesPosts.map((post) => (
+                    <article class="note-row">
+                      <div class="note-row-date">
+                        <time>{formatDate(post.data.date)}</time>
+                      </div>
+                      <div>
+                        <div class="note-tags">
+                          {getPostTags(post).slice(0, 4).map((tag) => (
+                            <a href={getTagUrl(tag)}>{tag}</a>
+                          ))}
+                        </div>
+                        <h3><a href={getPostUrl(post)}>{post.data.title}</a></h3>
+                        <p>{getPostDescription(post)}</p>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-              </article>
+              </section>
             ))}
           </div>
         </section>

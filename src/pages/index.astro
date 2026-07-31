@@ -4,11 +4,13 @@ import Layout from '../layouts/Layout.astro';
 import {
   basePath,
   formatDate,
-  getAllTags,
+  getNavigationTags,
+  getPostTags,
   getPostDescription,
   getPostUrl,
   getTagUrl,
-  getTopicGroups,
+  getPrimaryTopic,
+  getTopicEntries,
   isRenderablePost,
   isPublicPost,
   sortByDateDesc,
@@ -18,9 +20,8 @@ const allPosts = (await getCollection('posts')).filter((post) => isPublicPost(po
 const posts = sortByDateDesc(allPosts);
 const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 3);
 const recentPosts = posts.slice(0, 8);
-const topicGroups = getTopicGroups(posts);
-const topTopics = Object.entries(topicGroups).sort((a, b) => b[1].length - a[1].length);
-const tags = getAllTags(posts);
+const topTopics = getTopicEntries(posts);
+const tags = getNavigationTags(posts);
 const latestPost = posts[0];
 const activeSince = posts[posts.length - 1];
 const baseUrl = basePath();
@@ -133,7 +134,8 @@ const baseUrl = basePath();
             </div>
             <div>
               <div class="note-tags">
-                {post.data.tags.slice(0, 3).map((tag) => (
+                <span class="topic-pill">{getPrimaryTopic(post)}</span>
+                {getPostTags(post).slice(0, 3).map((tag) => (
                   <a href={getTagUrl(tag)}>{tag}</a>
                 ))}
               </div>
@@ -148,11 +150,12 @@ const baseUrl = basePath();
     <section id="tags" class="section-block">
       <div class="section-heading">
         <p class="eyebrow">Index</p>
-        <h2>标签索引</h2>
+        <h2>关键词索引</h2>
+        <p>这里保留可复用的概念标签；主题分类和系列归档放在合集页里。</p>
       </div>
       <div class="tag-cloud">
-        {tags.map((tag) => (
-          <a href={getTagUrl(tag)}>{tag}</a>
+        {tags.map(({ tag, count }) => (
+          <a href={getTagUrl(tag)}>{tag}<span>{count}</span></a>
         ))}
       </div>
     </section>

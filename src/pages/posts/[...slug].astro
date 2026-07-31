@@ -5,6 +5,7 @@ import {
   basePath,
   formatDate,
   getPostDescription,
+  getPostTags,
   getTagUrl,
   isRenderablePost,
   isPublicPost,
@@ -54,7 +55,7 @@ const visibleHeadings = headings.filter((heading) => heading.depth <= 3);
       <article class="article-main">
         <header class="article-header">
           <div class="note-tags">
-            {post.data.tags.map((tag) => (
+            {getPostTags(post).map((tag) => (
               <a href={getTagUrl(tag)}>{tag}</a>
             ))}
           </div>

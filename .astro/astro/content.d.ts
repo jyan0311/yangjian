@@ -211,6 +211,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"quant-alpha/alpha-mining-evolution-review/index.md": {
+	id: "quant-alpha/alpha-mining-evolution-review/index.md";
+  slug: "quant-alpha/alpha-mining-evolution-review";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "quant-alpha/factor-evaluation/specific-return/index.md": {
 	id: "quant-alpha/factor-evaluation/specific-return/index.md";
   slug: "quant-alpha/factor-evaluation/specific-return";
