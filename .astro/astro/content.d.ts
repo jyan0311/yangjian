@@ -155,6 +155,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"llm-research/cure-med/index.md": {
+	id: "llm-research/cure-med/index.md";
+  slug: "llm-research/cure-med";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "llm-research/dail-imitation-learning/index.md": {
 	id: "llm-research/dail-imitation-learning/index.md";
   slug: "llm-research/dail-imitation-learning";
