@@ -155,6 +155,13 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"essays/stage-reflections-2026-08/index.md": {
+	id: "essays/stage-reflections-2026-08/index.md";
+  slug: "essays/stage-reflections-2026-08";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "llm-research/cross-lingual-reasoning-distillation/figures/README.md": {
 	id: "llm-research/cross-lingual-reasoning-distillation/figures/README.md";
   slug: "llm-research/cross-lingual-reasoning-distillation/figures/readme";
