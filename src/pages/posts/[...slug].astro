@@ -98,6 +98,11 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
       { type: 'footnote'; number: string; html: string; href?: string } |
       { type: 'link'; label: string; text: string; href: string };
 
+    type CollectedCitations = {
+      items: CitationItem[];
+      footnoteRefs: HTMLAnchorElement[];
+    };
+
     const footnotes = Array.from(article.querySelectorAll('.footnotes ol > li[id]'));
     const footnoteItems = new Map<string, CitationItem>();
     footnotes.forEach((note, index) => {
@@ -111,6 +116,41 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
         href: `#${note.id}`,
       });
     });
+
+    const collectCitations = (container: HTMLElement): CollectedCitations => {
+      const items: CitationItem[] = [];
+      const footnoteRefs: HTMLAnchorElement[] = [];
+      const seen = new Set<string>();
+
+      container.querySelectorAll<HTMLAnchorElement>('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
+        const noteKey = ref
+          .getAttribute('href')
+          ?.replace(/^#user-content-fn-/, '')
+          .replace(/^#fn-/, '');
+        if (!noteKey) return;
+        footnoteRefs.push(ref);
+        if (seen.has(`fn-${noteKey}`)) return;
+        const item = footnoteItems.get(noteKey);
+        if (!item) return;
+        seen.add(`fn-${noteKey}`);
+        items.push(item);
+      });
+
+      container.querySelectorAll<HTMLAnchorElement>('a[href^="http"]').forEach((link) => {
+        if (link.closest('sup')) return;
+        const href = link.getAttribute('href') || '';
+        if (!href || seen.has(href)) return;
+        seen.add(href);
+        items.push({
+          type: 'link',
+          label: String(externalLinkIndex++).padStart(2, '0'),
+          text: link.textContent?.trim() || href,
+          href,
+        });
+      });
+
+      return { items, footnoteRefs };
+    };
 
     const createSidenote = (items: CitationItem[]) => {
       const aside = document.createElement('aside');
@@ -135,25 +175,51 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
       return aside;
     };
 
+    const citationAnchors = new Map<HTMLElement, HTMLElement>();
+    let citationOccurrence = 0;
+
+    const attachSidenote = (
+      anchor: HTMLElement,
+      host: HTMLElement,
+      citations: CollectedCitations,
+      className?: string,
+    ) => {
+      if (!citations.items.length) return;
+      const aside = createSidenote(citations.items);
+      if (className) aside.classList.add(className);
+      aside.id = `inline-citation-${++citationOccurrence}`;
+      citations.footnoteRefs.forEach((ref) => ref.setAttribute('href', `#${aside.id}`));
+      citationAnchors.set(aside, anchor);
+      host.append(aside);
+    };
+
     const stackSidenotes = () => {
       const notes = Array.from(article.querySelectorAll<HTMLElement>('.inline-citation'));
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        notes.forEach((note) => note.style.top = '');
+        return;
+      }
+
       let lastBottom = 0;
       const gap = 14;
 
       notes
         .map((note) => {
-          const block = note.closest<HTMLElement>('.has-inline-citation');
-          return { note, block, top: block?.getBoundingClientRect().top ?? note.getBoundingClientRect().top };
+          const anchor = citationAnchors.get(note) || note.closest<HTMLElement>('.has-inline-citation');
+          return { note, anchor, top: anchor?.getBoundingClientRect().top ?? note.getBoundingClientRect().top };
         })
         .sort((a, b) => a.top - b.top)
-        .forEach(({ note, block }) => {
-          if (!block) return;
+        .forEach(({ note, anchor }) => {
+          if (!anchor) return;
           note.style.transform = '';
-          const blockTop = block.getBoundingClientRect().top + window.scrollY;
-          const currentTop = note.getBoundingClientRect().top + window.scrollY;
-          const desiredTop = Math.max(currentTop, lastBottom + gap);
-          const offset = desiredTop - blockTop;
-          note.style.top = `${Math.max(0, offset)}px`;
+          note.style.top = '';
+          const anchorTop = anchor.getBoundingClientRect().top + window.scrollY;
+          const offsetParent = note.offsetParent as HTMLElement | null;
+          const parentTop = offsetParent
+            ? offsetParent.getBoundingClientRect().top + window.scrollY
+            : anchorTop;
+          const desiredTop = Math.max(anchorTop, lastBottom + gap);
+          note.style.top = `${Math.max(0, desiredTop - parentTop)}px`;
           lastBottom = desiredTop + note.offsetHeight;
         });
     };
@@ -164,44 +230,27 @@ const visibleHeadings = headings.filter((heading) => heading.depth > 1 && headin
     citedBlocks.forEach((block) => {
       if (block.closest('.footnotes')) return;
       const blockElement = block as HTMLElement;
-      const items: CitationItem[] = [];
-      const seen = new Set<string>();
-
-      blockElement.querySelectorAll('sup a[href^="#fn"], sup a[data-footnote-ref]').forEach((ref) => {
-        const noteKey = ref
-          .getAttribute('href')
-          ?.replace(/^#user-content-fn-/, '')
-          .replace(/^#fn-/, '');
-        if (!noteKey || seen.has(`fn-${noteKey}`)) return;
-        const item = footnoteItems.get(noteKey);
-        if (!item) return;
-        seen.add(`fn-${noteKey}`);
-        items.push(item);
-        ref.setAttribute('href', `#inline-fn-${noteKey}`);
-      });
-
-      blockElement.querySelectorAll('a[href^="http"]').forEach((link) => {
-        if (link.closest('sup')) return;
-        const href = link.getAttribute('href') || '';
-        if (!href || seen.has(href)) return;
-        seen.add(href);
-        items.push({
-          type: 'link',
-          label: String(externalLinkIndex++).padStart(2, '0'),
-          text: link.textContent?.trim() || href,
-          href,
-        });
-      });
-
-      if (!items.length) return;
+      const citations = collectCitations(blockElement);
+      if (!citations.items.length) return;
       blockElement.classList.add('has-inline-citation');
-      const aside = createSidenote(items);
-      const firstFootnoteRef = blockElement
-        .querySelector('sup a[data-footnote-ref], sup a[href^="#inline-fn-"]')
-        ?.getAttribute('href')
-        ?.replace(/^#inline-fn-/, '');
-      if (firstFootnoteRef) aside.id = `inline-fn-${firstFootnoteRef}`;
-      blockElement.append(aside);
+      attachSidenote(blockElement, blockElement, citations);
+    });
+
+    article.querySelectorAll<HTMLElement>('table').forEach((table) => {
+      const citedRows = Array.from(table.querySelectorAll<HTMLElement>('tr'))
+        .map((row) => ({ row, citations: collectCitations(row) }))
+        .filter(({ citations }) => citations.items.length > 0);
+      if (!citedRows.length) return;
+
+      const frame = document.createElement('div');
+      frame.className = 'table-citation-frame';
+      table.before(frame);
+      frame.append(table);
+
+      citedRows.forEach(({ row, citations }) => {
+        row.classList.add('has-table-citation');
+        attachSidenote(row, frame, citations, 'table-row-citation');
+      });
     });
 
     article.classList.add('has-citation-rail');

@@ -679,6 +679,15 @@ a {
   white-space: nowrap;
 }
 
+.table-citation-frame {
+  position: relative;
+}
+
+.table-citation-frame > table {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .article-prose th,
 .article-prose td {
   vertical-align: top;
@@ -789,6 +798,10 @@ a {
     width: auto;
     margin-top: 10px;
     padding-left: 10px;
+  }
+
+  .table-row-citation {
+    margin-left: 0;
   }
 
   .note-row {
