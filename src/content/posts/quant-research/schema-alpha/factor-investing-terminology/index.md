@@ -1,5 +1,6 @@
 ---
-title: "因子投资术语与 AlphaSchema 流程对照"
+
+## title: "因子投资术语与 AlphaSchema 流程对照"
 description: "把传统因子投资的术语、研究链条与 AlphaSchema 的语义计划、代码实现和奖励搜索流程放到同一张对照图中。"
 date: "2026-07-31"
 category: "量化研究"
@@ -9,7 +10,6 @@ tags: ["AlphaSchema", "Schema Alpha", "因子投资", "因子挖掘", "量化研
 source: "个人研究笔记"
 featured: false
 draft: false
----
 
 # 因子投资术语与 AlphaSchema 流程对照
 
@@ -28,6 +28,8 @@ draft: false
 - Qlib (Yang et al., 2020)。这是本文实验中使用的量化研究平台和 Alpha158/Alpha360 等因子库来源。
 - AlphaSchema 当前论文：尤其是 `sections/Preliminary_v2.tex`、`sections/Methodology_v3.tex`、`sections/Experiment.tex` 和 `sections/Analysis.tex`。
 
+
+
 ## 2. 一句话总览
 
 经典因子投资的核心问题是：找到一个可以解释或预测资产收益的变量，检验它是否稳健，再把它转化为组合权重和交易策略。
@@ -42,62 +44,82 @@ AlphaSchema 的核心问题是：先把候选因子的经济语义写成结构�
 AlphaSchema：语义计划 -> 代码实现 -> 执行验证 -> 因子评价 -> 语义奖励学习 -> 自动搜索下一批计划
 ```
 
+
+
 ## 3. 核心术语中英文对照
+
+
 
 ### 3.1 因子与收益解释
 
-| 中文术语 | 英文术语 | 含义 | 常见出处 | 与 AlphaSchema 的关系 |
-|---|---|---|---|---|
-| 因子 | Factor | 能解释或预测资产收益差异的变量、特征或组合收益。可以是风险暴露，也可以是交易信号。 | Sharpe (1964), Fama and French (1992, 1993), 石川等 (2020) | AlphaSchema 最终生成的是 executable factor，即可执行因子函数。 |
-| Alpha 因子 | Alpha factor | 在量化交易中通常指具有预测力的交易信号，不一定承担资产定价模型中“风险因子”的含义。 | Kakushadze (2016), Qlib (2020) | AlphaSchema 论文中的 alpha mining 更接近“自动挖掘预测信号”。 |
-| 风险因子 | Risk factor | 代表系统性风险来源的因子，投资者因承担该风险获得风险溢价。 | Sharpe (1964), Fama and French (1993) | AlphaSchema 不直接建模风险溢价，而是发现可预测信号；某些 schema 可表达风险状态或风险条件。 |
-| 风险溢价 | Risk premium | 投资者承担某类风险后获得的预期补偿。 | CAPM, Fama-French 模型 | 在论文中不是核心目标；论文更关注 out-of-sample predictive power 和 portfolio performance。 |
-| 异象 | Anomaly | 无法被传统定价模型充分解释、但在历史数据中呈现收益差异的现象。 | Fama and French (1992), Hou et al. (2017) | AlphaSchema 的 Event/Context 可以被看作对潜在异象或交易机制的语义化表达。 |
-| 因子暴露 | Factor exposure | 个股或组合对某个因子的敏感度或取值。 | 多因子模型、Barra 风格模型、石川等 (2020) | AlphaSchema 的 realized factor 输出的是横截面信号，可被视为一种动态因子暴露或排序分数。 |
-| 因子收益 | Factor return | 多空组合或回归中由某个因子对应的收益。 | Fama-French 三因子模型、实证资产定价 | AlphaSchema 主要报告 IC/RankIC 和组合表现，不直接估计定价模型中的 factor return。 |
+
+| 中文术语     | 英文术语            | 含义                                         | 常见出处                                                    | 与 AlphaSchema 的关系                                                        |
+| -------- | --------------- | ------------------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 因子       | Factor          | 能解释或预测资产收益差异的变量、特征或组合收益。可以是风险暴露，也可以是交易信号。  | Sharpe (1964), Fama and French (1992, 1993), 石川等 (2020) | AlphaSchema 最终生成的是 executable factor，即可执行因子函数。                           |
+| Alpha 因子 | Alpha factor    | 在量化交易中通常指具有预测力的交易信号，不一定承担资产定价模型中“风险因子”的含义。 | Kakushadze (2016), Qlib (2020)                          | AlphaSchema 论文中的 alpha mining 更接近“自动挖掘预测信号”。                             |
+| 风险因子     | Risk factor     | 代表系统性风险来源的因子，投资者因承担该风险获得风险溢价。              | Sharpe (1964), Fama and French (1993)                   | AlphaSchema 不直接建模风险溢价，而是发现可预测信号；某些 schema 可表达风险状态或风险条件。                  |
+| 风险溢价     | Risk premium    | 投资者承担某类风险后获得的预期补偿。                         | CAPM, Fama-French 模型                                    | 在论文中不是核心目标；论文更关注 out-of-sample predictive power 和 portfolio performance。 |
+| 异象       | Anomaly         | 无法被传统定价模型充分解释、但在历史数据中呈现收益差异的现象。            | Fama and French (1992), Hou et al. (2017)               | AlphaSchema 的 Event/Context 可以被看作对潜在异象或交易机制的语义化表达。                       |
+| 因子暴露     | Factor exposure | 个股或组合对某个因子的敏感度或取值。                         | 多因子模型、Barra 风格模型、石川等 (2020)                             | 1. AlphaSchema 的 realized factor 输出的是横截面信号，可被视为一种动态因子暴露或排序分数。            |
+| 因子收益     | Factor return   | 多空组合或回归中由某个因子对应的收益。                        | Fama-French 三因子模型、实证资产定价                                | AlphaSchema 主要报告 IC/RankIC 和组合表现，不直接估计定价模型中的 factor return。              |
+
+
+
 
 ### 3.2 因子构造与预处理
 
-| 中文术语 | 英文术语 | 含义 | 常见出处 | 与 AlphaSchema 的关系 |
-|---|---|---|---|---|
-| 因子构造 | Factor construction | 从原始数据生成因子变量，例如估值、动量、波动率、成交量冲击等。 | 石川等 (2020), Kakushadze (2016) | 在 AlphaSchema 中分成两层：schema plan 先定义语义，LLM realization 再生成具体代码。 |
-| 原始特征 | Raw feature | OHLCV、VWAP、财务字段、分析师预期等原始输入。 | Qlib (2020), 因子投资实践 | AlphaSchema 当前主实验主要使用 OHLCV/VWAP，+Fundamental 设置加入基本面 schema。 |
-| 去极值 | Winsorization | 对极端值进行截尾，避免少数异常点主导因子。 | 石川等 (2020), 因子实证流程 | AlphaSchema 的 Quality 可表达 outlier filtering，也可由代码实现阶段选择具体处理方式。 |
-| 标准化 | Standardization | 将因子转为均值 0、标准差 1，便于比较和组合。 | 多因子模型实践 | AlphaSchema 实验中使用 cross-sectional rank normalization 处理因子和标签。 |
-| 排序标准化 | Rank normalization | 将因子值转成横截面排序或分位数，降低极端值影响。 | Qlib, 量化选股实践 | AlphaSchema 的 Output 可选择 cross-sectional rank 或 z-score 类信号。 |
-| 中性化 | Neutralization | 剔除行业、市值、风格等暴露，使因子更纯粹。 | Barra 风格模型、因子实证实践 | 当前论文没有把行业/市值中性化作为核心贡献；可以作为后续数据契约或 Quality 约束加入。 |
-| 正交化 | Orthogonalization | 从一个因子中剔除与已有因子的线性相关部分，降低冗余。 | 多因子组合实践 | AlphaSchema 的最终 factor pool 使用 correlation filtering 控制冗余，但不等同于严格正交化。 |
-| 因子方向 | Factor direction | 因子值越大预期收益越高，或越大预期收益越低。 | 因子排序、多空组合 | AlphaSchema 中 Direction 明确表达 continuation、reversal、range oscillation 等方向假设。 |
+
+| 中文术语  | 英文术语                | 含义                              | 常见出处                          | 与 AlphaSchema 的关系                                                           |
+| ----- | ------------------- | ------------------------------- | ----------------------------- | --------------------------------------------------------------------------- |
+| 因子构造  | Factor construction | 从原始数据生成因子变量，例如估值、动量、波动率、成交量冲击等。 | 石川等 (2020), Kakushadze (2016) | 在 AlphaSchema 中分成两层：schema plan 先定义语义，LLM realization 再生成具体代码。              |
+| 原始特征  | Raw feature         | OHLCV、VWAP、财务字段、分析师预期等原始输入。     | Qlib (2020), 因子投资实践           | AlphaSchema 当前主实验主要使用 OHLCV/VWAP，+Fundamental 设置加入基本面 schema。               |
+| 去极值   | Winsorization       | 对极端值进行截尾，避免少数异常点主导因子。           | 石川等 (2020), 因子实证流程            | AlphaSchema 的 Quality 可表达 outlier filtering，也可由代码实现阶段选择具体处理方式。              |
+| 标准化   | Standardization     | 将因子转为均值 0、标准差 1，便于比较和组合。        | 多因子模型实践                       | AlphaSchema 实验中使用 cross-sectional rank normalization 处理因子和标签。               |
+| 排序标准化 | Rank normalization  | 将因子值转成横截面排序或分位数，降低极端值影响。        | Qlib, 量化选股实践                  | AlphaSchema 的 Output 可选择 cross-sectional rank 或 z-score 类信号。                |
+| 中性化   | Neutralization      | 剔除行业、市值、风格等暴露，使因子更纯粹。           | Barra 风格模型、因子实证实践             | 当前论文没有把行业/市值中性化作为核心贡献；可以作为后续数据契约或 Quality 约束加入。                             |
+| 正交化   | Orthogonalization   | 从一个因子中剔除与已有因子的线性相关部分，降低冗余。      | 多因子组合实践                       | AlphaSchema 的最终 factor pool 使用 correlation filtering 控制冗余，但不等同于严格正交化。       |
+| 因子方向  | Factor direction    | 因子值越大预期收益越高，或越大预期收益越低。          | 因子排序、多空组合                     | AlphaSchema 中 Direction 明确表达 continuation、reversal、range oscillation 等方向假设。 |
+
+
+
 
 ### 3.3 因子检验与评价
 
-| 中文术语 | 英文术语 | 含义 | 常见出处 | 与 AlphaSchema 的关系 |
-|---|---|---|---|---|
-| 信息系数 | Information Coefficient, IC | 因子值与未来收益之间的相关系数，常用 Pearson 相关。 | 因子实证实践、石川等 (2020) | 论文主表报告 IC，并用于衡量 predictive power。 |
-| 秩信息系数 | Rank IC | 因子横截面排序与未来收益排序之间的 Spearman 相关。 | 因子实证实践、Qlib | AlphaSchema 的 reward 直接使用 RankIC 和 RankICIR。 |
-| ICIR | IC Information Ratio | IC 均值除以 IC 标准差，衡量因子预测稳定性。 | 因子实证实践 | 论文主表报告 ICIR 和 RankICIR。 |
-| 分组检验 | Portfolio sorting / Quantile sorting | 按因子值把股票分成若干组，观察组间未来收益是否单调。 | Fama and French (1992), 石川等 (2020) | AlphaSchema 论文没有以分组收益作为核心图表，但 portfolio evaluation 承担类似验证功能。 |
-| 多空组合 | Long-short portfolio | 买入高因子组、卖出低因子组，检验因子收益。 | 因子投资实践 | 论文使用 Top50/Drop5 组合回测，更偏 long-only 或 benchmark-relative 交易评价。 |
-| 换手率 | Turnover | 组合持仓变化程度，影响交易成本和可实施性。 | 投资组合实践 | 论文在附录中说明交易成本和回测协议，但主文没有把 turnover 作为主指标。 |
-| 最大回撤 | Maximum Drawdown, MDD | 净值从高点到低点的最大跌幅。 | 组合评价 | 论文主表报告 MDD，越低越好。 |
-| 年化收益 | Annualized Return | 将周期收益换算成年化收益，可能是简单年化或复利年化。 | 投资绩效评价 | 论文使用 benchmark-relative AER，附录定义为复利年化 excess return。 |
-| 信息比率 | Information Ratio, IR | 超额收益均值相对跟踪误差的比率。 | 主动投资评价 | 论文用 IR 衡量相对基准的组合表现。 |
-| 样本外 | Out-of-sample | 在未参与训练、调参或选择的测试期上评价。 | 统计学习与因子实证 | 论文使用 2016-2020 train、2021-2022 validation、2023-2025 test。 |
-| 前视偏差 | Look-ahead bias | 使用了当前时点不可获得的未来信息。 | 量化回测规范 | AlphaSchema 的 execution guards 包括 look-ahead leakage screening。 |
-| 幸存者偏差 | Survivorship bias | 只保留存续资产导致历史表现被高估。 | 投资实证规范 | 论文需要依赖数据集设定说明是否控制；不是算法核心。 |
-| 数据挖掘偏差 | Data snooping / Multiple testing | 大量试验中偶然发现显著因子，导致过拟合。 | Hou et al. (2017), 因子异象复现研究 | AlphaSchema 用 validation/test split、reward buffer、correlation filtering 和 held-out backtest 缓解，但自动搜索本身仍需要严格控制。 |
-| 因子衰减 | Alpha decay / Factor decay | 因子发现后预测力随时间下降。 | AlphaAgent 等近期 alpha mining 文献、实务研究 | 论文附录有 factor-decay analysis，用测试期 rolling RankIC 观察稳定性。 |
+
+| 中文术语   | 英文术语                                 | 含义                             | 常见出处                                | 与 AlphaSchema 的关系                                                                                              |
+| ------ | ------------------------------------ | ------------------------------ | ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 信息系数   | Information Coefficient, IC          | 因子值与未来收益之间的相关系数，常用 Pearson 相关。 | 因子实证实践、石川等 (2020)                   | 论文主表报告 IC，并用于衡量 predictive power。                                                                              |
+| 秩信息系数  | Rank IC                              | 因子横截面排序与未来收益排序之间的 Spearman 相关。 | 因子实证实践、Qlib                         | AlphaSchema 的 reward 直接使用 RankIC 和 RankICIR。                                                                   |
+| ICIR   | IC Information Ratio                 | IC 均值除以 IC 标准差，衡量因子预测稳定性。      | 因子实证实践                              | 论文主表报告 ICIR 和 RankICIR。                                                                                        |
+| 分组检验   | Portfolio sorting / Quantile sorting | 按因子值把股票分成若干组，观察组间未来收益是否单调。     | Fama and French (1992), 石川等 (2020)  | AlphaSchema 论文没有以分组收益作为核心图表，但 portfolio evaluation 承担类似验证功能。                                                   |
+| 多空组合   | Long-short portfolio                 | 买入高因子组、卖出低因子组，检验因子收益。          | 因子投资实践                              | 论文使用 Top50/Drop5 组合回测，更偏 long-only 或 benchmark-relative 交易评价。                                                  |
+| 换手率    | Turnover                             | 组合持仓变化程度，影响交易成本和可实施性。          | 投资组合实践                              | 论文在附录中说明交易成本和回测协议，但主文没有把 turnover 作为主指标。                                                                       |
+| 最大回撤   | Maximum Drawdown, MDD                | 净值从高点到低点的最大跌幅。                 | 组合评价                                | 论文主表报告 MDD，越低越好。                                                                                               |
+| 年化收益   | Annualized Return                    | 将周期收益换算成年化收益，可能是简单年化或复利年化。     | 投资绩效评价                              | 论文使用 benchmark-relative AER，附录定义为复利年化 excess return。                                                           |
+| 信息比率   | Information Ratio, IR                | 超额收益均值相对跟踪误差的比率。               | 主动投资评价                              | 论文用 IR 衡量相对基准的组合表现。                                                                                            |
+| 样本外    | Out-of-sample                        | 在未参与训练、调参或选择的测试期上评价。           | 统计学习与因子实证                           | 论文使用 2016-2020 train、2021-2022 validation、2023-2025 test。                                                      |
+| 前视偏差   | Look-ahead bias                      | 使用了当前时点不可获得的未来信息。              | 量化回测规范                              | AlphaSchema 的 execution guards 包括 look-ahead leakage screening。                                                |
+| 幸存者偏差  | Survivorship bias                    | 只保留存续资产导致历史表现被高估。              | 投资实证规范                              | 论文需要依赖数据集设定说明是否控制；不是算法核心。                                                                                      |
+| 数据挖掘偏差 | Data snooping / Multiple testing     | 大量试验中偶然发现显著因子，导致过拟合。           | Hou et al. (2017), 因子异象复现研究         | AlphaSchema 用 validation/test split、reward buffer、correlation filtering 和 held-out backtest 缓解，但自动搜索本身仍需要严格控制。 |
+| 因子衰减   | Alpha decay / Factor decay           | 因子发现后预测力随时间下降。                 | AlphaAgent 等近期 alpha mining 文献、实务研究 | 论文附录有 factor-decay analysis，用测试期 rolling RankIC 观察稳定性。                                                         |
+
+
+
 
 ### 3.4 多因子模型与组合
 
-| 中文术语 | 英文术语 | 含义 | 常见出处 | 与 AlphaSchema 的关系 |
-|---|---|---|---|---|
-| 多因子模型 | Multi-factor model | 使用多个因子解释或预测收益。 | Fama-French 三因子模型、Barra 模型、石川等 (2020) | AlphaSchema 先发现 factor pool，再用 LightGBM combiner 做下游组合预测。 |
-| 因子池 | Factor pool / Factor library | 可供组合、筛选和建模的一组因子。 | Alpha158, Alpha360, 101 Formulaic Alphas | AlphaSchema 的输出不是单个因子，而是 120 或 150 个 selected factor pool。 |
-| 因子筛选 | Factor selection | 根据预测力、稳定性、相关性等选择因子。 | 多因子实践 | AlphaSchema 使用 reward ranking 和 correlation filtering。 |
-| 因子合成 | Factor combination | 将多个因子合成为一个综合信号，可用加权、回归、树模型等。 | 多因子模型实践、Qlib | 论文使用 LightGBM ranker 作为 combiner。 |
-| 组合构建 | Portfolio construction | 将预测信号转为持仓权重，并考虑约束、换手和成本。 | 投资组合理论与实务 | 论文使用 Top50/Drop5 backtest protocol。 |
-| 基准 | Benchmark | 用来比较超额收益的市场指数或组合。 | 主动投资评价 | 论文使用 CSI300 和 SH000300 benchmark，附录还含 CSI500 transfer。 |
+
+| 中文术语  | 英文术语                         | 含义                           | 常见出处                                     | 与 AlphaSchema 的关系                                          |
+| ----- | ---------------------------- | ---------------------------- | ---------------------------------------- | ---------------------------------------------------------- |
+| 多因子模型 | Multi-factor model           | 使用多个因子解释或预测收益。               | Fama-French 三因子模型、Barra 模型、石川等 (2020)    | AlphaSchema 先发现 factor pool，再用 LightGBM combiner 做下游组合预测。  |
+| 因子池   | Factor pool / Factor library | 可供组合、筛选和建模的一组因子。             | Alpha158, Alpha360, 101 Formulaic Alphas | AlphaSchema 的输出不是单个因子，而是 120 或 150 个 selected factor pool。 |
+| 因子筛选  | Factor selection             | 根据预测力、稳定性、相关性等选择因子。          | 多因子实践                                    | AlphaSchema 使用 reward ranking 和 correlation filtering。     |
+| 因子合成  | Factor combination           | 将多个因子合成为一个综合信号，可用加权、回归、树模型等。 | 多因子模型实践、Qlib                             | 论文使用 LightGBM ranker 作为 combiner。                          |
+| 组合构建  | Portfolio construction       | 将预测信号转为持仓权重，并考虑约束、换手和成本。     | 投资组合理论与实务                                | 论文使用 Top50/Drop5 backtest protocol。                        |
+| 基准    | Benchmark                    | 用来比较超额收益的市场指数或组合。            | 主动投资评价                                   | 论文使用 CSI300 和 SH000300 benchmark，附录还含 CSI500 transfer。     |
+
+
+
 
 ## 4. 经典因子投资流程
 
@@ -116,6 +138,8 @@ AlphaSchema：语义计划 -> 代码实现 -> 执行验证 -> 因子评价 -> �
   -> 组合构建
   -> 回测与实盘监控
 ```
+
+
 
 ### 4.1 研究问题与投资假设
 
@@ -219,18 +243,22 @@ AlphaSchema 的对应关系：论文把自动发现的因子组成 factor pool�
 
 ## 6. 两套流程的逐步对应
 
-| 经典因子投资流程 | AlphaSchema 流程 | 是否等价 | 说明 |
-|---|---|---|---|
-| 提出经济假设 | 构造 Event/Context/Quality/Direction/Output | 部分等价 | 经典假设通常是自然语言和经济解释；AlphaSchema 把它结构化成可搜索对象。 |
-| 构造因子公式 | LLM realization 生成 executable factor | 部分等价 | 经典流程中公式通常由研究员写；AlphaSchema 中公式/代码由 LLM 根据 schema 实现。 |
-| 因子清洗 | execution guards + data contract + numerical checks | 部分等价 | 经典清洗更偏统计处理；AlphaSchema 还强调代码是否执行、是否泄漏。 |
-| 单因子检验 | RankIC/RankICIR reward | 高度对应 | AlphaSchema 用因子检验结果作为 plan reward。 |
-| 因子筛选 | reward ranking + correlation filtering | 高度对应 | 都是在候选因子中筛掉弱因子和冗余因子。 |
-| 多因子合成 | LightGBM combiner | 高度对应 | 论文中用学习排序模型合成 factor pool。 |
-| 组合构建 | Top50/Drop5 backtest | 高度对应 | 都是把预测信号转成投资组合。 |
-| 样本外检验 | 2023-2025 held-out test | 高度对应 | 都要求测试期不能参与训练、调参和选择。 |
-| 稳健性检验 | CSI500 transfer、factor decay、LLM robustness | 部分等价 | AlphaSchema 额外检验自动发现流程和 LLM 实现环节。 |
-| 研究员经验迭代 | reward buffer + surrogate + quota selector | 不等价但对应 | AlphaSchema 把人工经验迭代替换为可学习的语义搜索策略。 |
+
+| 经典因子投资流程 | AlphaSchema 流程                                      | 是否等价   | 说明                                                   |
+| -------- | --------------------------------------------------- | ------ | ---------------------------------------------------- |
+| 提出经济假设   | 构造 Event/Context/Quality/Direction/Output           | 部分等价   | 经典假设通常是自然语言和经济解释；AlphaSchema 把它结构化成可搜索对象。            |
+| 构造因子公式   | LLM realization 生成 executable factor                | 部分等价   | 经典流程中公式通常由研究员写；AlphaSchema 中公式/代码由 LLM 根据 schema 实现。 |
+| 因子清洗     | execution guards + data contract + numerical checks | 部分等价   | 经典清洗更偏统计处理；AlphaSchema 还强调代码是否执行、是否泄漏。               |
+| 单因子检验    | RankIC/RankICIR reward                              | 高度对应   | AlphaSchema 用因子检验结果作为 plan reward。                   |
+| 因子筛选     | reward ranking + correlation filtering              | 高度对应   | 都是在候选因子中筛掉弱因子和冗余因子。                                  |
+| 多因子合成    | LightGBM combiner                                   | 高度对应   | 论文中用学习排序模型合成 factor pool。                            |
+| 组合构建     | Top50/Drop5 backtest                                | 高度对应   | 都是把预测信号转成投资组合。                                       |
+| 样本外检验    | 2023-2025 held-out test                             | 高度对应   | 都要求测试期不能参与训练、调参和选择。                                  |
+| 稳健性检验    | CSI500 transfer、factor decay、LLM robustness         | 部分等价   | AlphaSchema 额外检验自动发现流程和 LLM 实现环节。                    |
+| 研究员经验迭代  | reward buffer + surrogate + quota selector          | 不等价但对应 | AlphaSchema 把人工经验迭代替换为可学习的语义搜索策略。                    |
+
+
+
 
 ## 7. 为什么你会觉得“术语和流程对不上”
 
@@ -300,6 +328,8 @@ validated realized factors -> factor pool
 factor pool -> downstream portfolio signal
 ```
 
+
+
 ## 8. 用经典语言重述 AlphaSchema
 
 如果用因子投资读者更熟悉的话语重述 AlphaSchema，可以写成：
@@ -336,15 +366,17 @@ AlphaSchema 是一个自动化因子研究系统。它不是直接在公式空�
 
 为了让读过经典因子投资的审稿人更容易理解 AlphaSchema，论文中可以更明确地区分以下概念：
 
-| 容易混淆的词 | 建议解释 |
-|---|---|
-| factor | 已经可计算、可回测的因子变量或信号。 |
-| schema plan | 还没有实现成代码的结构化交易语义假设。 |
-| realization | 把 schema plan 转换成 executable factor 的代码生成过程。 |
-| reward | realized factor 经过验证和回测后的 plan-level 评价。 |
-| factor pool | 通过验证和筛选后，进入下游组合模型的一组因子。 |
+
+| 容易混淆的词             | 建议解释                                           |
+| ------------------ | ---------------------------------------------- |
+| factor             | 已经可计算、可回测的因子变量或信号。                             |
+| schema plan        | 还没有实现成代码的结构化交易语义假设。                            |
+| realization        | 把 schema plan 转换成 executable factor 的代码生成过程。   |
+| reward             | realized factor 经过验证和回测后的 plan-level 评价。       |
+| factor pool        | 通过验证和筛选后，进入下游组合模型的一组因子。                        |
 | semantic surrogate | 学习 schema plan 与 reward 之间关系的模型，不是直接预测股票收益的模型。 |
-| LightGBM combiner | 下游把 factor pool 合成为股票预测信号的模型。 |
+| LightGBM combiner  | 下游把 factor pool 合成为股票预测信号的模型。                  |
+
 
 因此，AlphaSchema 的定位可以进一步写清楚：
 
@@ -353,6 +385,8 @@ AlphaSchema 是一个自动化因子研究系统。它不是直接在公式空�
 它不是直接学习股票收益，而是先学习“哪些交易语义更可能产生好因子”；
 它不是把 LLM 当作全流程研究员，而是让 LLM 只承担 plan-to-code realization。
 ```
+
+
 
 ## 11. 建议在论文中采用的术语桥接句
 
