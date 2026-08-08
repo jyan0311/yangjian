@@ -1,6 +1,5 @@
 ---
-
-## title: "因子投资术语与 AlphaSchema 流程对照"
+title: "因子投资术语与 AlphaSchema 流程对照"
 description: "把传统因子投资的术语、研究链条与 AlphaSchema 的语义计划、代码实现和奖励搜索流程放到同一张对照图中。"
 date: "2026-07-31"
 category: "量化研究"
@@ -10,6 +9,7 @@ tags: ["AlphaSchema", "Schema Alpha", "因子投资", "因子挖掘", "量化研
 source: "个人研究笔记"
 featured: false
 draft: false
+---
 
 # 因子投资术语与 AlphaSchema 流程对照
 

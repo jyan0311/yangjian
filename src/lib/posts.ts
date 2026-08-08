@@ -28,7 +28,7 @@ export const getTagUrl = (tag: string) => `${basePath()}tags/${slugifyTag(tag)}`
 
 export const isPublicPost = (post: PostEntry) => !post.data.draft;
 
-export const isRenderablePost = (post: PostEntry) => post.id.toLowerCase() !== 'readme.md';
+export const isRenderablePost = (post: PostEntry) => !post.id.toLowerCase().endsWith('/readme.md');
 
 const topicLabels: Record<string, string> = {
   competition: '科研竞赛',

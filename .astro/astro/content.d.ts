@@ -155,6 +155,20 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".md"] };
+"llm-research/cross-lingual-reasoning-distillation/figures/README.md": {
+	id: "llm-research/cross-lingual-reasoning-distillation/figures/README.md";
+  slug: "llm-research/cross-lingual-reasoning-distillation/figures/readme";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
+"llm-research/cross-lingual-reasoning-distillation/index.md": {
+	id: "llm-research/cross-lingual-reasoning-distillation/index.md";
+  slug: "llm-research/cross-lingual-reasoning-distillation";
+  body: string;
+  collection: "posts";
+  data: InferEntrySchema<"posts">
+} & { render(): Render[".md"] };
 "llm-research/cure-med/index.md": {
 	id: "llm-research/cure-med/index.md";
   slug: "llm-research/cure-med";
