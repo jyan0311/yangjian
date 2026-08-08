@@ -1,25 +1,26 @@
-# 插图清单
+# 插图编辑记录
 
-本文暂不直接复制论文页面中的图表，以避免分辨率、排版与版权问题。可在发布前按下列位置补入经授权的原图，或据原论文数据自行重绘。
+正文目前使用四张论文原图或局部截图。每张图均放在其直接支撑的论证之后，并在正文图注中标明原论文、原图号和解释边界。发布或二次分发前仍应核查原论文的许可要求；必要时可依据原图数据自行重绘。
 
-| 位置 | 推荐图 | 用途 | 来源 |
+## 已插入正文
+
+| 正文位置 | 文件 | 图像含义 | 使用边界 |
 |---|---|---|---|
-| “原生支持多少语言”小节 | 模型语言覆盖的四层能力矩阵 | 区分可编码、语言能力、推理能力、对齐与领域能力 | 建议按正文定义原创绘制 |
-| “语码转换”小节 | 四类混语现象的二维图 | 区分自然语码转换、设计的混合推理、语言侵入与输出错配 | 参考 2021/2026 code-switching surveys 与 OLA，原创绘制 |
-| 正文“数学推理”开头 | 多语言覆盖与资源等级图 | 说明评测偏差不是抽象概念 | PluraMath Figure 1 / Table 1 |
-| “语言混合”小节 | 输入语言、隐藏层脚本、CoT 脚本关系图 | 展示英语/拉丁脚本 pivot 的机制假设 | Language Mixing in Reasoning Language Models |
-| “医疗推理”小节 | 数据构建 - code-switching SFT - 课程 GRPO 流程图 | 展示 CURE-Med 的训练链 | CURE-Med Figure 1 |
-| “OPD 到 MOPD”小节 | OPD/OPSD/MOPD 统一框架 | 展示 student rollout、privileged context、multi-teacher 和 peer rollout 的差异 | 根据 GKD、SDR、COPSD、两类 MOPD 原创重绘 |
-| “技术路线”小节 | 本文提出的路由 - 蒸馏 - 评测流程图 | 汇总项目研究路线 | 建议原创绘制 |
+| 3.1 LMU 内部机制 | `LMU_not_latent_reasoners.png` | R1-Qwen-7B 在德语、斯瓦希里语和泰语 MGSM 样本中的英语方向表征相似度，按层、推理进度和答题正确性分解 | 仅支持“英语方向对齐受资源与正确性影响”，不能推出所有内部推理均以英语进行 |
+| 6.5 Language-Mixed CoT | `YISANG_mix_lang_anchored_COT.png` | 左侧比较纯英语 CoT 与韩英混合 CoT；右侧给出 KO-REAson-35B 在原论文任务集合中的雷达图 | 雷达图受任务、量表和基线选择影响，不作通用模型排名 |
+| 6.7 COPSD | `LMU_COPSD_framework.png` | 同参数教师利用英语问题与参考解构成 privileged context，在学生自己的低资源语言 rollout 上提供逐 token 分布 | 用于解释同策略自蒸馏的数据流，不表示教师拥有独立参数或外部更大模型 |
+| 7.2 CURE-Med | `CURE_MED_code_switch_example.png` | 法语问题、法英混合推理轨迹与法语最终答案的冷启动样例 | 展示训练样本格式，不作为临床忠实性或因果机制证据 |
 
-插图文件可放在本目录下，以语义化文件名命名，例如 `language-capability-matrix.png`、`code-switching-taxonomy.png`、`pluramath-coverage.png`、`opd-family.png`、`cure-med-pipeline.png`。文章中使用相对路径引用。
+## 可选补图
 
-## 原创图的建议结构
+现有四张图已经覆盖内部机制、混合轨迹、同策略蒸馏与医疗数据格式。下列内容只在改写为开题报告或长篇论文时补充，博客版本无需全部加入。
 
-### `code-switching-taxonomy.png`
+| 建议文件 | 适合位置 | 内容与要求 |
+|---|---|---|
+| `anchor-taxonomy.png` | 6.6.2 | 原创绘制目标语言问题、高资源语言推理支架、目标语言答案三段式结构；区分自发 lexical retention 与人为双语术语约束 |
+| `opd-family.png` | 9.4 | 原创绘制 OPD 共用主干，并分别标出外部教师、privileged self-teacher、多教师路由与 peer rollouts |
+| `cure-med-pipeline.png` | 7.2 | 仅在需要展开训练实现时，根据 CURE-Med Figure 1 重绘数据构建、code-switching SFT 与资源课程 GRPO |
+| `pluramath-coverage.png` | 6.2 | 根据 PluraMath 的语言、语系、脚本和资源等级信息重绘评测覆盖，不直接截取论文页面 |
+| `language-mixing-mechanism.png` | 6.4 | 将输入语言、隐层脚本偏好和输出轨迹语言画成证据链，避免画成已经证实的单向因果机制 |
 
-横轴为“是否由系统主动设计”，纵轴为“是否满足用户语言预期”。四个象限分别放置自然语码转换、混合推理、语言侵入和输出语言错配。不要把 code-switching 与 failure 画成同义词。
-
-### `opd-family.png`
-
-从左到右固定画出 `prompt -> student rollout -> teacher scoring -> update`。用不同颜色表示四类变化：标准 OPD 更换外部 teacher；OPSD 给同参数 teacher privileged context；MOPD-MT 按领域路由多个 teacher；MOPD-MR 给 teacher 成功/失败 peer trajectories。图注需明确两个 MOPD 是同名不同方法。
+第 2 节的语言支持信息、第 4 节的语码转换分类和第 8 节的训练配置均已由表格承载，不再增加信息重复的装饰性图片。第 10 节的技术路线保留为连续阶段描述；若文章用于答辩，可再制作横向流程图。
